@@ -4,3 +4,9 @@ import { twMerge } from "tailwind-merge"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+export function isActivePath(itemUrl: string, pathname: string) {
+  if (!itemUrl || itemUrl === "#") return false;
+  if (itemUrl === "/") return pathname === "/";
+  return pathname === itemUrl || pathname.startsWith(itemUrl + "/");
+}

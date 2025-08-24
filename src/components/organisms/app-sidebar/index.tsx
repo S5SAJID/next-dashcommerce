@@ -1,3 +1,4 @@
+"use client";
 import {
   Sidebar,
   SidebarContent,
@@ -12,39 +13,42 @@ import {
 } from "@/components/ui/sidebar";
 import {ShoppingBag, Search, Inbox, Calendar} from "lucide-react"
 import { NavUser } from "./nav-user";
+import { usePathname } from "next/navigation";
+import { isActivePath } from "@/lib/utils";
+
+// Menu items.
+const SIDEBAR_LINKS = [
+  {
+    title: "Products",
+    url: "/products",
+    icon: ShoppingBag,
+  },
+  {
+    title: "Orders",
+    url: "/orders",
+    icon: Inbox,
+  },
+  {
+    title: "Calendar",
+    url: "#calendar",
+    icon: Calendar,
+  },
+  {
+    title: "Search",
+    url: "#search",
+    icon: Search,
+  },
+];
+
+const USER =  {
+  name: "shadcn",
+  email: "m@example.com",
+  avatar: "/avatars/demo.png",
+};
 
 export default function AppSidebar() {
-  // Menu items.
-  const items = [
-    {
-      title: "Products",
-      url: "#product",
-      icon: ShoppingBag,
-    },
-    {
-      title: "Inbox",
-      url: "#",
-      icon: Inbox,
-    },
-    {
-      title: "Calendar",
-      url: "#",
-      icon: Calendar,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: Search,
-    },
-  ];
-
-  const user =  {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/demo.png",
-  };
-
-
+  const pathname = usePathname();
+  
   return (
     <Sidebar collapsible="icon">
       {/* Header */}
@@ -68,9 +72,10 @@ export default function AppSidebar() {
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item, i) => {
-                const isActive = item.url === "#product";
-                return <SidebarMenuItem key={i}>
+              {SIDEBAR_LINKS.map((item) => {
+                const isActive = isActivePath(item.url, pathname);
+                
+                return <SidebarMenuItem key={item.url}>
                   <SidebarMenuButton asChild isActive={isActive}>
                     <a href={item.url} className={isActive ? "opacity-100" : "opacity-80"}>
                       <item.icon />
@@ -85,7 +90,7 @@ export default function AppSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenuItem>
-          <NavUser user={user} />
+          <NavUser user={USER} />
         </SidebarMenuItem>
       </SidebarFooter>
     </Sidebar>
