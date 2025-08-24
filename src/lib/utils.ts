@@ -10,3 +10,17 @@ export function isActivePath(itemUrl: string, pathname: string) {
   if (itemUrl === "/") return pathname === "/";
   return pathname === itemUrl || pathname.startsWith(itemUrl + "/");
 }
+
+type formatePriceParams = {
+  price: string | number,
+  locale: Intl.LocalesArgument,
+}
+
+export function formatPrice({ locale = "en-US", price }: formatePriceParams) {
+  const amount = typeof price == "number" ? price : parseFloat(price);
+  const formatted = new Intl.NumberFormat(locale, {
+    currency: "USD",
+    style: "currency"
+  }).format(amount);
+  return formatted
+}

@@ -15,6 +15,7 @@ import {ShoppingBag, Search, Inbox, Calendar} from "lucide-react"
 import { NavUser } from "./nav-user";
 import { usePathname } from "next/navigation";
 import { isActivePath } from "@/lib/utils";
+import Link from "next/link";
 
 // Menu items.
 const SIDEBAR_LINKS = [
@@ -77,10 +78,10 @@ export default function AppSidebar() {
                 
                 return <SidebarMenuItem key={item.url}>
                   <SidebarMenuButton asChild isActive={isActive}>
-                    <a href={item.url} className={isActive ? "opacity-100" : "opacity-80"}>
+                    <Link href={item.url} className={isActive ? "opacity-100" : "opacity-80"}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               })}
