@@ -2,7 +2,7 @@ import { Main } from "@/components/layout/main";
 import AppSidebar from "@/components/organisms/app-sidebar";
 import { SiteHeader } from "@/components/organisms/dashboard-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { ThemeProvider } from "@/providers/theme-provider";
+import DashboardProviders from "@/providers/dashboard/providers";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -14,22 +14,18 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange>
+    <DashboardProviders>
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset className='@container/content'>
           <main className="flex-1 w-full h-full">
-            <SiteHeader title="Products" />
+            <SiteHeader title="" />
             <Main>
               {children}
             </Main>
           </main>
         </SidebarInset>
       </SidebarProvider>
-    </ThemeProvider>
+    </DashboardProviders>
   )
 }

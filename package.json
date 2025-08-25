@@ -6,10 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint",
-    "postinstall": "react-flagpack --framework nextjs"
+    "lint": "eslint"
   },
   "dependencies": {
+    "@bprogress/next": "^3.2.12",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
