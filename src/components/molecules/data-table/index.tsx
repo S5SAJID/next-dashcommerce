@@ -2,7 +2,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from "@tanstack/react-table"
 import { DataTablePagination } from "./data-table-pagination"
 import { useState } from "react"
-import type { Table as TableType } from "@tanstack/react-table"
 import { DataTableToolbar, DataTableToolbarFilters } from "./data-table-toolbar"
 
 type DataTableProps<TData, TValue> = {
