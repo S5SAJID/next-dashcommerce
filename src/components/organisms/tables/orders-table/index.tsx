@@ -5,6 +5,24 @@ import { orders } from "./data";
 
 export default function OrdersTable() {
   return (
-    <DataTable columns={order_columns} data={orders}/>
+    <DataTable 
+      columns={order_columns} 
+      data={orders}
+      toolbar={{
+        searchColumn: "id",
+        searchPlaceholder: "Filter order IDs...",
+        filters: [
+          {
+            columnName: 'status',
+            title: "Status",
+            options: [
+              { label: "Done", value: "done" },
+              { label: "Active", value: "active" },
+              { label: "Pending", value: "pending" },
+            ]
+          }
+        ]
+      }}
+    />
   )
 }

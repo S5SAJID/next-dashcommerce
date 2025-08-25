@@ -2,14 +2,20 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from "@tanstack/react-table"
 import { DataTablePagination } from "./data-table-pagination"
 import { useState } from "react"
-import { DataTableToolbar } from "@/components/organisms/tables/products-table/products-table-toolbar"
+import type { Table as TableType } from "@tanstack/react-table"
+import { DataTableToolbar, DataTableToolbarFilters } from "./data-table-toolbar"
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[],
-  data: TData[]
+  data: TData[],
+  toolbar: {
+    searchColumn: string,
+    searchPlaceholder: string,
+    filters: DataTableToolbarFilters[],
+  }
 }
 
-export default function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export default function DataTable<TData, TValue>({ columns, data, toolbar }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -33,7 +39,12 @@ export default function DataTable<TData, TValue>({ columns, data }: DataTablePro
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table}/>
+      <DataTableToolbar
+        table={table}
+        searchColumn={toolbar.searchColumn}
+        searchPlaceholder={toolbar.searchPlaceholder}
+        filters={toolbar.filters}
+      />
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
