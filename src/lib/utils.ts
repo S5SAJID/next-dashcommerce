@@ -24,3 +24,8 @@ export function formatPrice({ locale = "en-US", price }: formatePriceParams) {
   }).format(amount);
   return formatted
 }
+
+export function extractCountryCode(phone: string) {
+  const match = phone.match(/^\s*(\+\d{1,3})/);
+  return match ? match[1] : null;
+}
