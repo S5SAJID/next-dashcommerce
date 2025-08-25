@@ -15,7 +15,7 @@ type DataTableToolbarProps<TData> = {
   table: Table<TData>,
   searchColumn: string,
   searchPlaceholder: string,
-  filters: DataTableToolbarFilters[]
+  filters?: DataTableToolbarFilters[]
 }
 
 export function DataTableToolbar<TData>({
@@ -39,28 +39,32 @@ export function DataTableToolbar<TData>({
           }
           className='h-8 w-[150px] lg:w-[250px]'
         />
-        <div className='flex gap-x-2'>
-          {filters.map(item => {
-            const column = table.getColumn(item.columnName)
-            return column ? (
-              <DataTableFacetedFilter
-                key={item.columnName}
-                column={column}
-                title={item.title}
-                options={item.options}
-              />
-            ) : null
-          })}
-        </div>
-        {isFiltered && (
-          <Button
-            variant='ghost'
-            onClick={() => table.resetColumnFilters()}
-            className='h-8 px-2 lg:px-3'
-          >
-            Reset
-            <X className='ms-2 h-4 w-4' />
-          </Button>
+        {filters && filters.length > 0 && (
+          <>
+            <div className='flex gap-x-2'>
+              {filters.map(item => {
+                const column = table.getColumn(item.columnName)
+                return column ? (
+                  <DataTableFacetedFilter
+                    key={item.columnName}
+                    column={column}
+                    title={item.title}
+                    options={item.options}
+                  />
+                ) : null
+              })}
+            </div>
+            {isFiltered && (
+              <Button
+                variant='ghost'
+                onClick={() => table.resetColumnFilters()}
+                className='h-8 px-2 lg:px-3'
+              >
+                Reset
+                <X className='ms-2 h-4 w-4' />
+              </Button>
+            )}
+          </>
         )}
       </div>
       <DataTableViewOptions table={table} />

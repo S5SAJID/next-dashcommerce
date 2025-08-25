@@ -11,7 +11,7 @@ type DataTableProps<TData, TValue> = {
   toolbar: {
     searchColumn: string,
     searchPlaceholder: string,
-    filters: DataTableToolbarFilters[],
+    filters?: DataTableToolbarFilters[],
   }
 }
 

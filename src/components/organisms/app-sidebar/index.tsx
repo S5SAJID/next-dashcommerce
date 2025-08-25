@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {ShoppingBag, Search, Inbox, Calendar} from "lucide-react"
+import {ShoppingBag, Search, Inbox, Users} from "lucide-react"
 import { NavUser } from "./nav-user";
 import { usePathname } from "next/navigation";
 import { isActivePath } from "@/lib/utils";
@@ -30,9 +30,9 @@ const SIDEBAR_LINKS = [
     icon: Inbox,
   },
   {
-    title: "Calendar",
-    url: "#calendar",
-    icon: Calendar,
+    title: "Customers",
+    url: "/customers",
+    icon: Users,
   },
   {
     title: "Search",
