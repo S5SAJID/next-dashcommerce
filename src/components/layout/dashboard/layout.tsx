@@ -1,3 +1,5 @@
+import BackButton from "@/components/molecules/back-button"
+
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   return <div>{children}</div>
 }
@@ -10,13 +12,18 @@ export function DashboardHeader({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function DashboardTitle({ title, description }: { title: string, description: string }) {
+export function DashboardTitle({ title, description, enableBack = false }: { title: string, enableBack?: boolean, description: string }) {
   return (
-    <div>
-      <h2 className='text-2xl font-bold tracking-tight'>{title}</h2>
-      <p className='text-muted-foreground'>
-        {description}
-      </p>
+    <div className="flex space-x-4">
+      {enableBack && <BackButton />}
+      <div>
+        <h2 className='text-2xl font-bold tracking-tight'>
+          {title}
+        </h2>
+        <p className='text-muted-foreground'>
+          {description}
+        </p>
+      </div>
     </div>
   )
 }

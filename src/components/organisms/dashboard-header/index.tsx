@@ -1,13 +1,10 @@
+import { BreadcrumbNavigation } from "@/components/molecules/bread-crumb-navigation";
 import { ThemeSwitch } from "@/components/molecules/theme-switch";
-import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 
-type SiteHeaderProps = {
-  title: string;
-}
 
-export function SiteHeader(props: SiteHeaderProps) {
+export function SiteHeader() {
   return (
     <header className="flex h-14 shrink-0 items-center gap-2 border-b transition-[width,height] width-full ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-14">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
@@ -16,7 +13,7 @@ export function SiteHeader(props: SiteHeaderProps) {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-base font-medium">{props.title}</h1>
+        <BreadcrumbNavigation />
         <div className="ml-auto flex items-center gap-2">
           <ThemeSwitch />
         </div>

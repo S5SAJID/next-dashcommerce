@@ -1,5 +1,6 @@
 import { Download, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export function ProductsPrimaryButtons() {
   return (
@@ -10,9 +11,11 @@ export function ProductsPrimaryButtons() {
       >
         <span>Import</span> <Download size={18} />
       </Button>
-      <Button className='space-x-1'>
-        <span>Create</span> <Plus size={18} />
-      </Button>
+      <Link href='/products/create'>
+        <Button className='space-x-1'>
+          <span>Create</span> <Plus size={18} />
+        </Button>
+      </Link>
     </div>
   )
 }

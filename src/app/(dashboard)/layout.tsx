@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <AppSidebar />
         <SidebarInset className='@container/content'>
           <main className="flex-1 w-full h-full">
-            <SiteHeader title="" />
+            <SiteHeader />
             <Main>
               {children}
             </Main>
