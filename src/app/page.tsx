@@ -3,11 +3,26 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex w-screen items-center flex-col space-y-1 justify-center min-h-screen">
-      <h1>Testing ShadCN UI</h1>
-      <Link href="/products">
-        <Button>Open products</Button>
-      </Link>
+    <div className="flex w-screen items-center flex-col space-y-1 justify-center h-screen overflow-hidden text-center">
+      <h1 className="text-7xl max-w-3xl font-light text-transparent bg-gradient-to-br from-primary to-muted-foreground bg-clip-text">
+        Simple Ecommerce with ShadCN UI.
+      </h1>
+      <p className="text-muted-foreground max-w-2xl">
+        Ecommerce user interface with client side functionalities to some extent. <br />
+        You can quick start creating your ecommerce webapp with it.
+      </p>
+      <div className="flex space-x-2">
+        <Button asChild className="mt-4">
+          <Link href="/products">
+            Go to Products
+          </Link>
+        </Button>
+        <Button asChild variant="secondary" className="mt-4">
+          <Link href="/products">
+            Github Repo
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 }
