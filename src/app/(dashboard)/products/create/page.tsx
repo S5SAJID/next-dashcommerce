@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/components/layout/dashboard/layout";
+import { FormPageLayout } from "@/components/layout/form-page-layout/layout";
 import ProductForm from "@/components/organisms/forms/product-form";
 import { Metadata } from "next";
 
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function ProductCreatePage() {
   return (
-    <DashboardLayout>
+    <FormPageLayout>
       <ProductForm />
-    </DashboardLayout>
+    </FormPageLayout>
   )
 }
