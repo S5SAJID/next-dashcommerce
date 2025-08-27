@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {ShoppingBag, Search, Inbox, Users} from "lucide-react"
+import {ShoppingBag, Inbox, Users} from "lucide-react"
 import { NavUser } from "./nav-user";
 import { usePathname } from "next/navigation";
 import { isActivePath } from "@/lib/utils";
@@ -33,11 +33,6 @@ const SIDEBAR_LINKS = [
     title: "Customers",
     url: "/customers",
     icon: Users,
-  },
-  {
-    title: "Search",
-    url: "#search",
-    icon: Search,
   },
 ];
 

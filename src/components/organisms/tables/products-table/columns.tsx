@@ -13,7 +13,6 @@ export const product_columns: ColumnDef<Product>[] = [
     accessorKey: "name",
     header: "Product Name",
     cell: ({ row }) => {
-      const link = row.original.name.replaceAll(" ", "-").toLowerCase();
       return (
         <div className="space-x-4 flex items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
