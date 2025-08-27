@@ -12,6 +12,7 @@ export default function BackButton() {
       variant="ghost"
       size="sm"
       className="w-8"
+      type="button"
       onClick={() => router.back()}
     >
       <ArrowLeft />

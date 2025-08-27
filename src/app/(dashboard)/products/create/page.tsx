@@ -1,6 +1,5 @@
-import { DashboardHeader, DashboardLayout, DashboardTitle } from "@/components/layout/dashboard/layout";
-import ProductForm from "@/components/molecules/forms/product-form";
-import CreateProductPrimaryButtons from "@/components/molecules/primary-buttons/creation-primary-buttons/product-create";
+import { DashboardLayout } from "@/components/layout/dashboard/layout";
+import ProductForm from "@/components/organisms/forms/product-form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,13 +10,6 @@ export const metadata: Metadata = {
 export default function ProductCreatePage() {
   return (
     <DashboardLayout>
-      <DashboardHeader>
-        <DashboardTitle
-          title="Create product"
-          enableBack
-          description="Fill the form to create your new product." />
-        <CreateProductPrimaryButtons />
-      </DashboardHeader>
       <ProductForm />
     </DashboardLayout>
   )
