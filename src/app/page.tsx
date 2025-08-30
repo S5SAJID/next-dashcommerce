@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="flex w-screen items-center flex-col space-y-1 justify-center h-screen overflow-hidden text-center">
-      <h1 className="text-7xl max-w-3xl font-light text-transparent bg-gradient-to-br from-primary to-muted-foreground bg-clip-text">
+      <h1 className="text-7xl max-w-3xl font-light">
         Simple Ecommerce with ShadCN UI.
       </h1>
       <p className="text-muted-foreground max-w-2xl">
