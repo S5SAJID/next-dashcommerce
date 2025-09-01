@@ -1,6 +1,6 @@
-# CustomEco Admin Dashboard
+# CustomEcom Admin Dashboard
 
-Hey! 👋 This is **CustomEco Admin Dashboard**, a Next.js-based ecommerce admin panel built with [shadcn/ui](https://ui.shadcn.com/) and Tailwind CSS. I made this for devs who want a clean, modern, and actually customizable dashboard for their store, without all the corporate bloat.
+Hey! 👋 This is **CustomEcom Admin Dashboard**, a Next.js-based ecommerce admin panel built with [shadcn/ui](https://ui.shadcn.com/) and Tailwind CSS. I made this for devs who want a clean, modern, and actually customizable dashboard for their store, without all the corporate bloat.
 
 ![Custom eco preview image](./public/preview.png)
 
@@ -57,11 +57,13 @@ Most dashboards out there are either too opinionated, too ugly, or too hard to c
 - `/settings` — Store/account/notification/display settings
 
 ## Screenshots
-_(Add your own screenshots here)_
+_You take some screenshots and make a PR then hahaha_
 
 ## License
 MIT. Do whatever you want. If you make something cool, let me know!
 
 ---
+
+Leave a star if it helps 😁
 
 Made by a solo [S5SAJID](https://s5sajid.github.io/) dev who just wanted a dashboard that doesn't suck. Enjoy!
