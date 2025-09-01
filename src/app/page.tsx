@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="flex w-screen items-center flex-col space-y-1 justify-center h-screen overflow-hidden text-center">
       <h1 className="text-7xl max-w-3xl font-light">
-        Simple Ecommerce with ShadCN UI.
+        Custom Ecommerce Admin with ShadCN UI.
       </h1>
       <p className="text-muted-foreground max-w-2xl">
         Ecommerce user interface with client side functionalities to some extent. <br />

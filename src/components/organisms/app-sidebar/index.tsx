@@ -36,7 +36,7 @@ const SIDEBAR_LINKS = [
   },
   {
     title: "Settings",
-    url: "/settings",
+    url: "/settings/store",
     icon: Settings
   }
 ];

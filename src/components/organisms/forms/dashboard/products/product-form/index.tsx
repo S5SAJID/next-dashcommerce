@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form";
 import { useState } from "react";
 import { toast } from "sonner";
-import CreateProductPrimaryButtons from "../../../molecules/primary-buttons/creation-primary-buttons/product-create";
+import CreateProductPrimaryButtons from "../../../../../molecules/primary-buttons/creation-primary-buttons/product-create";
 import { CheckCircle2, Loader } from "lucide-react";
 import { FormPageGridContainer, FormPageHeader, FormPageTitle } from "@/components/layout/form-page-layout/layout";
 import { ProductFormLeftSide } from "./left-side";

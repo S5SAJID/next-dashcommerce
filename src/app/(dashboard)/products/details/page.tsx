@@ -1,5 +1,5 @@
 import { FormPageLayout } from "@/components/layout/form-page-layout/layout";
-import ProductDetailsForm from "@/components/organisms/forms/product-details";
+import ProductDetailsForm from "@/components/organisms/forms/dashboard/products/product-details";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

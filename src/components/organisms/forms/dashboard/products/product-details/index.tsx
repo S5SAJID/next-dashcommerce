@@ -5,8 +5,8 @@ import { Form } from "@/components/ui/form";
 import { FormPageGridContainer, FormPageHeader, FormPageTitle } from "@/components/layout/form-page-layout/layout";
 import { product_form_schema, ProductFormType } from "../product-form/schema";
 import { Button } from "@/components/ui/button";
-import { ProductFormRightSide } from "@/components/organisms/forms/product-form/right-side";
-import { ProductFormLeftSide } from "@/components/organisms/forms/product-form/left-side";
+import { ProductFormRightSide } from "@/components/organisms/forms/dashboard/products/product-form/right-side";
+import { ProductFormLeftSide } from "@/components/organisms/forms/dashboard/products/product-form/left-side";
 
 const DEMO_PRODUCT: ProductFormType = {
   name: "Classic men jeans",
