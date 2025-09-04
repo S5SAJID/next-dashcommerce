@@ -32,8 +32,9 @@ export default function StoreFrontNavbar() {
           <Button size="icon" variant="outline">
             <User />
           </Button>
-          <Button size="icon" variant="outline">
+          <Button size="icon" variant="outline" className="relative">
             <ShoppingCart />
+            {/* <div className="absolute -top-[0.2rem] -right-[0.2rem] size-2 rounded-full bg-blue-500 dark:bg-blue-400"></div> */}
           </Button>
         </div>
       </div>

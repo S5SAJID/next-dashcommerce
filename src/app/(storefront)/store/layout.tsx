@@ -1,5 +1,13 @@
 import StoreFrontFooter from "@/components/storefront/organisms/footer";
 import StoreFrontNavbar from "@/components/storefront/organisms/navbar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Acme Store',
+    default: 'Acme Store | Premium daily products',
+  },
+}
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

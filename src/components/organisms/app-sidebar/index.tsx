@@ -11,14 +11,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {ShoppingBag, Inbox, Users, Settings} from "lucide-react"
+import {ShoppingBag, Inbox, Users, Settings, LucideIcon} from "lucide-react"
 import { NavUser } from "./nav-user";
 import { usePathname } from "next/navigation";
 import { isActivePath } from "@/lib/utils";
 import Link from "next/link";
 
+type SidebarLinkType = {
+  title: string,
+  url: string,
+  icon: LucideIcon,
+}
+
 // Menu items.
-const SIDEBAR_LINKS = [
+const SIDEBAR_LINKS: SidebarLinkType[] = [
   {
     title: "Products",
     url: "/products",

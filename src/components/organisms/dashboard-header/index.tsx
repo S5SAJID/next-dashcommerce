@@ -1,7 +1,10 @@
 import { BreadcrumbNavigation } from "@/components/molecules/bread-crumb-navigation";
 import { ThemeSwitch } from "@/components/molecules/theme-switch";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import { Store } from "lucide-react";
+import Link from "next/link";
 
 
 export function SiteHeader() {
@@ -15,6 +18,12 @@ export function SiteHeader() {
         />
         <BreadcrumbNavigation />
         <div className="ml-auto flex items-center gap-2">
+          <Button asChild variant="ghost" size="icon">
+            <Link href="/store" target="_blank" prefetch={false}>
+              <Store />
+              <span className="sr-only">Open Store</span>
+            </Link>
+          </Button>
           <ThemeSwitch />
         </div>
       </div>

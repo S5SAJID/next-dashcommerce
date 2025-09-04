@@ -13,7 +13,7 @@ export function isActivePath(itemUrl: string, pathname: string) {
 
 type formatePriceParams = {
   price: string | number,
-  locale: Intl.LocalesArgument,
+  locale?: Intl.LocalesArgument,
 }
 
 export function formatPrice({ locale = "en-US", price }: formatePriceParams) {
