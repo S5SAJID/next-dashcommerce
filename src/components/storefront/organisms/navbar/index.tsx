@@ -4,6 +4,7 @@ import { ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 
 const links = [
+  { title: "All", href: "/store/products" },
   { title: "Digital", href: "/category/digital" },
   { title: "Beauty", href: "/category/beauty" },
   { title: "Apparel", href: "/category/apparel" },
