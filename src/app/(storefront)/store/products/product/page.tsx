@@ -3,9 +3,14 @@ import StoreFrondProductImagePreview from "@/components/storefront/organisms/pro
 import StoreFrontProductList from "@/components/storefront/organisms/products/product-list";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
+import { Metadata } from "next";
 
 // demo product
 const product = products[0]
+
+export const metadata: Metadata = {
+  title: product.name
+}
 
 export default function ProductPage() {
   return (
@@ -28,6 +33,8 @@ export default function ProductPage() {
           <Button className="mt-8 rounded-full" size="lg">Add to cart</Button>
         </div>
       </section>
+
+      
       <div className="my-16"/>
       <div className="space-y-8">
         <h3 className="text-2xl">You May Also Like</h3>

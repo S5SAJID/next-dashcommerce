@@ -9,7 +9,7 @@ export default function StoreFrontProductCard({ product }: { product: Product })
   return (
     <Card className="bg-none p-0 gap-0 text-card-foreground overflow-hidden border-none shadow-none">
       <CardHeader className="p-0 group relative overflow-hidden gap-0">
-        <Link href={`#${product.name}`} className="group-hover:opacity-75">
+        <Link href={`/store/products/product#${product.name}`} className="group-hover:opacity-75">
           <Image
             width={450}
             height={450}
