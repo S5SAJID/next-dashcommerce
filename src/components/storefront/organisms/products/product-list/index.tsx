@@ -1,4 +1,4 @@
-import { Product } from "@/components/organisms/tables/products-table/data"
+import { Product } from "@/lib/demoData";
 import StoreFrontProductCard from "./product-card";
 
 type StoreFrontProductListProps = {

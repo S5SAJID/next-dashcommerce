@@ -1,12 +1,12 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Product } from "./data";
 import { Badge } from "@/components/ui/badge";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Product } from "@/lib/demoData";
 
 export const product_columns: ColumnDef<Product>[] = [
   {
@@ -16,24 +16,24 @@ export const product_columns: ColumnDef<Product>[] = [
       return (
         <div className="space-x-4 flex items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={row.original.img} alt={row.getValue("name")} className="h-8 w-8 rounded-md" />
+          <img src={row.original.images[0]} alt={row.getValue("name")} className="h-8 w-8 rounded-md" />
           <Link href={`products/details`} className="hover:underline">{row.getValue("name")}</Link>
         </div>
       );
     }
   },
   {
-    accessorKey: "collection",
-    header: "Collection",
+    accessorKey: "category",
+    header: "Category",
     cell: ({ row }) => {
       const data = row.original;
-      if (!data.collections) {
-        return <span className="text-muted-foreground">No collection</span>;
+      if (!data.category) {
+        return <span className="text-muted-foreground">No category</span>;
       }
 
       return (
-        <Link href={`#${data.collections[0]}`} className="capitalize hover:underline">
-          {data.collections[0]}
+        <Link href={`#${data.category}`} className="capitalize hover:underline">
+          {data.category}
         </Link>
       );
     }
@@ -73,6 +73,11 @@ export const product_columns: ColumnDef<Product>[] = [
 
       return <div className="text-right font-medium">{formatted}</div>
     }
+  },
+  {
+    accessorKey: "stock",
+    header: () => <span className="block text-right">Stock</span>,
+    cell: ({row}) => <span className="text-right block">{row.getValue("stock")}</span>,
   },
   {
     id: "actions",

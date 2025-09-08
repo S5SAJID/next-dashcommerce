@@ -21,13 +21,14 @@ export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
   className,
-}: DataTableColumnHeaderProps<TData, TValue>) {
+  rightAligned=false,
+}: DataTableColumnHeaderProps<TData, TValue> & {rightAligned?: boolean}) {
   if (!column.getCanSort()) {
     return <div className={cn(className)}>{title}</div>
   }
 
   return (
-    <div className={cn("flex items-center gap-2", className)}>
+    <div className={cn("flex items-center gap-2",  className)}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -35,7 +36,7 @@ export function DataTableColumnHeader<TData, TValue>({
             size="sm"
             className="data-[state=open]:bg-accent -ml-3 h-8"
           >
-            <span>{title}</span>
+            <span className={rightAligned ? "text-right": undefined}>{title}</span>
             {column.getIsSorted() === "desc" ? (
               <ArrowDown />
             ) : column.getIsSorted() === "asc" ? (

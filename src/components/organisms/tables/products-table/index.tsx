@@ -1,8 +1,8 @@
 "use client";
 import DataTable from "@/components/molecules/data-table";
-import { products } from "./data";
 import { product_columns } from "./columns";
 import { DataTableToolbarFilters } from "@/components/molecules/data-table/data-table-toolbar";
+import { DEMO_PRODUCTS } from "@/lib/demoData";
 
 
 export default function ProductsTable() {
@@ -25,7 +25,7 @@ export default function ProductsTable() {
           searchPlaceholder: "Filter products...",
           filters: filters,
         }}
-        data={products}
+        data={DEMO_PRODUCTS.map(e => ({status: "active", ...e}))}
       />
     </div>
   )

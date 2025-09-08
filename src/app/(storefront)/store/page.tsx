@@ -1,6 +1,6 @@
-import { products } from "@/components/organisms/tables/products-table/data";
 import StoreFrontHero from "@/components/storefront/organisms/hero";
 import StoreFrontProductList from "@/components/storefront/organisms/products/product-list";
+import { DEMO_PRODUCTS } from "@/lib/demoData";
 
 // TODO: add dummy products
 
@@ -21,7 +21,7 @@ export default function StoreFrontPage() {
         }}
       />
 
-      <StoreFrontProductList products={products}/>
+      <StoreFrontProductList products={DEMO_PRODUCTS.slice(0,9)}/>
     </main>
   );
 }
