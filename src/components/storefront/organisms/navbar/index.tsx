@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
+import StoreFrontNavbarCartButton from "./cart-button";
+import { User } from "lucide-react";
 
 const links = [
   { title: "All", href: "/store/products" },
@@ -33,10 +34,7 @@ export default function StoreFrontNavbar() {
           <Button size="icon" variant="outline">
             <User />
           </Button>
-          <Button size="icon" variant="outline" className="relative">
-            <ShoppingCart />
-            {/* <div className="absolute -top-[0.2rem] -right-[0.2rem] size-2 rounded-full bg-blue-500 dark:bg-blue-400"></div> */}
-          </Button>
+          <StoreFrontNavbarCartButton />
         </div>
       </div>
     </nav>

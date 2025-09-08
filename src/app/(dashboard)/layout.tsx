@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     template: '%s | Custom Eco', // %s will be replaced by the child page's title
     default: 'Custom Eco', // Fallback title for pages without a specific title
   },
+  icons: [
+    {
+      url: "/favico.svg"
+    }
+  ]
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

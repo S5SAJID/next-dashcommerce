@@ -16,6 +16,8 @@ import { NavUser } from "./nav-user";
 import { usePathname } from "next/navigation";
 import { isActivePath } from "@/lib/utils";
 import Link from "next/link";
+import Logo from "../../../../public/favico.svg"
+import Image from "next/image";
 
 type SidebarLinkType = {
   title: string,
@@ -66,9 +68,10 @@ export default function AppSidebar() {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#">
+              <Link href="/products">
+                <Image src={Logo} className="size-6" alt="Acme inc logo" />
                 <span className="text-base font-semibold">Acme Inc.</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

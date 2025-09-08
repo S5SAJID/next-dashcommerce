@@ -8,13 +8,18 @@ export const metadata: Metadata = {
     template: '%s | Acme Store',
     default: 'Acme Store | Premium daily products',
   },
+  icons: [
+    {
+      url: "/store-favico.svg"
+    }
+  ]
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ fontFamily: "PP Mori" }}>
-      <StoreFrontNavbar />
       <StoreFrontProviders>
+      <StoreFrontNavbar />
         <main className="mx-auto w-full max-w-7xl px-4 pb-6 pt-2 sm:px-6 lg:px-8">
           {children}
         </main>

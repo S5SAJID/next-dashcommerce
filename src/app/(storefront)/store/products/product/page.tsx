@@ -1,7 +1,7 @@
 import { products } from "@/components/organisms/tables/products-table/data"
+import StoreFrontAddToCart from "@/components/storefront/molecules/add-to-cart";
 import StoreFrondProductImagePreview from "@/components/storefront/organisms/products/img-preview";
 import StoreFrontProductList from "@/components/storefront/organisms/products/product-list";
-import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import { Metadata } from "next";
 
@@ -30,7 +30,7 @@ export default function ProductPage() {
           <p className="mt-8 text-muted-foreground">
             Ocean Bloom captures the spirit of coastal escapes — a wave-blue silhouette paired with sun-washed handles that feel straight out of a Mediterranean summer. Structured yet soft, it’s the kind of bag that moves effortlessly from city strolls to seaside aperitifs. Salt in the air; style in the details.
           </p>
-          <Button className="mt-8 rounded-full" size="lg">Add to cart</Button>
+          <StoreFrontAddToCart className="mt-8 rounded-full w-full" />
         </div>
       </section>
 
