@@ -9,7 +9,7 @@ export default function StoreFrontProductCard({ product }: { product: Product })
   return (
     <Card className="bg-none p-0 gap-0 text-card-foreground overflow-hidden border-none shadow-none">
       <CardHeader className="p-0 group relative overflow-hidden gap-0">
-        <Link href={`/store/products/${product.slug}`} className="group-hover:opacity-75">
+        <Link href={`/products/${product.slug}`} className="group-hover:opacity-75">
           <Image
             width={450}
             height={450}
@@ -30,7 +30,7 @@ export default function StoreFrontProductCard({ product }: { product: Product })
         </div>
       </CardHeader>
       <CardContent className="p-3 space-y-1 flex flex-col text-left">
-        <Link href={`#${product.name}`} className="text-sm hover:underline text-primary/90">{product.name}</Link>
+        <Link href={`/products/${product.slug}`} className="text-sm hover:underline text-primary/90">{product.name}</Link>
         <p className="text-sm">{formatPrice({ locale: "en-US", price: product.price })}</p>
       </CardContent>
     </Card>
