@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Product } from "@/lib/demoData";
+import { ProductTable } from "@/db/schema";
 import { formatPrice } from "@/lib/utils";
+import { InferSelectModel } from "drizzle-orm";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function StoreFrontProductCard({ product }: { product: Product }) {
+export default function StoreFrontProductCard({ product }: { product: InferSelectModel<typeof ProductTable> }) {
   return (
     <Card className="bg-none p-0 gap-0 text-card-foreground overflow-hidden border-none shadow-none">
       <CardHeader className="p-0 group relative overflow-hidden gap-0">
@@ -16,13 +17,13 @@ export default function StoreFrontProductCard({ product }: { product: Product })
             alt={`${product.name} preview image`}
             className={`h-full bg-muted ${product.images.length > 1 ? "group-hover:hidden" : ""} w-full object-cover rounded-xl`}
             src={product.images[0]} />
-          {product.images[1] ? (
+          {product.images.length > 1 ? (
             <Image
               width={450}
               height={450}
               alt={`${product.name} preview image`}
-              className="h-full hidden group-hover:block w-full object-cover rounded-xl"
-              src={product.images[0]} />
+              className="h-full bg-muted hidden group-hover:block w-full object-cover rounded-xl"
+              src={product.images[1]} />
           ) : null}
         </Link>
         <div className="absolute -bottom-14 z-10 transition-[opacity_transform] backdrop-blur-sm duration-300 opacity-0 group-hover:opacity-100 group-hover:bottom-0 right-0 left-0 p-2 rounded-b-lg bg-muted-foreground/10">

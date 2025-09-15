@@ -1,7 +1,7 @@
 import StoreFrontHero from "@/components/storefront/organisms/hero";
 import StoreFrontProductList from "@/components/storefront/organisms/products/product-list";
+import { getPublicStorefrontProducts } from "@/db/actions/storefront/products/public/actionts";
 import { getPublicStoreFront } from "@/db/actions/storefront/store/public/actionts";
-import { DEMO_PRODUCTS } from "@/lib/demoData";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -11,6 +11,9 @@ type Props = {
 export default async function StoreFrontPage({ params }: Props) {
   const storeSlug = (await params).store_slug;
   const store = await getPublicStoreFront(storeSlug);
+  
+  const products = await getPublicStorefrontProducts(storeSlug);
+
   if (!store) return notFound();
   return (
     <main className="space-y-4">
@@ -28,7 +31,7 @@ export default async function StoreFrontPage({ params }: Props) {
         }}
       />
 
-      <StoreFrontProductList products={DEMO_PRODUCTS.slice(0, 9)} />
+      <StoreFrontProductList products={products.slice(0,11)} />
     </main>
   );
 }

@@ -1,5 +1,5 @@
 import StoreFrontProductList from "@/components/storefront/organisms/products/product-list";
-import { DEMO_PRODUCTS } from "@/lib/demoData";
+import { getPublicStorefrontProducts } from "@/db/actions/storefront/products/public/actionts";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,10 +7,16 @@ export const metadata: Metadata = {
   description: "Explore all products."
 }
 
-export default function ProductsPage() {
+type Props = {
+  params: Promise<{ store_slug: string }>
+}
+
+export default async function ProductsPage({ params }: Props) {
+  const storeSlug = (await params).store_slug;
+  const products = await getPublicStorefrontProducts(storeSlug);
   return (
     <div>
-      <StoreFrontProductList products={DEMO_PRODUCTS}/>
+      <StoreFrontProductList products={products} />
     </div>
   )
 }

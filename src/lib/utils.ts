@@ -29,3 +29,13 @@ export function extractCountryCode(phone: string) {
   const match = phone.match(/^\s*(\+\d{1,3})/);
   return match ? match[1] : null;
 }
+
+export function shuffleArray<T>(array: T[]): T[] {
+  for (let i = array.length - 1; i > 0; i--) {
+    // Generate a random index from 0 to i
+    const j = Math.floor(Math.random() * (i + 1));
+    // Swap elements array[i] and array[j]
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}

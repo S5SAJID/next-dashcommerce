@@ -1,20 +1,28 @@
 import StoreFrontAddToCart from "@/components/storefront/molecules/add-to-cart";
 import StoreFrondProductImagePreview from "@/components/storefront/organisms/products/img-preview";
 import StoreFrontProductList from "@/components/storefront/organisms/products/product-list";
-import { DEMO_PRODUCTS } from "@/lib/demoData";
-import { formatPrice } from "@/lib/utils";
+import { getPublicStorefrontProduct, getPublicStorefrontProducts } from "@/db/actions/storefront/products/public/actionts";
+import { formatPrice, shuffleArray } from "@/lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-export function generateMetadata(): Metadata {
-  const product = DEMO_PRODUCTS[0]
-  return { title: product.name, description: product.description }
+type Props = {
+  params: Promise<{ store_slug: string, slug: string }>,
 }
 
-export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
-  const slug = (await params).slug;
-  // demo product
-  const product = DEMO_PRODUCTS.filter(e => e.slug==slug)[0];
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const awaitedParams = await params;
+  const product = await getPublicStorefrontProduct(awaitedParams.store_slug, awaitedParams.slug);
+
+  if (!product) return notFound();
+
+  return { title: product.name, description: product.description, }
+}
+
+export default async function ProductPage({ params }: Props) {
+  const awaitedParams = await params;
+  const product = await getPublicStorefrontProduct(awaitedParams.store_slug, awaitedParams.slug);
+  const recommendedProducts = await getPublicStorefrontProducts(awaitedParams.store_slug);
 
   // if not found return notfound page
   if (!product) notFound();
@@ -41,7 +49,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <div className="my-16" />
       <div className="space-y-8">
         <h3 className="text-2xl">You May Also Like</h3>
-        <StoreFrontProductList products={DEMO_PRODUCTS.slice(0, 4)} dense />
+        <StoreFrontProductList products={shuffleArray(recommendedProducts).slice(0,4)} dense />
       </div>
     </>
   )

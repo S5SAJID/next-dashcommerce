@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import StoreFrontNavbarCartButton from "./cart-button";
 import { User } from "lucide-react";
-import { StoreTable } from "@/db/schema/schema"
+import { StoreTable } from "@/db/schema"
 
 
 export default function StoreFrontNavbar({ store }: { store: typeof StoreTable.$inferSelect }) {
@@ -31,7 +31,9 @@ export default function StoreFrontNavbar({ store }: { store: typeof StoreTable.$
         </div>
         {/* Right side */}
         <div className="flex gap-2">
-          <Input type="search" placeholder="Search for products..." className="hidden md:block" />
+          <form action="/search">
+            <Input name="q" type="search" placeholder="Search for products..." className="hidden md:block" />
+          </form>
           <Button size="icon" variant="outline">
             <User />
           </Button>

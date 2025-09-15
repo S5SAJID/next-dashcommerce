@@ -1,8 +1,10 @@
-import { Product } from "@/lib/demoData";
 import StoreFrontProductCard from "./product-card";
+import { InferSelectModel } from "drizzle-orm";
+import { ProductTable } from "@/db/schema";
+import { ProductWithStore } from "@/db/actions/storefront/products/public/types";
 
 type StoreFrontProductListProps = {
-  products: Product[],
+  products: InferSelectModel<typeof ProductTable>[] | ProductWithStore[],
   dense?: boolean
 }
 

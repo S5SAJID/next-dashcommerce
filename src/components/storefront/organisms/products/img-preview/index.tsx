@@ -1,10 +1,10 @@
 "use client";
 
-import { Product } from "@/lib/demoData";
+import { ProductWithStore } from "@/db/actions/storefront/products/public/types";
 import Image from "next/image";
 import { useState } from "react";
 
-export default function StoreFrondProductImagePreview({ product }: { product: Product }) {
+export default function StoreFrondProductImagePreview({ product }: { product: ProductWithStore}) {
   const [selectedImg, setSelectedImg] = useState(product.images[0]);
 
   return (
