@@ -6,50 +6,37 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Product } from "@/lib/demoData";
+import { DashboardProduct } from "@/db/actions/dashboard/products/types";
+import Image from "next/image";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { updateDashboardProduct } from "@/db/actions/dashboard/products/actions";
+import { dashboardQueryClient } from "@/lib/dashboardQueryClient";
 
-export const product_columns: ColumnDef<Product>[] = [
+export const product_columns: ColumnDef<DashboardProduct >[] = [
   {
     accessorKey: "name",
     header: "Product Name",
     cell: ({ row }) => {
       return (
         <div className="space-x-4 flex items-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={row.original.images[0]} alt={row.getValue("name")} className="h-8 w-8 bg-muted rounded-md" />
+          <Image width={50} height={50} src={row.original.images[0]} alt={row.getValue("name")} className="h-8 w-8 bg-muted rounded-md" />
           <Link href={`products/details`} className="hover:underline">{row.getValue("name")}</Link>
         </div>
       );
     }
   },
-  {
-    accessorKey: "category",
-    header: "Category",
-    cell: ({ row }) => {
-      const data = row.original;
-      if (!data.category) {
-        return <span className="text-muted-foreground">No category</span>;
-      }
 
-      return (
-        <Link href={`#${data.category}`} className="capitalize hover:underline">
-          {data.category}
-        </Link>
-      );
-    }
-  },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      const value = row.getValue("status");
-      const isActive = value === "active";
-      const badgeVariant = isActive ? "secondary" : "outline";
+      const isPublished = row.original.is_published;
+      const badgeVariant = isPublished ? "secondary" : "outline";
 
       return (
         <Badge variant={badgeVariant}>
-          {isActive && <div className="bg-green-500 size-1 rounded-full dark:bg-green-400" />}
-          <span>{row.getValue("status")}</span>
+          {isPublished && <div className="bg-green-500 size-1 rounded-full dark:bg-green-400" />}
+          <span>{isPublished ? "Published" : "Draft"}</span>
         </Badge>
       );
     }
@@ -101,7 +88,7 @@ export const product_columns: ColumnDef<Product>[] = [
                 Copy product name
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>View customer</DropdownMenuItem>
+              <DropdownMenuItem>{product.is_published? "Change to draft" : "Change to published"}</DropdownMenuItem>
               <DropdownMenuItem>View product details</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

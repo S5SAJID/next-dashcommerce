@@ -2,7 +2,8 @@
 import DataTable from "@/components/molecules/data-table";
 import { product_columns } from "./columns";
 import { DataTableToolbarFilters } from "@/components/molecules/data-table/data-table-toolbar";
-import { DEMO_PRODUCTS } from "@/lib/demoData";
+import { useQuery } from "@tanstack/react-query";
+import { getDashboardProducts } from "@/db/actions/dashboard/products/actions";
 
 
 export default function ProductsTable() {
@@ -16,6 +17,18 @@ export default function ProductsTable() {
       ],
     },
   ];
+
+  const productsQuery = useQuery({
+    queryKey: ["products"],
+    queryFn: () => getDashboardProducts(),
+  })
+
+  if (productsQuery.isError) {
+    return <div className="w-full rounded border flex items-center justify-center h-[60vh]">
+      <pre className="text-destructive">{productsQuery.error.name}</pre>
+    </div>
+  }
+
   return (
     <div>
       <DataTable
@@ -25,7 +38,8 @@ export default function ProductsTable() {
           searchPlaceholder: "Filter products...",
           filters: filters,
         }}
-        data={DEMO_PRODUCTS.map(e => ({status: "active", ...e}))}
+        data={productsQuery.data}
+        isLoading={productsQuery.isLoading}
       />
     </div>
   )

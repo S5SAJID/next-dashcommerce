@@ -1,27 +1,45 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from "@tanstack/react-table"
 import { DataTablePagination } from "./data-table-pagination"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { DataTableToolbar, DataTableToolbarFilters } from "./data-table-toolbar"
+import { Skeleton } from "@/components/ui/skeleton"
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[],
-  data: TData[],
+  data?: TData[],
   toolbar: {
     searchColumn: string,
     searchPlaceholder: string,
     filters?: DataTableToolbarFilters[],
-  }
+  },
+  isLoading?: boolean
 }
 
-export default function DataTable<TData, TValue>({ columns, data, toolbar }: DataTableProps<TData, TValue>) {
+export default function DataTable<TData, TValue>({ columns, data=[], toolbar, isLoading = false }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
 
-  const table = useReactTable({
-    data,
-    columns,
+  const tableData: typeof data = useMemo(
+    () => (isLoading ? Array(30).fill({}) : data),
+    [isLoading, data]
+  );
+
+  const tableColumns = useMemo(
+    () =>
+      isLoading
+        ? columns.map((column) => ({
+            ...column,
+            cell: () => <Skeleton className="h-6" />,
+          }))
+        : columns,
+    [isLoading, columns]
+  );
+
+  const table = useReactTable<TData>({
+    data: tableData,
+    columns: tableColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
