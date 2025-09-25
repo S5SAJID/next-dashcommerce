@@ -8,9 +8,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { DashboardProduct } from "@/db/actions/dashboard/products/types";
 import Image from "next/image";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { updateDashboardProduct } from "@/db/actions/dashboard/products/actions";
-import { dashboardQueryClient } from "@/lib/dashboardQueryClient";
 
 export const product_columns: ColumnDef<DashboardProduct >[] = [
   {

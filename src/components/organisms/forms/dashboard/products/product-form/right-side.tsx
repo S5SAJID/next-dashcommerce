@@ -3,9 +3,9 @@ import { ProductFormType } from "./schema";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FormPageGridSecondary } from "@/components/layout/form-page-layout/layout";
 import { UseFormReturn } from "react-hook-form";
+import { Switch } from "@/components/ui/switch";
 
 type ProductFormRightSideProps = {
   form: UseFormReturn<ProductFormType>
@@ -28,19 +28,19 @@ export function ProductFormRightSide({ form }: ProductFormRightSideProps) {
                 <Input
                   placeholder="400"
                   type="number"
-                  {...form.register("price", { valueAsNumber: true })} />
+                  {...form.register("price", { setValueAs: (v) => (v === "" ? undefined : parseFloat(v)) })} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )} />
         <FormField
           control={form.control}
-          name="compare_at_price"
+          name="compare_at"
           render={() => (
             <FormItem>
               <FormLabel>Compare at price</FormLabel>
               <FormControl>
-                <Input placeholder="300" {...form.register("compare_at_price", { valueAsNumber: true })} />
+                <Input placeholder="300" {...form.register("compare_at", { setValueAs: (v) => (v === "" ? undefined : parseFloat(v)) })} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -54,19 +54,19 @@ export function ProductFormRightSide({ form }: ProductFormRightSideProps) {
     <CardContent className="flex gap-4">
       <FormField
         control={form.control}
-        name="stock_quantity"
+        name="stock"
         render={() => (
           <FormItem>
             <FormLabel>Stock Quantity</FormLabel>
             <FormControl>
-              <Input placeholder="50" {...form.register("stock_quantity", { valueAsNumber: true })} />
+              <Input placeholder="50" {...form.register("stock", { setValueAs: (v) => (v === "" ? undefined : parseFloat(v)) })} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )} />
       <FormField
         control={form.control}
-        name="sku_code"
+        name="sku"
         render={({ field }) => (
           <FormItem>
             <FormLabel>SKU</FormLabel>
@@ -84,44 +84,14 @@ export function ProductFormRightSide({ form }: ProductFormRightSideProps) {
     <CardContent className="flex space-x-4">
       <FormField
         control={form.control}
-        name="status"
+        name="is_published"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Status</FormLabel>
             <FormControl>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Product status" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="inactive">Inactive</SelectItem>
-                </SelectContent>
-              </Select>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )} />
-      <FormField
-        control={form.control}
-        name="category"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Category</FormLabel>
-            <FormControl>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a category" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="electronics">Electronics</SelectItem>
-                  <SelectItem value="Beauty">Beauty</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="flex items-center space-x-2">
+                <Switch checked={field.value} onCheckedChange={field.onChange}/>
+                <FormLabel htmlFor="airplane-mode">Publish</FormLabel>
+              </div>
             </FormControl>
             <FormMessage />
           </FormItem>

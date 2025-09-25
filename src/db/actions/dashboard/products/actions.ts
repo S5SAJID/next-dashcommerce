@@ -3,15 +3,40 @@
 import { db } from "@/db/db";
 import { DashboardProduct } from "./types";
 import { ProductTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
+import { product_form_schema, ProductFormType } from "@/components/organisms/forms/dashboard/products/product-form/schema";
+import z from "zod";
+import { uploadDashboardFiles } from "../common/actions";
 
 export async function getDashboardProducts() {
   // TODO: Make it use to get specific user based products
-  const results = await db.query.ProductTable.findMany()
+  const results = await db.query.ProductTable.findMany({
+    orderBy: [desc(ProductTable.updated_at)]
+  })
   return results
 }
 
-export async function updateDashboardProduct(data:DashboardProduct) {
-  const results = await db.update(ProductTable).set(data).where(eq(ProductTable.id, data.id)).returning({id: ProductTable.id})
+export async function updateDashboardProduct(data: DashboardProduct) {
+  const results = await db.update(ProductTable).set(data).where(eq(ProductTable.id, data.id)).returning({ id: ProductTable.id })
   return results[0]
+}
+
+export async function createDashboardProduct(data: ProductFormType) {
+  const parsedData = z.safeParse(product_form_schema, data)
+
+  if (!parsedData.success) return { success: false, error: parsedData.error.message };
+
+  // TODO: implement image uploader. Currently saving to local harddisk
+  const images = await uploadDashboardFiles(parsedData.data.images);
+
+  const product = await db.insert(ProductTable).values({
+    ...parsedData.data,
+    images: images,
+    // TODO: Remove the hardcoded value
+    store_id: "a66ba6dc-e9a5-4d17-a2fb-50c85c504f37",
+  }).returning({ id: ProductTable.id })
+
+  if (!product[0].id) return { success: false, error: "Product not created." }
+
+  return { success: true, message: "Product created" }
 }

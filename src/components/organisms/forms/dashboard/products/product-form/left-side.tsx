@@ -7,14 +7,24 @@ import { Separator } from "@/components/ui/separator";
 import { ImageUploader } from "@/components/organisms/image-uploader";
 import { FormPageGridPrimary } from "@/components/layout/form-page-layout/layout";
 import { UseFormReturn } from "react-hook-form";
+import { useEffect } from "react";
+import slugify from "slugify"
 
 type ProductFormLeftSideProps = {
   form: UseFormReturn<ProductFormType>,
-  images: File[],
-  handleImagesChange: (newImages: File[]) => void
 }
 
-export function ProductFormLeftSide({ form, images, handleImagesChange }: ProductFormLeftSideProps) {
+export function ProductFormLeftSide({ form }: ProductFormLeftSideProps) {
+  const { watch, setValue } = form;
+  const name = watch("name");
+
+  useEffect(() => {
+    if (name) {
+      const generatedSlug = slugify(name, { lower: true, strict: true })
+      setValue("slug", generatedSlug);
+    }
+  }, [name, setValue])
+
   return (
     <FormPageGridPrimary>
       <CardHeader>
@@ -43,7 +53,7 @@ export function ProductFormLeftSide({ form, images, handleImagesChange }: Produc
               <FormItem>
                 <FormLabel>Slug</FormLabel>
                 <FormControl>
-                  <Input placeholder="classic-t-shirt" {...field} />
+                  <Input readOnly placeholder="classic-t-shirt" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -72,9 +82,18 @@ export function ProductFormLeftSide({ form, images, handleImagesChange }: Produc
         <CardTitle>Product Images</CardTitle>
       </CardHeader>
       <CardContent>
-        <ImageUploader
-          images={images}
-          onImagesChange={handleImagesChange} />
+        <FormField
+          control={form.control}
+          name="images"
+          render={({ field }) => (
+            <FormItem>
+              <ImageUploader
+                images={field.value}
+                onImagesChange={field.onChange} />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </CardContent>
     </FormPageGridPrimary>
   );
