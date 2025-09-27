@@ -21,6 +21,17 @@ export async function updateDashboardProduct(data: DashboardProduct) {
   return results[0]
 }
 
+export async function deleteDashboardProduct(id: string) {
+  try {
+    // TODO: add store id as filter
+    await db.delete(ProductTable).where(eq(ProductTable.id, id));
+    return { success: true, message: "Product deleted successfully" }
+  } catch (error: unknown) {
+    console.log({type: "Product Delete", error})
+    return { success: false, error: "Error deleting product" }   
+  }
+}
+
 export async function createDashboardProduct(data: ProductFormType) {
   const parsedData = z.safeParse(product_form_schema, data)
 

@@ -2,12 +2,12 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { DashboardProduct } from "@/db/actions/dashboard/products/types";
 import Image from "next/image";
+import ProductTableRowActions from "./row-actions";
 
 export const product_columns: ColumnDef<DashboardProduct >[] = [
   {
@@ -22,7 +22,6 @@ export const product_columns: ColumnDef<DashboardProduct >[] = [
       );
     }
   },
-
   {
     accessorKey: "status",
     header: "Status",
@@ -65,33 +64,7 @@ export const product_columns: ColumnDef<DashboardProduct >[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      const product = row.original
-
-      return (
-        <div className="flex justify-end">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(product.name)}
-              >
-                Copy product name
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>{product.is_published? "Change to draft" : "Change to published"}</DropdownMenuItem>
-              <DropdownMenuItem>View product details</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      )
-    },
+    cell: ({ row }) => <ProductTableRowActions product={row.original}/>,
   },
 
 ]
