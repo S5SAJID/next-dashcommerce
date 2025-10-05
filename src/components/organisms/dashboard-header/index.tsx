@@ -22,7 +22,7 @@ export function SiteHeader() {
           <Tooltip>
             <TooltipTrigger>
               <Button asChild variant="ghost" size="icon">
-                <Link href="/store" target="_blank" prefetch={false}>
+                <Link href="http://acme.localhost:3000" target="_blank" prefetch={false}>
                   <Store />
                 </Link>
               </Button>

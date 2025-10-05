@@ -44,7 +44,7 @@ const SIDEBAR_LINKS: SidebarLinkType[] = [
   },
   {
     title: "Settings",
-    url: "/settings/store",
+    url: "/settings/general",
     icon: Settings
   }
 ];

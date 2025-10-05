@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { db } from "@/db/db";
 import { ProductTable, StoreTable } from "@/db/schema";
 import { DEMO_PRODUCTS } from "@/lib/demoData";

@@ -1,28 +1,18 @@
 import { DashboardLayout } from "@/components/layout/dashboard/layout";
 import SettingsSidebar from "@/components/organisms/app-sidebar/settings-sidebar";
 import { Separator } from "@/components/ui/separator";
-import { Bell, Monitor, Store, Wrench } from 'lucide-react'
+import { Store, Layout } from 'lucide-react'
 
 const settingsSidebarNavItems = [
   {
-    title: 'Store',
-    href: '/settings/store',
+    title: 'General',
+    href: '/settings/general',
     icon: <Store size={18} />,
   },
   {
-    title: 'Account',
-    href: '/settings/account',
-    icon: <Wrench size={18} />,
-  },
-  {
-    title: 'Notifications',
-    href: '/settings/notifications',
-    icon: <Bell size={18} />,
-  },
-  {
-    title: 'Display',
-    href: '/settings/display',
-    icon: <Monitor size={18} />,
+    title: 'Layout',
+    href: '/settings/layout',
+    icon: <Layout size={18} />,
   },
 ]
 
