@@ -1,18 +1,24 @@
 "use client"
 
 import type React from "react"
-
 import { useCallback, useRef, useState } from "react"
 import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
-
 import { Upload } from "lucide-react"
 import { ImageUploadItem } from "@/components/molecules/image-upload-item"
 import { toast } from "sonner"
 
+// Define a union type for images, allowing either a File object or a string URL
+export type ImageSource = File | string
+
+// Type guard to check if an item is a File object
+const isFile = (item: ImageSource): item is File => {
+  return typeof item !== "string"
+}
+
 export interface ImageUploaderProps {
-  images: File[]
-  onImagesChange: (images: File[]) => void
+  images: ImageSource[]
+  onImagesChange: (images: ImageSource[]) => void
   maxImages?: number
   maxFileSize?: number // in bytes
   acceptedTypes?: string[]
@@ -30,6 +36,9 @@ export function ImageUploader({
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // ... (rest of the logic, unchanged)
+  // [handleFileSelect, handleDragStart, handleDragOver, handleDragLeave, handleDrop, handleRemoveImage, handleAddImageClick, validateFile, canAddMore]
 
   const validateFile = useCallback(
     (file: File): string | null => {
@@ -139,21 +148,26 @@ export function ImageUploader({
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {images.map((image, index) => (
-          <ImageUploadItem
-            key={`${image.name}-${index}`}
-            image={image}
-            index={index}
-            isMain={index === 0}
-            isDragging={draggedIndex === index}
-            isDragOver={dragOverIndex === index}
-            onDragStart={() => handleDragStart(index)}
-            onDragOver={(e) => handleDragOver(e, index)}
-            onDragLeave={handleDragLeave}
-            onDrop={(e) => handleDrop(e, index)}
-            onRemove={() => handleRemoveImage(index)}
-          />
-        ))}
+        {images.map((image, index) => {
+          // Pass the image object directly, and the temporary URL for preview.
+          const imagePreviewUrl = isFile(image) ? URL.createObjectURL(image) : image
+          return (
+            <ImageUploadItem
+              key={imagePreviewUrl}
+              imageSource={image} // Pass the original object (File or string)
+              imagePreviewUrl={imagePreviewUrl} // Pass the URL for the preview
+              index={index}
+              isMain={index === 0}
+              isDragging={draggedIndex === index}
+              isDragOver={dragOverIndex === index}
+              onDragStart={() => handleDragStart(index)}
+              onDragOver={(e) => handleDragOver(e, index)}
+              onDragLeave={handleDragLeave}
+              onDrop={(e) => handleDrop(e, index)}
+              onRemove={() => handleRemoveImage(index)}
+            />
+          )
+        })}
 
         {canAddMore && (
           <Card

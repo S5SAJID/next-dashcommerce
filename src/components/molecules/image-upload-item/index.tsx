@@ -1,8 +1,6 @@
 "use client"
 
 import type React from "react"
-
-import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -10,8 +8,15 @@ import { Badge } from "@/components/ui/badge"
 import { X, GripVertical } from "lucide-react"
 import Image from "next/image"
 
+type ImageSource = File | string
+
+const isFile = (item: ImageSource): item is File => {
+  return typeof item !== "string"
+}
+
 interface ImageUploadItemProps {
-  image: File
+  imageSource: ImageSource // The original object (File or string)
+  imagePreviewUrl: string // The URL for the preview
   index: number
   isMain: boolean
   isDragging: boolean
@@ -24,7 +29,8 @@ interface ImageUploadItemProps {
 }
 
 export function ImageUploadItem({
-  image,
+  imageSource,
+  imagePreviewUrl, // Use the preview URL directly
   index,
   isMain,
   isDragging,
@@ -35,13 +41,10 @@ export function ImageUploadItem({
   onDrop,
   onRemove,
 }: ImageUploadItemProps) {
-  const [imageUrl, setImageUrl] = useState<string>("")
+  // We no longer need state for imageUrl or a useEffect to create the URL,
+  // as the parent passes the correct preview URL directly.
 
-  useEffect(() => {
-    const url = URL.createObjectURL(image)
-    setImageUrl(url)
-    return () => URL.revokeObjectURL(url)
-  }, [image])
+  const fileSize = isFile(imageSource) ? (imageSource.size / 1024 / 1024).toFixed(1) : null
 
   return (
     <Card
@@ -60,7 +63,7 @@ export function ImageUploadItem({
       {/* Image */}
       <div className="absolute inset-0">
         <Image
-          src={imageUrl || "/placeholder.svg"}
+          src={imagePreviewUrl || "/placeholder.svg"} // Use the new prop
           alt={`Upload ${index + 1}`}
           fill
           className="object-cover"
@@ -97,12 +100,14 @@ export function ImageUploadItem({
           </Badge>
         )}
 
-        {/* Image Info */}
-        <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <div className="bg-background/80 backdrop-blur-sm rounded px-2 py-1">
-            <p className="text-xs text-muted-foreground">{(image.size / 1024 / 1024).toFixed(1)}MB</p>
+        {/* Image Info (conditionally rendered for File objects) */}
+        {fileSize && (
+          <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="bg-background/80 backdrop-blur-sm rounded px-2 py-1">
+              <p className="text-xs text-muted-foreground">{fileSize}MB</p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Card>
   )

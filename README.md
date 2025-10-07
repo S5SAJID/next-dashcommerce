@@ -1,37 +1,37 @@
-# Next Ecommerce Stack
+# ExpEcommerce Stack (Experimental)
 
-This is **Next Ecommerce Stack**, a Next.js-based ecommerce admin dashboard and storefront, built with [shadcn/ui](https://ui.shadcn.com/) and Tailwind CSS. I put this together because I wanted a clean, modern, and actually customizable starting point for building ecommerce sites, without all the usual bloat or "enterprise" nonsense.
+This is a **highly experimental** Next.js-based ecommerce admin dashboard and storefront, built with [shadcn/ui](https://ui.shadcn.com/) and Tailwind CSS. I'm actively working on this project—expect frequent changes and new features. The goal is a clean, modern, and truly customizable starting point for building ecommerce sites, without the usual bloat or "enterprise" overhead.
 
 ![Preview](./public/preview.png)
 
 ## What is this?
 
-It's a simple, open-source ecommerce dashboard and storefront. You get:
+A simple, open-source ecommerce dashboard and storefront. You get:
 
 - **Admin Dashboard**: Manage products, orders, customers, and settings.
 - **Storefront**: A basic, hackable frontend for your shop.
-- **No backend included**: Just UI and client-side logic. You can wire it up to your own API, database, or whatever you like.
+- **Backend work in progress**: I'm currently working on backend integration, including databases, server actions, and more. Expect updates soon.
 
 Everything is ready to be tweaked, extended, or torn apart for your own needs.
 
+## Experimental Status & Roadmap
+
+This project is **in active development**. Current focus is on backend features like:
+
+- Database integration
+- Caching strategies
+- Dynamic data loading
+- Advanced forms
+- Server actions
+- And much more...
+
+Expect breaking changes and new features as things evolve.
+
 ## Why does this exist?
 
-Honestly, most dashboards and starter kits out there are either too opinionated, too ugly, or just a pain to customize. I wanted something that:
+Most dashboards and starter kits are either too opinionated, too ugly, or hard to customize. I wanted something that:
 
 - Looks decent out of the box (thanks, shadcn/ui)
-- Is easy to mess with
-- Doesn't force you into a specific stack or backend
-- Lets you build your own thing, fast
-
-If you want a plug-and-play, all-in-one solution, this probably isn't it. But if you want a solid starting point you can actually understand and change, you might like it.
-
-## Tech Stack
-
-- [Next.js](https://nextjs.org/) (App Router)
-- [shadcn/ui](https://ui.shadcn.com/) (for all the UI components)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [React Hook Form](https://react-hook-form.com/)
-- [Zod](https://zod.dev/) (form validation)
 - [Lucide Icons](https://lucide.dev/) (icons)
 
 ## Quick Preview
@@ -55,7 +55,7 @@ If you want a plug-and-play, all-in-one solution, this probably isn't it. But if
 
 - All UI is built with shadcn/ui, so you can swap out components, change styles, or add new pages easily.
 - The sidebar, header, and table layouts are modular.
-- No backend included, so you can plug in your own API, database, or whatever.
+- Backend integration is coming soon, so you'll be able to plug in your own API, database, or whatever.
 
 ## Pages
 

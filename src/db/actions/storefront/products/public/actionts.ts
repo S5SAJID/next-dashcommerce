@@ -1,6 +1,6 @@
 import { db } from "@/db/db";
 import { ProductTable, StoreTable } from "@/db/schema";
-import { and, eq, exists } from "drizzle-orm";
+import { and, desc, eq, exists } from "drizzle-orm";
 import { notFound } from "next/navigation";
 
 async function storeExists(domain: string) {
@@ -13,7 +13,7 @@ export async function getPublicStorefrontProducts(domain: string) {
   const store_id = storeExists(domain);
   if (!store_id) return notFound();
 
-  const products = await db.select().from(ProductTable)
+  const products = await db.select().from(ProductTable).orderBy(desc(ProductTable.updated_at))
   return products;
 }
 

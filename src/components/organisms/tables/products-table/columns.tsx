@@ -17,7 +17,7 @@ export const product_columns: ColumnDef<DashboardProduct >[] = [
       return (
         <div className="space-x-4 flex items-center">
           <Image width={50} height={50} src={row.original.images[0]} alt={row.getValue("name")} className="h-8 w-8 bg-muted rounded-md" />
-          <Link href={`products/details`} className="hover:underline">{row.getValue("name")}</Link>
+          <Link href={`products/${row.original.slug}`} className="hover:underline">{row.getValue("name")}</Link>
         </div>
       );
     }
