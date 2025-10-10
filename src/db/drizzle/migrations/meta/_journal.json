@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1760095133997,
+      "tag": "0000_lethal_proemial_gods",
+      "breakpoints": true
+    }
+  ]
+}

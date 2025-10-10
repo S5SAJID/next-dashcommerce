@@ -23,6 +23,8 @@ const checkoutFormDefault = {
   state: "",
 };
 
+type CheckoutSuccessResponse = { success: boolean; message: string; orderId: string; };
+
 export default function StoreFrontCheckoutForm() {
   const { items, emptyCart, cartTotal } = useCart();
   const router = useRouter();
@@ -39,8 +41,12 @@ export default function StoreFrontCheckoutForm() {
       toast.promise(checkoutFormAction(data), {
         loading: "Submitting...",
         success: (response) => {
+          const responseData = response as CheckoutSuccessResponse;
+          if (!responseData.success) {
+            throw new Error(responseData.message || "Something went wrong. Please try again.");
+          }
           const params = new URLSearchParams({
-            orderId: response.data?.orderId as string,
+            orderId: responseData.orderId,
             itemCount: String(items.length ?? 0),
             total: cartTotal.toFixed(2),
             name: data.name,

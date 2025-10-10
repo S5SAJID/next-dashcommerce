@@ -6,8 +6,8 @@ import { eq } from "drizzle-orm";
 import { exit } from "process";
 
 async function main() {
-  await insertDemoProducts();
-  console.log(await db.query.ProductTable.findMany())
+  // await insertDemoProducts();
+  console.log(await db.query.ProductTable.findMany({limit: 2}))
   exit(0);
 }
 

@@ -1,16 +1,16 @@
-import { pgTable, uuid, varchar, timestamp, pgEnum, integer, jsonb, decimal } from "drizzle-orm/pg-core";
+import { pgTable, uuid, timestamp, pgEnum, integer, jsonb, decimal } from "drizzle-orm/pg-core";
 import { StoreTable } from "../../stores";
 import { CustomerTable } from "../customers/schema";
 import { ProductTable } from "../../products";
 
-const orderStatusEnum = pgEnum("order_status", ["PENDING", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"]);
+export const orderStatusEnum = pgEnum("order_status", ["PENDING", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"]);
 
 export const OrderTable = pgTable("orders", {
   id: uuid("id").defaultRandom().primaryKey(),
   store_id: uuid().references(() => StoreTable.id).notNull(),
-  customer_id: uuid().references(() => CustomerTable.id), // can be null for guest checkout
+  customer_id: uuid().references(() => CustomerTable.id).notNull(), // can be null for guest checkout
   status: orderStatusEnum().default("PENDING").notNull(),
-  total_amount: varchar({ length: 50 }).notNull(),
+  total_amount: decimal().notNull(),
   created_at: timestamp().defaultNow().notNull(),
   updated_at: timestamp().defaultNow().notNull(),
 });

@@ -32,8 +32,7 @@ export const checkoutFormSchema = z.object({
     .optional(),
   phone: z.string()
     // Accepts formats like 0345..., 92345..., +92345..., +92 345..., etc.
-    .regex(/^(\+?92|92|0)?3\d{2}[- ]?\d{7}$/, invalidPhone)
-    .optional(),
+    .regex(/^(\+?92|92|0)?3\d{2}[- ]?\d{7}$/, invalidPhone),
   cartItems: z.array(z.object({
     productId: z.uuid().min(1).nonoptional(),
     quantity: z.number().min(1, "Quantity must be at least 1"),
