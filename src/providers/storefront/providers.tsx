@@ -4,6 +4,7 @@ import { CartModalProvider } from "@/components/storefront/organisms/cart/contex
 import { Toaster } from "@/components/ui/sonner";
 import { ProgressProvider } from "@bprogress/next/app";
 import React from "react";
+import { CartProvider } from "react-use-cart";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 export default function StoreFrontProviders({ children }: { children: React.ReactNode }) {
@@ -11,11 +12,13 @@ export default function StoreFrontProviders({ children }: { children: React.Reac
     <>
       <NuqsAdapter>
         <CartModalProvider>
-          <ProgressProvider>
-            {children}
-            <Toaster />
-            <StoreFrontCartModel />
-          </ProgressProvider>
+          <CartProvider>
+            <ProgressProvider>
+              {children}
+              <Toaster />
+              <StoreFrontCartModel />
+            </ProgressProvider>
+          </CartProvider>
         </CartModalProvider>
       </NuqsAdapter>
     </>

@@ -1,21 +1,17 @@
-import z from "zod";
+type Product = {
+    id: number;
+    name: string;
+    slug: string;
+    description: string;
+    category: string;
+    price: number;
+    images: string[];
+    compare_at?: number | undefined;
+    stock?: number | undefined;
+    sku?: string | undefined;
+}
 
-export const products_schema = z.object({
-  id: z.number().int().positive(),
-  name: z.string().min(1),
-  slug: z.string().min(1),
-  description: z.string().min(1),
-  category: z.string().min(1),
-  price: z.number().positive(),
-  compare_at: z.number().positive().optional(),
-  stock: z.number().positive().optional(),
-  sku: z.string().min(1).optional(),
-  images: z.array(z.string()),
-});
-
-export type Product = z.infer<typeof products_schema>;
-
-export const DEMO_PRODUCTS = [
+export const DEMO_PRODUCTS: Product[] = [
   {
     id: 1,
     name: "Essence Mascara Lash Princess",

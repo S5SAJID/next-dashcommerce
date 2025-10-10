@@ -41,7 +41,13 @@ export default async function ProductPage({ params }: Props) {
           <p className="mt-8 text-muted-foreground">
             {product.description}
           </p>
-          <StoreFrontAddToCart className="mt-8 rounded-full w-full" />
+          <StoreFrontAddToCart className="mt-8 rounded-full w-full" product={{
+            id: product.id, 
+            name: product.name, 
+            price: product.price, 
+            image: product.images[0],
+            quantity: 1
+          }} />
         </div>
       </section>
 
@@ -49,7 +55,7 @@ export default async function ProductPage({ params }: Props) {
       <div className="my-16" />
       <div className="space-y-8">
         <h3 className="text-2xl">You May Also Like</h3>
-        <StoreFrontProductList products={shuffleArray(recommendedProducts).slice(0,4)} dense />
+        <StoreFrontProductList products={shuffleArray(recommendedProducts).slice(0, 4)} dense />
       </div>
     </>
   )

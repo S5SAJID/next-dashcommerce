@@ -34,7 +34,7 @@ export default async function Layout({ children, params }: { children: React.Rea
     <div style={{ fontFamily: "PP Mori" }}>
       <StoreFrontProviders>
         <StoreFrontNavbar store={store} />
-        <main className="mx-auto w-full max-w-7xl px-4 pb-6 pt-2 sm:px-6 lg:px-8">
+        <main className="mx-auto w-full max-w-7xl min-h-[70dvh] px-4 pb-6 pt-2 sm:px-6 lg:px-8">
           {children}
         </main>
       </StoreFrontProviders>

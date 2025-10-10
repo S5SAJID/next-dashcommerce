@@ -1,13 +1,16 @@
 "use client";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { checkoutFormSchema, CheckoutFormSchemaType } from "./schema";
-import { showSubmittedData } from "@/lib/showSubmittedData";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Textarea } from "@/components/ui/textarea";
+import { checkoutFormAction } from "@/db/actions/storefront/order/checkout/action";
+import { useCart } from "react-use-cart";
+import { useRouter } from "@bprogress/next";
 
 const checkoutFormDefault = {
   name: "",
@@ -21,14 +24,44 @@ const checkoutFormDefault = {
 };
 
 export default function StoreFrontCheckoutForm() {
+  const { items, emptyCart, cartTotal } = useCart();
+  const router = useRouter();
   const form = useForm<CheckoutFormSchemaType>({
     resolver: zodResolver(checkoutFormSchema),
-    defaultValues: checkoutFormDefault
+    defaultValues: {
+      ...checkoutFormDefault,
+      cartItems: items.map(e => ({ productId: e.id, quantity: e.quantity }))
+    }
   });
 
   const handleSubmit = form.handleSubmit(
-    (data) => showSubmittedData(data),
-    (errors) => toast("Error", { description: JSON.stringify(errors) })
+    (data) => {
+      toast.promise(checkoutFormAction(data), {
+        loading: "Submitting...",
+        success: (response) => {
+          const params = new URLSearchParams({
+            orderId: response.data?.orderId as string,
+            itemCount: String(items.length ?? 0),
+            total: cartTotal.toFixed(2),
+            name: data.name,
+            email: data.email,
+            country: data.country,
+            city: data.city,
+          })
+          emptyCart()
+          router.push(`/checkout/success?${params.toString()}`)
+          return "Order placed successfully!"
+        },
+        error: "Something went wrong. Please try again."
+      });
+    },
+    (errors) => {
+      // put a friendlier toast with focused first error
+      const firstErrorKey = Object.keys(errors)[0];
+      toast.error("Please fix errors");
+      const el = document.querySelector(`[name="${firstErrorKey}"]`) as HTMLElement | null;
+      el?.focus();
+    }
   );
   return (
     <Form {...form}>
@@ -61,7 +94,7 @@ export default function StoreFrontCheckoutForm() {
             </FormItem>
           )}
         />
-        <div className="grid gap-2 grid-cols-2 ">
+        <div className="grid gap-2 grid-cols-2">
           <FormField
             control={form.control}
             name="postalCode"
@@ -149,7 +182,7 @@ export default function StoreFrontCheckoutForm() {
             <FormItem>
               <FormLabel>Address</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Bloom streat block IV, New York" />
+                <Textarea {...field} placeholder="Bloom street block IV, New York" />
               </FormControl>
               <FormMessage />
             </FormItem>

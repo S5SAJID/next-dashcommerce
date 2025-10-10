@@ -3,7 +3,7 @@ import { extractSubdomain } from './lib/subdomain';
 
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, search } = request.nextUrl;
   const subdomain = extractSubdomain(request);
 
   if (subdomain) {
@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
     //   return NextResponse.rewrite(new URL(`/store/${subdomain}`, request.url));
     // }
     if (pathname.startsWith('/')) {
-      return NextResponse.rewrite(new URL(`/store/${subdomain}${pathname}`, request.url));
+      return NextResponse.rewrite(new URL(`/store/${subdomain}${pathname}${search}`, request.url));
     }
   }
 
