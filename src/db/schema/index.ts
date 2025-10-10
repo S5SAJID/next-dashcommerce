@@ -5,10 +5,9 @@ import { OrderTable, OrderItemTable } from "./tables/storefront/orders/schema";
 import {
   ProductStoreRelation,
   StoreProductsRelation,
-  StoreCustomersRelation,
   CustomerStoreRelation,
-  OrderOrderItemsRelation,
-  OrderItemOrderRelation
+  OrderRelations,
+  OrderItemRelations,
 } from "./relations";
 
 export {
@@ -17,10 +16,9 @@ export {
   CustomerTable,
   OrderTable,
   OrderItemTable,
-  OrderItemOrderRelation,
-  OrderOrderItemsRelation,
   StoreProductsRelation,
   ProductStoreRelation,
-  StoreCustomersRelation,
   CustomerStoreRelation,
+  OrderRelations,
+  OrderItemRelations,
 };

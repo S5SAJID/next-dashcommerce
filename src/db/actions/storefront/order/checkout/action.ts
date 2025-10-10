@@ -1,4 +1,5 @@
 "use server";
+
 import { checkoutFormSchema } from "@/components/storefront/organisms/forms/checkout/schema";
 import { db } from "@/db/db";
 import {
@@ -13,10 +14,19 @@ import { and, eq, inArray } from "drizzle-orm";
 type CustomerInsert = typeof CustomerTable.$inferInsert;
 type OrderItemInsert = typeof OrderItemTable.$inferInsert;
 
+// Improved response type for consistency
+type CheckoutResponse = {
+  success: boolean;
+  message: string;
+  orderId?: string;
+  error?: string;
+};
+
 export const checkoutFormAction = actionClient
   .inputSchema(checkoutFormSchema)
-  .action(async ({ parsedInput }) => {
-    const store_id = "a66ba6dc-e9a5-4d17-a2fb-50c85c504f37"; // TODO: Fix hardcoded
+  .action(async ({ parsedInput }): Promise<CheckoutResponse> => {
+    // TODO: Get store_id from context/session instead of hardcoding
+    const store_id = "a66ba6dc-e9a5-4d17-a2fb-50c85c504f37";
     const productIds = parsedInput.cartItems.map((c) => c.productId);
 
     const customerData: CustomerInsert = {
@@ -29,13 +39,51 @@ export const checkoutFormAction = actionClient
 
     try {
       return await db.transaction(async (tx) => {
-        // upsert customer
+        // 1. Fetch products and validate availability
+        const productRows = await tx
+          .select({
+            id: ProductTable.id,
+            price: ProductTable.price,
+            name: ProductTable.name,
+            stock: ProductTable.stock,
+            is_published: ProductTable.is_published,
+          })
+          .from(ProductTable)
+          .where(
+            and(
+              eq(ProductTable.store_id, store_id),
+              inArray(ProductTable.id, productIds)
+            )
+          );
+
+        // Validate all products exist and are available
+        const productMap = new Map(productRows.map((p) => [p.id, p]));
+
+        for (const cartItem of parsedInput.cartItems) {
+          const product = productMap.get(cartItem.productId);
+
+          if (!product) {
+            throw new Error(`Product with ID ${cartItem.productId} not found.`);
+          }
+
+          if (!product.is_published) {
+            throw new Error(`Product "${product.name}" is not available for purchase.`);
+          }
+
+          if (product.stock !== null && product.stock < cartItem.quantity) {
+            throw new Error(`Insufficient stock for product "${product.name}". Available: ${product.stock}, Requested: ${cartItem.quantity}`);
+          }
+        }
+
+        // 2. Upsert customer (improved logic)
+        let customer_id: string | undefined = undefined;
         const [customer] = await tx
           .insert(CustomerTable)
           .values(customerData)
           .onConflictDoNothing()
           .returning();
-        const customer_id =
+
+        customer_id =
           customer.id ??
           (await tx
             .select({ id: CustomerTable.id })
@@ -47,53 +95,43 @@ export const checkoutFormAction = actionClient
               )
             )
             .then((r) => r[0]!.id));
+
         if (!customer_id) {
           throw new Error("Could not find or create customer.");
         }
 
-        // fetch current prices and build snapshot
-        const productRows = await tx
-          .select({
-            id: ProductTable.id,
-            price: ProductTable.price,
-            name: ProductTable.name,
-          })
-          .from(ProductTable)
-          .where(
-            and(
-              eq(ProductTable.store_id, store_id),
-              inArray(ProductTable.id, productIds)
-            )
-          );
-
-        // Use a Map for O(1) lookup to improve performance.
-        const productMap = new Map(productRows.map((p) => [p.id, p]));
-
-        // Build the items list.
+        // 3. Build order items with proper decimal handling
         const items = parsedInput.cartItems.map((c) => {
-          const p = productMap.get(c.productId);
-          if (!p) {
-            throw new Error(`Product with ID ${c.productId} not found.`);
-          }
+          const product = productMap.get(c.productId)!;
           return {
             productId: c.productId,
             qty: c.quantity,
-            price: p.price,
-            snapshot: { name: p.name, price: p.price },
+            price: product.price,
+            snapshot: {
+              name: product.name,
+              price: product.price,
+              sku: product.stock,
+              // TODO: add sku
+            },
           };
         });
 
-        // Calculate total amount. Use `toFixed` for safe monetary calculations if needed later.
-        const total = items.reduce((s, i) => s + Number(i.price) * i.qty, 0);
+        // 4. Calculate total with proper decimal precision
+        const total = items.reduce((sum, item) => {
+          return sum + (Number(item.price) * item.qty);
+        }, 0);
 
-        // 5. Create the order.
+        // Round to 2 decimal places for monetary precision
+        const roundedTotal = Math.round(total * 100) / 100;
+
+        // 5. Create the order
         const [order] = await tx
           .insert(OrderTable)
           .values({
             store_id: store_id,
             customer_id: customer_id,
             status: "PENDING",
-            total_amount: total.toString(),
+            total_amount: roundedTotal.toString(),
           })
           .returning({ id: OrderTable.id });
 
@@ -101,17 +139,31 @@ export const checkoutFormAction = actionClient
           throw new Error("Failed to create order.");
         }
 
-        // 6. Create line items using a single bulk insert.
-        const orderItems: OrderItemInsert[] = items.map((i) => ({
+        // 6. Create order items
+        const orderItems: OrderItemInsert[] = items.map((item) => ({
           store_id: store_id,
           order_id: order.id,
-          product_id: i.productId,
-          quantity: i.qty,
-          price_at_purchase: i.price.toString(),
-          product_snapshot: i.snapshot,
+          product_id: item.productId,
+          quantity: item.qty,
+          price_at_purchase: item.price.toString(),
+          product_snapshot: item.snapshot,
         }));
 
         await tx.insert(OrderItemTable).values(orderItems);
+
+        // 7. Update product stock (if stock tracking is enabled)
+        for (const item of items) {
+          const product = productMap.get(item.productId)!;
+          if (product.stock !== null) {
+            await tx
+              .update(ProductTable)
+              .set({
+                stock: product.stock - item.qty,
+                updated_at: new Date(),
+              })
+              .where(eq(ProductTable.id, item.productId));
+          }
+        }
 
         return {
           success: true,
@@ -120,8 +172,13 @@ export const checkoutFormAction = actionClient
         };
       });
     } catch (error) {
-      // Catch any errors that occur during the transaction and return a generic error message.
       console.error('Checkout failed:', error);
-      return { error: 'An unexpected error occurred during checkout.' };
+
+      // Return consistent error format
+      return {
+        success: false,
+        message: error instanceof Error ? error.message : 'An unexpected error occurred during checkout.',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   });
