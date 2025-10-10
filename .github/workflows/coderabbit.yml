@@ -25,7 +25,7 @@ jobs:
 
       - name: CodeRabbit AI Review Action
         # This action executes the AI review process based on the settings in .coderabbit.yaml
-        uses: coderabbitai/pr-agent-action@v1.0.0
+        uses: coderabbitai/ai-pr-reviewer@latest
         env:
           # This secret is automatically provided by GitHub and is required for the action to post comments
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
