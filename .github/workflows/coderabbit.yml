@@ -1,0 +1,33 @@
+# This workflow triggers the Coderabbit AI review on every push to the repository.
+# Note: For best results and full functionality (like detailed summaries and follow-ups),
+# Coderabbit is typically configured to run on 'pull_request' events, but this is set
+# to 'push' as requested.
+name: Code Review (CodeRabbit AI)
+
+on:
+  push:
+    # Run the review on every push to any branch
+    branches:
+      - 'main'
+
+jobs:
+  coderabbit_review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write # Needed by Coderabbit to post review comments
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Needed for full history comparison
+
+      - name: CodeRabbit AI Review Action
+        # This action executes the AI review process based on the settings in .coderabbit.yaml
+        uses: coderabbitai/pr-agent-action@v1.0.0
+        env:
+          # This secret is automatically provided by GitHub and is required for the action to post comments
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optionally, if you use a private token for Coderabbit features, uncomment and set it here
+          # CODERABBIT_TOKEN: ${{ secrets.CODERABBIT_TOKEN }}

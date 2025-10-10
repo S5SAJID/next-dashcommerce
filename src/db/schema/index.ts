@@ -1,5 +1,26 @@
 import { StoreTable } from "./tables/stores";
 import { ProductTable } from "./tables/products";
-import { ProductStoreRelation, StoreProductsRelation } from "./relations";
+import { CustomerTable } from "./tables/storefront/customers/schema";
+import { OrderTable, OrderItemTable } from "./tables/storefront/orders/schema";
+import {
+  ProductStoreRelation,
+  StoreProductsRelation,
+  StoreCustomersRelation,
+  CustomerStoreRelation,
+  OrderOrderItemsRelation,
+  OrderItemOrderRelation
+} from "./relations";
 
-export { StoreTable, ProductTable, StoreProductsRelation, ProductStoreRelation };
+export {
+  StoreTable,
+  ProductTable,
+  CustomerTable,
+  OrderTable,
+  OrderItemTable,
+  OrderItemOrderRelation,
+  OrderOrderItemsRelation,
+  StoreProductsRelation,
+  ProductStoreRelation,
+  StoreCustomersRelation,
+  CustomerStoreRelation,
+};
