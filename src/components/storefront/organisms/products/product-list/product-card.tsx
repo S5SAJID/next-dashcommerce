@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import StoreFrontAddToCart from "@/components/storefront/molecules/add-to-cart";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { ProductTable } from "@/db/schema";
 import { formatPrice } from "@/lib/utils";
@@ -27,7 +27,17 @@ export default function StoreFrontProductCard({ product }: { product: InferSelec
           ) : null}
         </Link>
         <div className="absolute -bottom-14 z-10 transition-[opacity_transform] backdrop-blur-sm duration-300 opacity-0 group-hover:opacity-100 group-hover:bottom-0 right-0 left-0 p-2 rounded-b-lg bg-muted-foreground/10">
-          <Button variant="secondary" size="lg" className="rounded-full bg-background hover:bg-background hover:text-foreground/60 w-full">Add to cart</Button>
+          <StoreFrontAddToCart
+            variant={{ variant: "secondary", size: "lg" }}
+            className="rounded-full bg-background hover:bg-background cursor-pointer hover:text-foreground/80 w-full"
+            product={{
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              image: product.images[0],
+              quantity: 1
+            }}
+          />
         </div>
       </CardHeader>
       <CardContent className="p-3 space-y-1 flex flex-col text-left">

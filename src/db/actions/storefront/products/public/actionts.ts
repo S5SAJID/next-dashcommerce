@@ -13,7 +13,7 @@ export async function getPublicStorefrontProducts(domain: string) {
   const store_id = storeExists(domain);
   if (!store_id) return notFound();
 
-  const products = await db.select().from(ProductTable).orderBy(desc(ProductTable.updated_at))
+  const products = await db.select().from(ProductTable).orderBy(desc(ProductTable.updated_at)).where(eq(ProductTable.is_published, true));
   return products;
 }
 
@@ -23,6 +23,7 @@ export async function getPublicStorefrontProduct(domain: string, slug: string) {
   const product = await db.query.ProductTable.findFirst({
     where: (productTable) => and(
       eq(productTable.slug, slug),
+      eq(productTable.is_published, true),
       exists(
         db.select()
           .from(StoreTable)

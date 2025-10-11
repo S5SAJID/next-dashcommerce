@@ -1,8 +1,21 @@
 "use client";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { checkoutFormSchema, CheckoutFormSchemaType } from "./schema";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -11,6 +24,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { checkoutFormAction } from "@/db/actions/storefront/order/checkout/action";
 import { useCart } from "react-use-cart";
 import { useRouter } from "@bprogress/next";
+import { Spinner } from "@/components/ui/spinner";
+import { toastPromise } from "@/hooks/use-promise-toaster";
 
 const checkoutFormDefault = {
   name: "",
@@ -23,7 +38,6 @@ const checkoutFormDefault = {
   state: "",
 };
 
-
 export default function StoreFrontCheckoutForm() {
   const { items, emptyCart, cartTotal } = useCart();
   const router = useRouter();
@@ -31,13 +45,13 @@ export default function StoreFrontCheckoutForm() {
     resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
       ...checkoutFormDefault,
-      cartItems: items.map(e => ({ productId: e.id, quantity: e.quantity }))
-    }
+      cartItems: items.map((e) => ({ productId: e.id, quantity: e.quantity })),
+    },
   });
 
   const handleSubmit = form.handleSubmit(
-    (data) => {
-      toast.promise(checkoutFormAction(data), {
+    async (data) => {
+      await toastPromise(checkoutFormAction(data), {
         loading: "Submitting...",
         success: (response) => {
           const responseData = response.data;
@@ -52,27 +66,29 @@ export default function StoreFrontCheckoutForm() {
             email: data.email,
             country: data.country,
             city: data.city,
-          })
-          emptyCart()
-          router.push(`/checkout/success?${params.toString()}`)
-          return "Order placed successfully!"
+          });
+          emptyCart();
+          router.push(`/checkout/success?${params.toString()}`);
+          return "Order placed successfully!";
         },
-        error: "Something went wrong. Please try again."
+        error: () => {
+          return "Something went wrong. Please try again.";
+        },
       });
     },
     (errors) => {
       // put a friendlier toast with focused first error
       const firstErrorKey = Object.keys(errors)[0];
       toast.error("Please fix errors");
-      const el = document.querySelector(`[name="${firstErrorKey}"]`) as HTMLElement | null;
+      const el = document.querySelector(
+        `[name="${firstErrorKey}"]`
+      ) as HTMLElement | null;
       el?.focus();
     }
   );
   return (
     <Form {...form}>
-      <form
-        className="space-y-8 pr-6 pt-6"
-        onSubmit={handleSubmit}>
+      <form className="space-y-8 pr-6 pt-6" onSubmit={handleSubmit}>
         <FormField
           control={form.control}
           name="name"
@@ -149,16 +165,26 @@ export default function StoreFrontCheckoutForm() {
               <FormItem>
                 <FormLabel>Country</FormLabel>
                 <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a country" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {['Pakistan', 'India', 'Palesine', 'Bangladesh'].map(country => (
-                        <SelectItem value={country.toLowerCase()} key={country}>{country}</SelectItem>
-                      ))}
+                      {["Pakistan", "India", "Palesine", "Bangladesh"].map(
+                        (country) => (
+                          <SelectItem
+                            value={country.toLowerCase()}
+                            key={country}
+                          >
+                            {country}
+                          </SelectItem>
+                        )
+                      )}
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -187,14 +213,39 @@ export default function StoreFrontCheckoutForm() {
             <FormItem>
               <FormLabel>Address</FormLabel>
               <FormControl>
-                <Textarea {...field} placeholder="Bloom street block IV, New York" />
+                <Textarea
+                  {...field}
+                  placeholder="Bloom street block IV, New York"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button size="lg" className="w-full rounded-full mt-4" type="submit">Checkout</Button>
+        <Button
+          size="lg"
+          className="w-full rounded-full mt-4"
+          type="submit"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? (
+            <>
+              <Spinner className="inline-block" /> Processing...
+            </>
+          ) : (
+            "Place Order"
+          )}
+        </Button>
+         <FormField
+          control={form.control}
+          name="cartItems"
+          render={() => (
+            <FormItem>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </form>
     </Form>
-  )
+  );
 }

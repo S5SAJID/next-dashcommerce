@@ -83,9 +83,9 @@ export const checkoutFormAction = actionClient
           .onConflictDoNothing()
           .returning();
 
-        customer_id =
-          customer.id ??
-          (await tx
+        if (!customer) {
+          // If no ID returned, it means the customer already exists
+          const cus = await tx
             .select({ id: CustomerTable.id })
             .from(CustomerTable)
             .where(
@@ -94,7 +94,9 @@ export const checkoutFormAction = actionClient
                 eq(CustomerTable.email, parsedInput.email)
               )
             )
-            .then((r) => r[0]!.id));
+            .limit(1);
+          customer_id = cus[0]?.id;
+        }
 
         if (!customer_id) {
           throw new Error("Could not find or create customer.");
