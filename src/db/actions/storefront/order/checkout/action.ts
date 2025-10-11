@@ -96,6 +96,9 @@ export const checkoutFormAction = actionClient
             )
             .limit(1);
           customer_id = cus[0]?.id;
+          console.log(customer_id)
+        } else {
+          customer_id = customer.id
         }
 
         if (!customer_id) {

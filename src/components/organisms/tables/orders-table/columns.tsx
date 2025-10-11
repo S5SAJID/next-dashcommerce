@@ -1,28 +1,27 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Order } from "./data";
+import { DashboardOrder } from "./data";
 import { formatPrice } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Loader, MoreHorizontal } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-export const order_columns: ColumnDef<Order>[] = [
+export const order_columns: ColumnDef<DashboardOrder>[] = [
   {
-    accessorKey: "id",
-    header: "ID",
-    cell: ({ row }) => <a href="#" key={row.id} className="hover:underline">
-      <span className="text-muted-foreground">#</span><span>{row.getValue("id")}</span>
-    </a>
+    accessorKey: "orderId",
+    header: "Order ID",
+    cell: ({ row }) => <Link href={`/orders/`+row.original.orderId} key={row.id} className="hover:underline">
+      <span className="text-muted-foreground">#</span><span>{row.original.orderId.toUpperCase().slice(0,6)}</span>
+    </Link>
   },
   {
-    accessorKey: "product_name",
-    header: "Product",
-    cell: ({row}) => {
-      const order = row.original;
-      return <div className="space-x-4 flex items-center">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={order.product_img} alt={order.product_name} className="h-8 w-8 rounded-md" />
-        <span>{order.product_name}</span>
+    accessorKey: "customerName",
+    header: "Customer",
+    cell: ({ row }) => {
+      return <div>
+        <h4>{row.original.customerName}</h4>
+        <p className="text-muted-foreground text-xs">{row.original.customerEmail}</p>
       </div>
     }
   },
@@ -30,16 +29,15 @@ export const order_columns: ColumnDef<Order>[] = [
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      const value = row.getValue("status");
-      const isActive = value === "done";
-      const badgeVariant = isActive ? "secondary" : "outline";
+      const value = row.original.status;
+      const badgeVariant = value == "SHIPPED" ? "secondary" : "outline";
 
       return (
         <Badge variant={badgeVariant} className="capitalize">
           {
-            value == "done"
+            value == "DELIVERED"
               ? <div className="bg-green-500 size-1 rounded-full dark:bg-green-400" />
-              : value == "pending"
+              : value == "PENDING"
                 ? <Loader className="stroke-muted-foreground" />
                 : <div className="bg-muted-foreground size-1 rounded-full" />
 
@@ -50,15 +48,19 @@ export const order_columns: ColumnDef<Order>[] = [
     }
   },
   {
-    accessorKey: "price",
-    header: "Price",
-    cell: ({ row }) => formatPrice({ price: row.original.price, locale: "en-US" })
+    accessorKey: "totalAmount",
+    header: "Total Amount",
+    cell: ({ row }) => formatPrice({ price: row.original.totalAmount, locale: "en-US" })
+  },
+  {
+    accessorKey: "itemCount",
+    header: "Products",
   },
   {
     accessorKey: "date",
     header: "Date",
     cell: ({ row }) => {
-      const format = Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(row.original.date)
+      const format = Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(row.original.createdAt)
       return <span>{format}</span>
     }
   },
@@ -79,7 +81,7 @@ export const order_columns: ColumnDef<Order>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(order.id)}
+                onClick={() => navigator.clipboard.writeText(order.orderId)}
               >
                 Copy product id
               </DropdownMenuItem>

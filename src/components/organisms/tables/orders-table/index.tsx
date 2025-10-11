@@ -1,24 +1,30 @@
 "use client"
 import DataTable from "@/components/molecules/data-table";
 import { order_columns } from "./columns";
-import { orders } from "./data";
+import { DashboardOrder } from "./data";
 
-export default function OrdersTable() {
+type OrdersTableProps = {
+  orders?: DashboardOrder[]
+}
+
+export default function OrdersTable({ orders = [] }: OrdersTableProps) {
   return (
-    <DataTable 
+    <DataTable
       columns={order_columns} 
       data={orders}
       toolbar={{
-        searchColumn: "id",
+        searchColumn: "orderId",
         searchPlaceholder: "Filter order IDs...",
         filters: [
           {
             columnName: 'status',
             title: "Status",
             options: [
-              { label: "Done", value: "done" },
-              { label: "Active", value: "active" },
-              { label: "Pending", value: "pending" },
+              { label: "Delivered", value: "DELIVERED" },
+              { label: "Processing", value: "PROCESSING" },
+              { label: "Shipped", value: "SHIPPED" },
+              { label: "Pending", value: "PENDING" },
+              { label: "Cancelled", value: "CANCELLED" },
             ]
           }
         ]
