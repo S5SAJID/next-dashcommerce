@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1760095133997,
-      "tag": "0000_lethal_proemial_gods",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1760192508545,
-      "tag": "0001_new_black_queen",
+      "when": 1760357933310,
+      "tag": "0000_thick_ricochet",
       "breakpoints": true
     }
   ]

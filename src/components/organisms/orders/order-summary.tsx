@@ -14,7 +14,7 @@ export default function OrderSummaryCard({
   tax: number
   discount?: number
   total: number
-  paymentMethod: string
+  // paymentMethod: string
 }) {
   return (
     <>

@@ -1,8 +1,8 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { extractSubdomain } from './lib/subdomain';
+import { auth } from './lib/auth/auth';
 
-
-export async function middleware(request: NextRequest) {
+export const middleware = auth(async (request: NextRequest) => {
   const { pathname, search } = request.nextUrl;
   const subdomain = extractSubdomain(request);
 
@@ -23,7 +23,8 @@ export async function middleware(request: NextRequest) {
 
   // On the root domain, allow normal access
   return NextResponse.next();
-}
+})
+
 
 export const config = {
   matcher: [

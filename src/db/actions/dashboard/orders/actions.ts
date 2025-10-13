@@ -1,10 +1,10 @@
 import { db } from "@/db/db"
-import { CustomerTable, OrderItemTable, OrderTable } from "@/db/schema";
-import { count, desc, eq } from "drizzle-orm";
+import { CustomerTable, OrderItemTable, OrderTable, ProductTable } from "@/db/schema";
+import { count, desc, eq, sql } from "drizzle-orm";
 
 export async function getDashboardOrders() {
   // TODO: Make it use to get specific user based products
-   const orders = await db
+  const orders = await db
     .select({
       orderId: OrderTable.id,
       status: OrderTable.status,
@@ -26,5 +26,44 @@ export async function getDashboardOrders() {
     .groupBy(OrderTable.id, CustomerTable.id)
     .orderBy(desc(OrderTable.created_at)) // Show the most recent orders first
 
-    return orders
+  return orders
+}
+
+export async function getDashboardOrder(orderId: string) {
+  const result = await db
+    .select({
+      // Select all fields from OrderTable
+      order: OrderTable,
+      // Select all fields from CustomerTable
+      customer: CustomerTable,
+      // Aggregate order items into a single JSON array field named 'items'
+      items: sql<
+        {
+          id: string;
+          quantity: number;
+          price: string;
+          product_name: string;
+          product_sku: string | null;
+          product_image: string | null;
+        }[]
+      >`json_agg(json_build_object(
+            'id', ${OrderItemTable.id},
+            'quantity', ${OrderItemTable.quantity},
+            'price', ${OrderItemTable.price_at_purchase},
+            'product_name', ${ProductTable.name},
+            'product_sku', ${ProductTable.sku},
+            'product_image', ${ProductTable.images}[1]
+          ))`,
+    })
+    .from(OrderTable)
+    .where(eq(OrderTable.id, orderId))
+    // Joins
+    .leftJoin(CustomerTable, eq(OrderTable.customer_id, CustomerTable.id))
+    .leftJoin(OrderItemTable, eq(OrderTable.id, OrderItemTable.order_id))
+    .leftJoin(ProductTable, eq(OrderItemTable.product_id, ProductTable.id))
+    // Group by the unique order and customer to collapse all items into the aggregate
+    .groupBy(OrderTable.id, CustomerTable.id);
+
+
+  return result[0]
 }

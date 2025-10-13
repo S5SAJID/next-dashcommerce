@@ -12,7 +12,7 @@ export function DashboardHeader({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function DashboardTitle({ title, description, enableBack = false }: { title: string, enableBack?: boolean, description: string }) {
+export function DashboardTitle({ title, description, enableBack = false }: { title: React.ReactNode, enableBack?: boolean, description: string }) {
   return (
     <div className="flex space-x-4">
       {enableBack && <BackButton />}
