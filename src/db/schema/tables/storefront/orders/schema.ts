@@ -6,7 +6,7 @@ import { ProductTable } from "../../products";
 export const orderStatusEnum = pgEnum("order_status", ["PENDING", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"]);
 
 export const OrderTable = pgTable("orders", {
-  id: uuid("id").defaultRandom().primaryKey(),
+  id: uuid().defaultRandom().primaryKey(),
   store_id: uuid().references(() => StoreTable.id).notNull(),
   customer_id: uuid().references(() => CustomerTable.id).notNull(), // can be null for guest checkout
   status: orderStatusEnum().default("PENDING").notNull(),

@@ -8,6 +8,13 @@
       "when": 1760095133997,
       "tag": "0000_lethal_proemial_gods",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1760192508545,
+      "tag": "0001_new_black_queen",
+      "breakpoints": true
     }
   ]
 }
