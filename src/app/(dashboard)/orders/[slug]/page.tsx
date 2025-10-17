@@ -15,7 +15,6 @@ import OrderProductsCard from "@/components/organisms/orders/order-products";
 import OrderCustomerCard from "@/components/organisms/orders/order-customer";
 import OrderShippingCard from "@/components/organisms/orders/order-shipping";
 import { getDashboardOrder } from "@/db/actions/dashboard/orders/actions";
-import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
   title: 'Order Details',

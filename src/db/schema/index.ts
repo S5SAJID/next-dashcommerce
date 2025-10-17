@@ -1,7 +1,19 @@
 import { StoreTable } from "./tables/stores";
 import { ProductTable } from "./tables/products";
 import { CustomerTable } from "./tables/storefront/customers/schema";
-import { OrderTable, OrderItemTable } from "./tables/storefront/orders/schema";
+import { OrderTable, OrderItemTable, orderStatusEnum } from "./tables/storefront/orders/schema";
+import {
+  user,
+  session,
+  account,
+  twoFactor,
+  passkey,
+  organization,
+  member,
+  invitation,
+  verification
+} from "./tables/auth"
+import {userRelations, accountRelations, invitationRelations, memberRelations, organizationRelations, passkeyRelations, sessionRelations, twoFactorRelations} from "./tables/auth/relations";
 import {
   ProductStoreRelation,
   StoreProductsRelation,
@@ -15,10 +27,30 @@ export {
   ProductTable,
   CustomerTable,
   OrderTable,
+  orderStatusEnum,
   OrderItemTable,
   StoreProductsRelation,
   ProductStoreRelation,
   CustomerStoreRelation,
   OrderRelations,
   OrderItemRelations,
+  // Auth
+  user,
+  session,
+  account,
+  twoFactor,
+  passkey,
+  organization,
+  member,
+  invitation,
+  verification,
+  // Auth Relations
+  userRelations,
+  accountRelations,
+  invitationRelations,
+  memberRelations,
+  organizationRelations,
+  passkeyRelations,
+  sessionRelations,
+  twoFactorRelations
 };

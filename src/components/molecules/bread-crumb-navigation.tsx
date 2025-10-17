@@ -45,7 +45,7 @@ export function BreadcrumbNavigation() {
         return (
           <BreadcrumbItem key={href} isLast={isLast}>
             <BreadcrumbLink href={href} isActive={isLast}>
-              {formattedSegment.length > 6 ? formattedSegment.slice(0, 6) + '...' : formattedSegment}
+              {formattedSegment.length > 8 ? formattedSegment.slice(0, 8) + '...' : formattedSegment}
             </BreadcrumbLink>
           </BreadcrumbItem>
         )

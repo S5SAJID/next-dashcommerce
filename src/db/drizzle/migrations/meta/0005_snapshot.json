@@ -1,6 +1,6 @@
 {
-  "id": "842cee2c-673e-456b-ba1f-a7d07ac7da45",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "ebc5d8c6-1381-439e-8591-f98f2356ef52",
+  "prevId": "e0008f57-09df-4778-8439-e10ef024e024",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -1116,12 +1116,6 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
-        },
-        "favorite_number": {
-          "name": "favorite_number",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
         }
       },
       "indexes": {},
@@ -1136,6 +1130,57 @@
           ]
         }
       },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.verification": {
+      "name": "verification",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "identifier": {
+          "name": "identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

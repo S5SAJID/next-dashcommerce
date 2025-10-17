@@ -3,8 +3,11 @@ import AppSidebar from "@/components/organisms/app-sidebar";
 import { SiteHeader } from "@/components/organisms/dashboard-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
+import { auth } from "@/lib/auth/auth";
 import DashboardProviders from "@/providers/dashboard/providers";
 import { Metadata } from "next";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: {
@@ -18,7 +21,13 @@ export const metadata: Metadata = {
   ]
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) redirect("/signin");
+
   return (
     <DashboardProviders>
       <SidebarProvider>

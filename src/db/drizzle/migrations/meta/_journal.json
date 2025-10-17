@@ -5,8 +5,43 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1760357933310,
-      "tag": "0000_thick_ricochet",
+      "when": 1760457295510,
+      "tag": "0000_polite_swarm",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1760457720239,
+      "tag": "0001_slippery_praxagora",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1760533209729,
+      "tag": "0002_bouncy_zuras",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1760698997452,
+      "tag": "0003_exotic_micromacro",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1760699382220,
+      "tag": "0004_tired_warhawk",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1760702258767,
+      "tag": "0005_sticky_emma_frost",
       "breakpoints": true
     }
   ]

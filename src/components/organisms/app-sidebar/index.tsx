@@ -49,12 +49,6 @@ const SIDEBAR_LINKS: SidebarLinkType[] = [
   }
 ];
 
-const USER =  {
-  name: "shadcn",
-  email: "m@example.com",
-  avatar: "/avatars/demo.png",
-};
-
 export default function AppSidebar() {
   const pathname = usePathname();
   
@@ -100,7 +94,7 @@ export default function AppSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenuItem>
-          <NavUser user={USER} />
+          <NavUser />
         </SidebarMenuItem>
       </SidebarFooter>
     </Sidebar>
