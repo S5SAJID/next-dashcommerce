@@ -1,6 +1,7 @@
 import { DashboardHeader, DashboardLayout, DashboardTitle } from "@/components/layout/dashboard/layout";
 import { ProductsPrimaryButtons } from "@/components/molecules/primary-buttons/products";
 import ProductsTable from "@/components/organisms/tables/products-table";
+import { getDashboardProducts } from "@/db/actions/dashboard/products/actions";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
   description: "Manage your products in the dashboard.",
 }
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await getDashboardProducts();
   return (
     <DashboardLayout>
       
@@ -17,7 +19,7 @@ export default function ProductsPage() {
         <ProductsPrimaryButtons />
       </DashboardHeader>
 
-      <ProductsTable />
+      <ProductsTable products={products.data}/>
     </DashboardLayout>
   )
 }

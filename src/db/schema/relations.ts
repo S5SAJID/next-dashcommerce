@@ -1,14 +1,18 @@
 import { relations } from "drizzle-orm";
-import { ProductTable, StoreTable } from "@/db/schema"
+import { ProductTable, StoreTable, user } from "@/db/schema"
 import { CustomerTable } from "./tables/storefront/customers/schema";
 import { OrderItemTable, OrderTable } from "./tables/storefront/orders/schema";
 
 // Store Relations
-export const StoreProductsRelation = relations(StoreTable, ({ many }) => ({
+export const StoreProductsRelation = relations(StoreTable, ({ many, one }) => ({
   products: many(ProductTable),
   customers: many(CustomerTable),
   orders: many(OrderTable),
   orderItems: many(OrderItemTable),
+  user: one(user, {
+    fields: [StoreTable.id],
+    references: [user.id]
+  })
 }));
 
 // Product Relations

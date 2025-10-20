@@ -15,11 +15,12 @@ type ProductDetailsPageProps = {
 
 export default async function ProductDetailsPage({ params }: ProductDetailsPageProps) {
   const slug = (await params).slug;
-  const product = await getDashboardProduct(slug);
-  if (!product) return notFound();
+  const product = await getDashboardProduct({ slug });
+  
+  if (!product.data) return notFound();
   return (
     <FormPageLayout>
-      <ProductDetailsForm product={product}/>
+      <ProductDetailsForm product={product.data} />
     </FormPageLayout>
   )
 }

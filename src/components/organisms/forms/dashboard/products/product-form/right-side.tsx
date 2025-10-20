@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { FormPageGridSecondary } from "@/components/layout/form-page-layout/layout";
 import { UseFormReturn } from "react-hook-form";
 import { Switch } from "@/components/ui/switch";
+import { NumberInput } from "@/components/ui/number-input";
 
 type ProductFormRightSideProps = {
   form: UseFormReturn<ProductFormType>
@@ -21,14 +22,11 @@ export function ProductFormRightSide({ form }: ProductFormRightSideProps) {
         <FormField
           control={form.control}
           name="price"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Price</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="400"
-                  type="number"
-                  {...form.register("price", { setValueAs: (v) => (v === "" ? undefined : parseFloat(v)) })} />
+                <NumberInput placeholder="400" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -36,11 +34,11 @@ export function ProductFormRightSide({ form }: ProductFormRightSideProps) {
         <FormField
           control={form.control}
           name="compare_at"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Compare at price</FormLabel>
               <FormControl>
-                <Input placeholder="300" {...form.register("compare_at", { setValueAs: (v) => (v === "" ? undefined : parseFloat(v)) })} />
+                <NumberInput placeholder="300" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -55,11 +53,11 @@ export function ProductFormRightSide({ form }: ProductFormRightSideProps) {
       <FormField
         control={form.control}
         name="stock"
-        render={() => (
+        render={({ field }) => (
           <FormItem>
             <FormLabel>Stock Quantity</FormLabel>
             <FormControl>
-              <Input placeholder="50" {...form.register("stock", { setValueAs: (v) => (v === "" ? undefined : parseFloat(v)) })} />
+              <NumberInput placeholder="50" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -71,7 +69,7 @@ export function ProductFormRightSide({ form }: ProductFormRightSideProps) {
           <FormItem>
             <FormLabel>SKU</FormLabel>
             <FormControl>
-              <Input placeholder="3A-E00-2" {...field} />
+              <Input placeholder="3A-E00-2" {...field} value={field.value ?? ""} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -89,7 +87,7 @@ export function ProductFormRightSide({ form }: ProductFormRightSideProps) {
           <FormItem>
             <FormControl>
               <div className="flex items-center space-x-2">
-                <Switch checked={field.value} onCheckedChange={field.onChange}/>
+                <Switch checked={field.value} onCheckedChange={field.onChange} />
                 <FormLabel htmlFor="airplane-mode">Publish</FormLabel>
               </div>
             </FormControl>

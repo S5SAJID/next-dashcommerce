@@ -1,4 +1,5 @@
-import { pgTable, text, timestamp, boolean, integer } from "drizzle-orm/pg-core"
+import { pgTable, text, timestamp, boolean, integer, uuid } from "drizzle-orm/pg-core"
+import { StoreTable } from "../stores"
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -17,6 +18,13 @@ export const user = pgTable("user", {
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires"),
   stripeCustomerId: text("stripe_customer_id"),
+
+  // Custom fields
+  storeId: uuid("primary_store_id")
+    .references(() => StoreTable.id, {
+      // delete if the store is deleted
+      onDelete: "cascade"
+    }),
 })
 
 export const session = pgTable("session", {

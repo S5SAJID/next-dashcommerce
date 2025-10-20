@@ -50,7 +50,7 @@ export function UserAuthForm({
   const isLoading = form.formState.isSubmitting;
 
   async function onSubmit(data: UserAuthFormSchema) {
-    await authClient.signUp.email({ email: data.email, name: data.name, password: data.password, callbackURL: "/products" }, {
+    await authClient.signUp.email({ email: data.email, name: data.name, password: data.password, callbackURL: "/new-store" }, {
       onError: ({ error }) => {
         toast.error(error.message || 'Something went wrong')
       },

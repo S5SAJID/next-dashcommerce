@@ -3,12 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Archive, Edit, MoreHorizontal, Rocket, Trash2 } from "lucide-react";
 import { DashboardProduct } from "@/db/actions/dashboard/products/types";
 import { deleteDashboardProduct, updateDashboardProduct } from "@/db/actions/dashboard/products/actions";
-import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "@bprogress/next";
 
 export default function ProductTableRowActions({ product }: { product: DashboardProduct }) {
-  const queryClient = useQueryClient();
   const router = useRouter();
 
   async function handleRowAction(type: "status" | "delete" | "edit") {
@@ -17,9 +15,9 @@ export default function ProductTableRowActions({ product }: { product: Dashboard
         toast.promise(
           updateDashboardProduct({ ...product, is_published: !product.is_published }), {
           loading: "Updating...",
-          success: async () => {
-            await queryClient.invalidateQueries({ queryKey: ['products'] });
-            return `Product "${product.name}" Updated`
+          success: async (data) => {
+            if (data.data?.id) return `Product "${product.name}" updated`
+            return data.serverError || "Something went wrong while updating product."
           },
           error: "Product updating failed."
         })
@@ -36,13 +34,13 @@ export default function ProductTableRowActions({ product }: { product: Dashboard
             label: "Delete",
             onClick: () => {
               toast.dismiss(`delete-toast-${product.id}`)
-              toast.promise(deleteDashboardProduct(product.id), {
+              toast.promise(deleteDashboardProduct({ id: product.id }), {
                 loading: "Deleting product...",
-                success: async () => {
-                  await queryClient.invalidateQueries({ queryKey: ['products'] });
-                  return `Product "${product.name}" deleted`
+                success: async (data) => {
+                  if (data.data?.success) return `Product "${product.name}" deleted`
+                  return data.data?.error || "Something went wrong while deleting product."
                 },
-                error: "Error deleting product."
+                error: "Something went wrong while deleting product."
               })
             }
           }

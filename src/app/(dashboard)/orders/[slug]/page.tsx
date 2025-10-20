@@ -70,13 +70,13 @@ export default async function OrderDetailsPage({ params }: PageProps<"/orders/[s
             price: Number(item.price),
           }))} />
         </FormPageGridPrimary>
-        <FormPageGridSecondary>
-          <OrderCustomerCard customer={customer} />
+        {/* <FormPageGridSecondary> */}
+          {/* <OrderCustomerCard customer={customer} />
           <Separator />
           <OrderShippingCard shipping={{
             address1: customer?.address,
-          }}/>
-        </FormPageGridSecondary>
+          }}/> */}
+        {/* </FormPageGridSecondary> */}
       </FormPageGridContainer>
     </FormPageLayout >
   )

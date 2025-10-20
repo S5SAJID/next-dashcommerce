@@ -34,7 +34,7 @@ export default function ProductForm() {
     toast.promise(createDashboardProduct(data), {
       loading: "Creating product...",
       success: async (data) => {
-        if (data.success) {
+        if (data.data?.success) {
           await queryClient.invalidateQueries({ queryKey: ['products'] })
           // navigate to product details page
           router.push("/products/")
@@ -42,10 +42,10 @@ export default function ProductForm() {
         }
         return "Product creation failed"
       },
-      error: {
-        message: "Product creation failed",
+      error: (error) => ({
+        message: error.message || "Product creation failed",
         description: "Product can't be created. Please try again.",
-      }
+      })
     })
   }
 

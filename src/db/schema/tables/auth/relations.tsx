@@ -8,6 +8,7 @@ import {
   organization,
   member,
   invitation,
+  StoreTable,
 } from "@/db/schema"
 
 // User Relations
@@ -17,6 +18,10 @@ export const userRelations = relations(user, ({ many, one }) => ({
   twoFactor: one(twoFactor, {
     fields: [user.id],
     references: [twoFactor.userId],
+  }),
+  store: one(StoreTable, {
+    references: [StoreTable.id],
+    fields: [user.storeId],
   }),
   passkeys: many(passkey),
   memberships: many(member),

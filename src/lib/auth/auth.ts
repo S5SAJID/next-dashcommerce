@@ -8,6 +8,14 @@ import { sendAuthEmailVerification } from "../email/email-verification";
 import { sendWelcomeEmail } from "../email/welcome-email";
 
 export const auth = betterAuth({
+    user: {
+        additionalFields: {
+            storeId: {
+                type: "string",
+                required: false,
+            }
+        }
+    },
     database: drizzleAdapter(db, {
         provider: "pg", // or "mysql", "sqlite"
     }),
@@ -43,7 +51,7 @@ export const auth = betterAuth({
     },
     hooks: {
         after: createAuthMiddleware(async (ctx) => {
-            if (ctx.path.startsWith("/signup") || ctx.path.startsWith("/signin")) {
+            if (ctx.path.startsWith("/sign-up")) {
                 const user = ctx.context.newSession?.user ?? {
                     name: ctx.body.name,
                     email: ctx.body.email,

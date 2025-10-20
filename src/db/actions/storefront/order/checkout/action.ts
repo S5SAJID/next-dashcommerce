@@ -8,7 +8,7 @@ import {
   OrderTable,
   ProductTable,
 } from "@/db/schema";
-import { actionClient } from "@/lib/safe-action";
+import { storeFrontActionClient } from "@/lib/safe-action-clients/storefront-client";
 import { and, eq, inArray } from "drizzle-orm";
 
 type CustomerInsert = typeof CustomerTable.$inferInsert;
@@ -22,7 +22,7 @@ type CheckoutResponse = {
   error?: string;
 };
 
-export const checkoutFormAction = actionClient
+export const checkoutFormAction = storeFrontActionClient
   .inputSchema(checkoutFormSchema)
   .action(async ({ parsedInput }): Promise<CheckoutResponse> => {
     // TODO: Get store_id from context/session instead of hardcoding

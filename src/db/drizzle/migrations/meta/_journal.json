@@ -43,6 +43,13 @@
       "when": 1760702258767,
       "tag": "0005_sticky_emma_frost",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1760795318651,
+      "tag": "0006_wakeful_loa",
+      "breakpoints": true
     }
   ]
 }

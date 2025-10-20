@@ -9,14 +9,12 @@ import { ProductDetailsFormRightSide } from "./right-side";
 import { ProductDetailsFormLeftSide } from "./left-side";
 import { updateDashboardProductDetails } from "@/db/actions/dashboard/products/actions";
 import { toast } from "sonner";
-import { useQueryClient } from "@tanstack/react-query";
 
 type ProductDetailsFormProps = {
   product: ProductDetailsFormType
 }
 
 export default function ProductDetailsForm({ product }: ProductDetailsFormProps) {
-  const queryClient = useQueryClient();
   const form = useForm<ProductDetailsFormType>({
     resolver: zodResolver(product_details_form_schema),
     defaultValues: product
@@ -26,8 +24,7 @@ export default function ProductDetailsForm({ product }: ProductDetailsFormProps)
     toast.promise(updateDashboardProductDetails(data), {
       loading: "Upadting product...",
       success: async (data) => {
-        if (data.success) {
-          await queryClient.invalidateQueries({ queryKey: ['products'] })
+        if (data.data?.success) {
           return "Product updated."
         }
         return "Product updating failed"

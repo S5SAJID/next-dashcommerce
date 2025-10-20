@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Remove locally uploaded images
 public/uploads
+
+# Vscode
+.vscode
