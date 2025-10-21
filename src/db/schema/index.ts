@@ -6,12 +6,8 @@ import {
   user,
   session,
   account,
-  twoFactor,
-  passkey,
-  organization,
-  member,
-  invitation,
-  verification
+  verification,
+  rateLimit
 } from "./tables/auth"
 import {userRelations, accountRelations, invitationRelations, memberRelations, organizationRelations, passkeyRelations, sessionRelations, twoFactorRelations} from "./tables/auth/relations";
 import {
@@ -38,12 +34,8 @@ export {
   user,
   session,
   account,
-  twoFactor,
-  passkey,
-  organization,
-  member,
-  invitation,
   verification,
+  rateLimit,
   // Auth Relations
   userRelations,
   accountRelations,
