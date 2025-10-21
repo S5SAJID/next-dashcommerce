@@ -36,13 +36,4 @@ export {
   account,
   verification,
   rateLimit,
-  // Auth Relations
-  userRelations,
-  accountRelations,
-  invitationRelations,
-  memberRelations,
-  organizationRelations,
-  passkeyRelations,
-  sessionRelations,
-  twoFactorRelations
 };
