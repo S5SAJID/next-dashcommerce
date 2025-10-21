@@ -9,7 +9,7 @@ import {
   verification,
   rateLimit
 } from "./tables/auth"
-import {userRelations, accountRelations, invitationRelations, memberRelations, organizationRelations, passkeyRelations, sessionRelations, twoFactorRelations} from "./tables/auth/relations";
+// import {userRelations, accountRelations, invitationRelations, memberRelations, organizationRelations, passkeyRelations, sessionRelations, twoFactorRelations} from "./tables/auth/relations";
 import {
   ProductStoreRelation,
   StoreProductsRelation,
