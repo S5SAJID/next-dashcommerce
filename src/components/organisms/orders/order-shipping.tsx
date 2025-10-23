@@ -6,7 +6,6 @@ export default function OrderShippingCard({
   shipping: {
     name: string
     address1: string
-    address2?: string
     city: string
     state?: string
     zip?: string
@@ -25,7 +24,7 @@ export default function OrderShippingCard({
           <div className="font-medium">{shipping.name}</div>
           <div className="text-muted-foreground">
             {shipping.address1}
-            {shipping.address2 ? `, ${shipping.address2}` : ""}
+            {/* {shipping.address2 ? `, ${shipping.address2}` : ""} */}
           </div>
           <div className="text-muted-foreground">
             {shipping.city}

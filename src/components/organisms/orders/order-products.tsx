@@ -1,21 +1,23 @@
-type Product = {
-  id: number
-  name: string
-  quantity: number
-  price: number
-}
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import Image from "next/image"
 import Link from "next/link"
+
+type Product = {
+  id: number
+  name: string
+  quantity: number
+  price: number
+  img: string
+}
 
 export default function OrderProductsCard({ products }: { products: Product[] }) {
   return (
@@ -25,20 +27,20 @@ export default function OrderProductsCard({ products }: { products: Product[] })
       </CardHeader>
       <CardContent>
         <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
+          {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
           <TableHeader>
             <TableRow>
-              <TableHead className="mn-w-[100px]">Name</TableHead>
+              <TableHead className="mn-w-[100px] px-0">Name</TableHead>
               <TableHead>Quantity</TableHead>
-              <TableHead className="text-right">Price</TableHead>
+              <TableHead className="text-right px-0">Price</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {products.map((product) => (
-              <TableRow key={product.id} >
-                <TableCell>
+              <TableRow key={product.id}>
+                <TableCell className="py-2 px-0">
                   <div className="space-x-4 flex items-center">
-                    <img width={50} height={50} src={"https://via.placeholder.com/50"} alt={product.name} className="h-8 w-8 bg-muted rounded-md" />
+                    <Image width={50} height={50} src={product.img} alt={product.name} className="h-8 w-8 bg-muted rounded-md" />
                     <Link href={`products/${product.id}`} className="hover:underline">{product.name}</Link>
                   </div>
                 </TableCell>

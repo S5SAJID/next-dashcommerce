@@ -3,7 +3,7 @@ import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 export default function OrderCustomerCard({
   customer,
 }: {
-  customer: { name: string; email: string; phone?: string }
+  customer: { full_name: string; email: string; phone?: string }
 }) {
   return (
     <>
@@ -13,7 +13,7 @@ export default function OrderCustomerCard({
       <CardContent className="space-y-2 text-sm">
         <div className="flex items-center justify-between">
           <span className="text-muted-foreground">Name</span>
-          <span className="font-medium">{customer.name}</span>
+          <span className="font-medium">{customer.full_name}</span>
         </div>
         <div className="flex items-center justify-between">
           <span className="text-muted-foreground">Email</span>

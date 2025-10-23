@@ -1,11 +1,8 @@
 import { BreadcrumbNavigation } from "@/components/molecules/bread-crumb-navigation";
 import { ThemeSwitch } from "@/components/molecules/theme-switch";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Store } from "lucide-react";
-import Link from "next/link";
+import DashboardStoreOpenButton from "./store-open-button";
 
 
 export function SiteHeader() {
@@ -19,16 +16,7 @@ export function SiteHeader() {
         />
         <BreadcrumbNavigation />
         <div className="ml-auto flex items-center gap-2">
-          <Tooltip>
-            <TooltipTrigger>
-              <Button asChild variant="ghost" size="icon">
-                <Link href="http://acme.localhost:3000" target="_blank" prefetch={false}>
-                  <Store />
-                </Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Open Store</TooltipContent>
-          </Tooltip>
+          <DashboardStoreOpenButton />
           <ThemeSwitch />
         </div>
       </div>

@@ -3,11 +3,13 @@ import AppSidebar from "@/components/organisms/app-sidebar";
 import { SiteHeader } from "@/components/organisms/dashboard-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
+import { getDashboadStore } from "@/db/actions/dashboard/settings/layout/actions";
 import { auth } from "@/lib/auth/auth";
+import { DashboardStoreInfoProvider } from "@/lib/context/dashboard/store-context-provider";
 import DashboardProviders from "@/providers/dashboard/providers";
 import { Metadata } from "next";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: {
@@ -28,20 +30,25 @@ export default async function Layout({ children }: { children: React.ReactNode }
 
   if (!session) redirect("/signin");
 
+  const { data } = await getDashboadStore()
+  if (!data) notFound()
+
   return (
     <DashboardProviders>
-      <SidebarProvider>
-        <AppSidebar />
-        <SidebarInset className='@container/content'>
-          <main className="flex-1 w-full h-full">
-            <SiteHeader />
-            <Main>
-              {children}
-            </Main>
-            <Toaster />
-          </main>
-        </SidebarInset>
-      </SidebarProvider>
+      <DashboardStoreInfoProvider initialStore={data}>
+        <SidebarProvider>
+          <AppSidebar />
+          <SidebarInset className='@container/content'>
+            <main className="flex-1 w-full h-full">
+              <SiteHeader />
+              <Main>
+                {children}
+              </Main>
+              <Toaster />
+            </main>
+          </SidebarInset>
+        </SidebarProvider>
+      </DashboardStoreInfoProvider>
     </DashboardProviders>
   )
 }

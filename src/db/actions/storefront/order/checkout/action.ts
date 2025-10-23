@@ -24,9 +24,13 @@ type CheckoutResponse = {
 
 export const checkoutFormAction = storeFrontActionClient
   .inputSchema(checkoutFormSchema)
-  .action(async ({ parsedInput }): Promise<CheckoutResponse> => {
-    // TODO: Get store_id from context/session instead of hardcoding
-    const store_id = "a66ba6dc-e9a5-4d17-a2fb-50c85c504f37";
+  .action(async ({ parsedInput, ctx }): Promise<CheckoutResponse> => {
+    const storeId = ctx.storeId.id;
+
+    if (!storeId) {
+      throw new Error("Store ID not found in context.");
+    }
+
     const productIds = parsedInput.cartItems.map((c) => c.productId);
 
     const customerData: CustomerInsert = {
@@ -34,7 +38,7 @@ export const checkoutFormAction = storeFrontActionClient
       address: parsedInput.address,
       email: parsedInput.email,
       phone: parsedInput.phone,
-      store_id: store_id,
+      store_id: storeId,
     };
 
     try {
@@ -51,7 +55,7 @@ export const checkoutFormAction = storeFrontActionClient
           .from(ProductTable)
           .where(
             and(
-              eq(ProductTable.store_id, store_id),
+              eq(ProductTable.store_id, storeId),
               inArray(ProductTable.id, productIds)
             )
           );
@@ -90,7 +94,7 @@ export const checkoutFormAction = storeFrontActionClient
             .from(CustomerTable)
             .where(
               and(
-                eq(CustomerTable.store_id, store_id),
+                eq(CustomerTable.store_id, storeId),
                 eq(CustomerTable.email, parsedInput.email)
               )
             )
@@ -133,7 +137,7 @@ export const checkoutFormAction = storeFrontActionClient
         const [order] = await tx
           .insert(OrderTable)
           .values({
-            store_id: store_id,
+            store_id: storeId,
             customer_id: customer_id,
             status: "PENDING",
             total_amount: roundedTotal.toString(),
@@ -146,7 +150,7 @@ export const checkoutFormAction = storeFrontActionClient
 
         // 6. Create order items
         const orderItems: OrderItemInsert[] = items.map((item) => ({
-          store_id: store_id,
+          store_id: storeId,
           order_id: order.id,
           product_id: item.productId,
           quantity: item.qty,

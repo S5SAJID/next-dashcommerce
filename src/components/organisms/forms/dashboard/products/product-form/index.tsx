@@ -10,11 +10,9 @@ import { ProductFormLeftSide } from "./left-side";
 import { ProductFormRightSide } from "./right-side";
 import { createDashboardProduct } from "@/db/actions/dashboard/products/actions";
 import { useRouter } from "@bprogress/next";
-import { useQueryClient } from "@tanstack/react-query";
 
 export default function ProductForm() {
   const router = useRouter();
-  const queryClient = useQueryClient()
   const form = useForm<ProductFormType>({
     resolver: zodResolver(product_form_schema),
     defaultValues: {
@@ -35,7 +33,6 @@ export default function ProductForm() {
       loading: "Creating product...",
       success: async (data) => {
         if (data.data?.success) {
-          await queryClient.invalidateQueries({ queryKey: ['products'] })
           // navigate to product details page
           router.push("/products/")
           return "Product created."

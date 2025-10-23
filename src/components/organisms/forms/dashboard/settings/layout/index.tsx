@@ -40,9 +40,9 @@ export default function StoreLayoutSettingsForm(props: StoreLayoutSettingsFormPr
   const onSubmit = async (data: StoreLayoutSettingsSchemaType) => {
     toast.promise(updateLayoutSettings(data), {
       loading: "Applying settings...",
-      success: async (data) => {
+      success: async ({data: responce}) => {
         // TODO: Add queryclient for it
-        if (data.success) return 'Settings applied successfully'
+        if (responce && responce.success) return 'Settings applied successfully'
         return "Settings applying failed"
       },
       error: {

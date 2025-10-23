@@ -67,7 +67,12 @@ export function DataTableToolbar<TData>({
           </>
         )}
       </div>
-      <DataTableViewOptions table={table} />
+      <div className='flex gap-1'>
+        <DataTableViewOptions table={table} />
+        {/* <Button size="icon" variant="outline" className='size-8'>
+          <RefreshCw />
+        </Button> */}
+      </div>
     </div>
   )
 }

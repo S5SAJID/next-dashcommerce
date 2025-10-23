@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default async function StoreSettingsPage() {
-  const store = await getDashboadStore();
+  const {data: store} = await getDashboadStore();
 
   return (
     <SubSettingsPageLayout

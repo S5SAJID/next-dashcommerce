@@ -12,9 +12,10 @@ import { CheckCircle2, CircleX, Loader } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import OrderSummaryCard from "@/components/organisms/orders/order-summary";
 import OrderProductsCard from "@/components/organisms/orders/order-products";
+import { getDashboardOrder } from "@/db/actions/dashboard/orders/actions";
+import { notFound } from "next/navigation";
 import OrderCustomerCard from "@/components/organisms/orders/order-customer";
 import OrderShippingCard from "@/components/organisms/orders/order-shipping";
-import { getDashboardOrder } from "@/db/actions/dashboard/orders/actions";
 
 export const metadata: Metadata = {
   title: 'Order Details',
@@ -23,7 +24,9 @@ export const metadata: Metadata = {
 
 export default async function OrderDetailsPage({ params }: PageProps<"/orders/[slug]">) {
   const orderSlug = (await params).slug
-  const {order, items, customer} = await getDashboardOrder(orderSlug)
+  const { data } = await getDashboardOrder({ orderId: orderSlug })
+  if (!data) notFound()
+  const { customer, items, order } = data
 
   return (
     <FormPageLayout>
@@ -65,18 +68,26 @@ export default async function OrderDetailsPage({ params }: PageProps<"/orders/[s
           <Separator />
           <OrderProductsCard products={items.map((item, i) => ({
             id: i,
+            img: item.product_image as string,
             name: item.product_name,
             quantity: item.quantity,
             price: Number(item.price),
           }))} />
         </FormPageGridPrimary>
-        {/* <FormPageGridSecondary> */}
-          {/* <OrderCustomerCard customer={customer} />
+        <FormPageGridSecondary>
+        { customer && <OrderCustomerCard customer={customer} />}
           <Separator />
+          {/* TODO: Fix this */}
           <OrderShippingCard shipping={{
-            address1: customer?.address,
-          }}/> */}
-        {/* </FormPageGridSecondary> */}
+            address1: customer?.address as string,
+            city: "Odigram",
+            country: "Pakistan",
+            name: customer?.full_name as string,
+            method: "COD",
+            state: "Swat",
+            zip: "23302"
+          }}/>
+        </FormPageGridSecondary>
       </FormPageGridContainer>
     </FormPageLayout >
   )

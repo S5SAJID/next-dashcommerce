@@ -3,6 +3,7 @@ import { DashboardHeader, DashboardLayout, DashboardTitle } from "@/components/l
 import { OrdersPrimaryButtons } from "@/components/molecules/primary-buttons/orders"
 import OrdersTable from "@/components/organisms/tables/orders-table"
 import { getDashboardOrders } from "@/db/actions/dashboard/orders/actions"
+import { notFound } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "Orders",
@@ -10,14 +11,16 @@ export const metadata: Metadata = {
 }
 
 export default async function ProductsPage() {
-  const orders = await getDashboardOrders();
+  const { data } = await getDashboardOrders();
+  if (!data) notFound();
+
   return (
     <DashboardLayout>
       <DashboardHeader>
         <DashboardTitle title="Orders" description="Here you can manage all your products."/>
         <OrdersPrimaryButtons />
       </DashboardHeader>
-      <OrdersTable orders={orders} />
+      <OrdersTable orders={data} />
     </DashboardLayout>
   )
 }
