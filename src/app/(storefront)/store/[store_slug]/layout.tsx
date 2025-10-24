@@ -31,7 +31,7 @@ export default async function Layout({ children, params }: { children: React.Rea
   if (!store) return notFound();
 
   return (
-    <div style={{ fontFamily: "PP Mori" }}>
+    <div className="[&>*]:font-['PP_Mori']">
       <StoreFrontProviders>
         <StoreFrontNavbar store={store} />
         <main className="mx-auto w-full max-w-7xl min-h-[70dvh] px-4 pb-6 pt-2 sm:px-6 lg:px-8">
