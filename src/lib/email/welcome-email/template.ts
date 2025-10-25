@@ -1,10 +1,10 @@
 type props = {
-  user: {
-    name: string
-  },
-}
+	user: {
+		name: string;
+	};
+};
 export function WelcomeEmailTemplate({ user }: props) {
-  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <meta name="viewport" content="width=device-width" />
@@ -107,5 +107,5 @@ export function WelcomeEmailTemplate({ user }: props) {
     </table>
   </body>
 </html>
-`
+`;
 }

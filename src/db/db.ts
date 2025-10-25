@@ -2,9 +2,9 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import * as schema from "./schema";
 
 export const db = drizzle(process.env.DATABASE_URL as string, {
-  logger: true,
-  schema: schema
-})
+	logger: true,
+	schema,
+});
 
 // const {
 //   // TODO: Fix

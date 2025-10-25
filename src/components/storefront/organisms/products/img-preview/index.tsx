@@ -1,40 +1,44 @@
 "use client";
 
-import { ProductWithStore } from "@/db/actions/storefront/products/public/types";
+import type { ProductWithStore } from "@/db/actions/storefront/products/public/types";
 import Image from "next/image";
 import { useState } from "react";
 
-export default function StoreFrondProductImagePreview({ product }: { product: ProductWithStore}) {
-  const [selectedImg, setSelectedImg] = useState(product.images[0]);
+export default function StoreFrondProductImagePreview({
+	product,
+}: {
+	product: ProductWithStore;
+}) {
+	const [selectedImg, setSelectedImg] = useState(product.images[0]);
 
-  return (
-    <div className="w-full gap-2 grid grid-rows-[1fr_80px]">
-      <div className="rounded relative bg-muted overflow-hidden">
-        {product.images.map(image => (
-          <Image
-            src={image}
-            alt={product.name}
-            width={1000}
-            height={1000}
-            key={image}
-            className={`transition-all duration-500 ${image === selectedImg ? 'opacity-100' : 'opacity-0 hidden'}`}
-          />
-        ))}
-      </div>
-      <div className="flex gap-2">
-        {product.images.map(img => (
-          <Image
-            key={img}
-            loading="lazy"
-            src={img}
-            alt={product.name}
-            onClick={() => setSelectedImg(img)}
-            width={80}
-            height={80}
-            className={`cursor-pointer border ${img === selectedImg ? 'border-primary' : 'border-transparent'} rounded`}
-          />
-        ))}
-      </div>
-    </div>
-  )
+	return (
+		<div className="grid w-full grid-rows-[1fr_80px] gap-2">
+			<div className="relative overflow-hidden rounded bg-muted">
+				{product.images.map((image) => (
+					<Image
+						alt={product.name}
+						className={`transition-all duration-500 ${image === selectedImg ? "opacity-100" : "hidden opacity-0"}`}
+						height={1000}
+						key={image}
+						src={image}
+						width={1000}
+					/>
+				))}
+			</div>
+			<div className="flex gap-2">
+				{product.images.map((img) => (
+					<Image
+						alt={product.name}
+						className={`cursor-pointer border ${img === selectedImg ? "border-primary" : "border-transparent"} rounded`}
+						height={80}
+						key={img}
+						loading="lazy"
+						onClick={() => setSelectedImg(img)}
+						src={img}
+						width={80}
+					/>
+				))}
+			</div>
+		</div>
+	);
 }

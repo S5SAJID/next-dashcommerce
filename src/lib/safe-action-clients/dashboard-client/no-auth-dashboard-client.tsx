@@ -1,4 +1,3 @@
 import { createSafeActionClient } from "next-safe-action";
 
-
-export const noAuthdashboardActionClient = createSafeActionClient()
+export const noAuthdashboardActionClient = createSafeActionClient();

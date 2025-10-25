@@ -3,30 +3,45 @@ import { cn } from "@/lib/utils";
 import { Minus, Plus } from "lucide-react";
 
 type StoreFrontQuantityInput = {
-  className?: string,
-  value?: number,
-  onChange: (value: number) => void
-}
+	className?: string;
+	value?: number;
+	onChange: (value: number) => void;
+};
 
-export default function StoreFrontQuantityInput({value=0, className, onChange }: StoreFrontQuantityInput) {
-  return (
-    <div className={cn("border border-input rounded-full flex h-9 items-center overflow-hidden", className)}>
-      <Button 
-        onClick={() => onChange(value-1)}
-        disabled={value<=0} 
-        className="rounded-full size-6 [&>svg]:stroke-primary/80 [&>svg]:hover:stroke-primary/60" 
-        variant="ghost" 
-        size="icon">
-        <Minus />
-      </Button>
-      <input className="rounded-none p-0 border-none text-center size-6" readOnly value={value} />
-      <Button 
-        onClick={() => onChange(value+1)}
-        className="rounded-full size-8 [&>svg]:stroke-primary/80 [&>svg]:hover:stroke-primary/60" 
-        variant="ghost" 
-        size="icon">
-        <Plus />
-      </Button>
-    </div>
-  )
+export default function StoreFrontQuantityInput({
+	value = 0,
+	className,
+	onChange,
+}: StoreFrontQuantityInput) {
+	return (
+		<div
+			className={cn(
+				"flex h-9 items-center overflow-hidden rounded-full border border-input",
+				className
+			)}
+		>
+			<Button
+				className="size-6 rounded-full [&>svg]:stroke-primary/80 [&>svg]:hover:stroke-primary/60"
+				disabled={value <= 0}
+				onClick={() => onChange(value - 1)}
+				size="icon"
+				variant="ghost"
+			>
+				<Minus />
+			</Button>
+			<input
+				className="size-6 rounded-none border-none p-0 text-center"
+				readOnly
+				value={value}
+			/>
+			<Button
+				className="size-8 rounded-full [&>svg]:stroke-primary/80 [&>svg]:hover:stroke-primary/60"
+				onClick={() => onChange(value + 1)}
+				size="icon"
+				variant="ghost"
+			>
+				<Plus />
+			</Button>
+		</div>
+	);
 }

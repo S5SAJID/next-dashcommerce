@@ -1,3 +1,7 @@
-export default function Placeholder({text=""}: {text?: string}) {
-  return <div className="w-full h-full border bg-muted font-mono flex items-center justify-center">{text}</div>
+export default function Placeholder({ text = "" }: { text?: string }) {
+	return (
+		<div className="flex h-full w-full items-center justify-center border bg-muted font-mono">
+			{text}
+		</div>
+	);
 }

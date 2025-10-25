@@ -5,17 +5,17 @@ import { Button } from "../ui/button";
 import { ArrowLeft } from "lucide-react";
 
 export default function BackButton() {
-  const router = useRouter();
+	const router = useRouter();
 
-  return (
-    <Button
-      variant="ghost"
-      size="sm"
-      className="w-8"
-      type="button"
-      onClick={() => router.back()}
-    >
-      <ArrowLeft />
-    </Button>
-  )
+	return (
+		<Button
+			className="w-8"
+			onClick={() => router.back()}
+			size="sm"
+			type="button"
+			variant="ghost"
+		>
+			<ArrowLeft />
+		</Button>
+	);
 }

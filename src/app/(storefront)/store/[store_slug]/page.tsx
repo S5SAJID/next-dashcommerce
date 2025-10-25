@@ -5,33 +5,42 @@ import { getPublicStoreFront } from "@/db/actions/storefront/store/public/action
 import { notFound } from "next/navigation";
 
 type Props = {
-  params: Promise<{ store_slug: string }>
-}
+	params: Promise<{ store_slug: string }>;
+};
+
+const HOMEPAGE_PRODUCTS_LIMIT = 11;
 
 export default async function StoreFrontPage({ params }: Props) {
-  const storeSlug = (await params).store_slug;
-  const store = await getPublicStoreFront(storeSlug);
-  
-  const products = await getPublicStorefrontProducts(storeSlug);
+	const storeSlug = (await params).store_slug;
+	const store = await getPublicStoreFront(storeSlug);
 
-  if (!store) return notFound();
-  return (
-    <main className="space-y-4">
-      <StoreFrontHero
-        title={store.settings.heroSection.title}
-        description={store.settings.heroSection.description}
-        cta={{
-          link: store.settings.heroSection.ctaLink,
-          text: store.settings.heroSection.ctaText,
-          target: store.settings.heroSection.ctaTarget == "_blank" ? "_blank" : "self"
-        }}
-        image={{
-          url: store.settings.heroSection.image,
-          alt: "hero image"
-        }}
-      />
+	const products = await getPublicStorefrontProducts(storeSlug);
 
-      <StoreFrontProductList products={products.slice(0,11)} />
-    </main>
-  );
+	if (!store) {
+		return notFound();
+	}
+	return (
+		<main className="space-y-4">
+			<StoreFrontHero
+				cta={{
+					link: store.settings.heroSection.ctaLink,
+					text: store.settings.heroSection.ctaText,
+					target:
+						store.settings.heroSection.ctaTarget === "_blank"
+							? "_blank"
+							: "self",
+				}}
+				description={store.settings.heroSection.description}
+				image={{
+					url: store.settings.heroSection.image,
+					alt: "hero image",
+				}}
+				title={store.settings.heroSection.title}
+			/>
+
+			<StoreFrontProductList
+				products={products.slice(0, HOMEPAGE_PRODUCTS_LIMIT)}
+			/>
+		</main>
+	);
 }
