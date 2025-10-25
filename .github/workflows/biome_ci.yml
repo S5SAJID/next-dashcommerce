@@ -1,0 +1,39 @@
+name: Biome Check
+
+# Triggers the workflow on push or pull request events to the main branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  biome_check:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        # Biome typically runs in a JavaScript environment, so setting up Node is standard practice.
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        # This step is crucial so the 'setup-biome' action can read the lockfile
+        # (package-lock.json, yarn.lock, etc.) and correctly detect the version
+        # of @biomejs/biome you have pinned in your project.
+        run: npm install # Use yarn, pnpm, or bun install if applicable
+
+      - name: Setup Biome CLI
+        # This action automatically detects the version from your project's dependencies
+        # and makes the 'biome' command available in the path.
+        uses: biomejs/setup-biome@v2
+        
+      - name: Run Biome CI Check
+        # The 'biome ci' command runs linting and formatting checks in a read-only mode,
+        # ensuring your code adheres to your project's configuration without making
+        # any file modifications. It will fail the workflow if errors are found.
+        run: biome ci
