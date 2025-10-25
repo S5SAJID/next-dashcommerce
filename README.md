@@ -12,7 +12,7 @@
 
 A modern e-commerce platform built with Next.js 15, featuring an admin dashboard and storefront. This project explores cutting-edge web development patterns with a focus on type safety, multi-tenancy, and developer experience. It's actively evolving - think of it as a solid foundation that's still growing. It's a working foundation that's getting better—and more stable—every day.
 
-![Preview](./public/preview.png)
+![Preview](./public/preview-v2.png)
 
 ## 🚀 What's This About?
 
