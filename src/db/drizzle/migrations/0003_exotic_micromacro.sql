@@ -1,1 +1,0 @@
-ALTER TABLE "user" ADD COLUMN "favorite_number" integer DEFAULT 0 NOT NULL;

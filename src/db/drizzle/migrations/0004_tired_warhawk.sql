@@ -1,1 +1,0 @@
-ALTER TABLE "user" ALTER COLUMN "favorite_number" DROP DEFAULT;

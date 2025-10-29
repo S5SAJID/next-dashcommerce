@@ -1,91 +1,59 @@
 "use client";
-import { useState, useEffect } from "react";
-import type { UseFormReturn } from "react-hook-form";
-import { checkDashboardSubdomainAvailability } from "@/db/actions/dashboard/common/actions"; // Assuming this path is correct
-import { useDebounceValue } from "@/hooks/use-debounce-value"; // Assuming this path is correct
-import type { z } from "zod";
-import type { storeFormSchema } from "@/components/organisms/forms/auth/create-store/schema";
+import { useState, useEffect, useRef } from "react";
+import { useDebounce } from "@/hooks/use-debounce";
+import { checkDashboardSubdomainAvailability } from "@/db/actions/dashboard/common/actions";
 
-export function useSubdomainAvailabilityCheck(
-	form: UseFormReturn<z.infer<typeof storeFormSchema>>,
-	watchSubdomainValue: string,
-	debounceTime = 500
-) {
-	const [debouncedSubdomain] = useDebounceValue(
-		watchSubdomainValue,
-		debounceTime
-	);
-	const [isSubDomainChecking, setIsSubDomainChecking] = useState(false);
-	const [isSubDomainAvailable, setIsSubDomainAvailable] = useState(false);
-	const subdomainError = form.formState.errors.subdomain?.message;
+type SubdomainStatus = "idle" | "checking" | "available" | "unavailable" | "error";
 
-	useEffect(() => {
-		if (
-			form.getFieldState("subdomain").invalid &&
-			subdomainError !==
-				`The subdomain "${debouncedSubdomain}" is already taken.`
-		) {
-			setIsSubDomainChecking(false);
-			setIsSubDomainAvailable(false);
-			return;
-		}
+export function useSubdomainAvailability(subdomain: string, debounceTime = 500) {
+  const debouncedSubdomain = useDebounce(subdomain, debounceTime);
+  const [status, setStatus] = useState<SubdomainStatus>("idle");
+  const [error, setError] = useState<string | null>(null);
 
-		// 2. Skip check if value is empty or too short (Zod validation will handle the error message).
-		if (!debouncedSubdomain || debouncedSubdomain.length < 3) {
-			setIsSubDomainChecking(false);
-			setIsSubDomainAvailable(false);
-			// Ensure manual error is cleared if the user deletes the input
-			if (subdomainError) {
-				form.clearErrors("subdomain");
-			}
-			return;
-		}
+  // Ref to track the latest request
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-		// We should only proceed if the value *passes* all Zod rules up to the async check.
-		// Zod's .refine(async...) will be triggered on submit, but this hook provides the real-time feedback.
+  useEffect(() => {
+    if (debouncedSubdomain.length < 3) {
+      setStatus("idle");
+      return;
+    }
 
-		const validate = async (subdomain: string) => {
-			// Prevent race conditions and update UI state
-			const currentCheckValue = subdomain;
-			setIsSubDomainChecking(true);
-			setIsSubDomainAvailable(false);
+    // Abort previous request if it's still running
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
 
-			// Clear manual error from previous check before starting the new one
-			form.clearErrors("subdomain");
+    const newAbortController = new AbortController();
+    abortControllerRef.current = newAbortController;
 
-			try {
-				const { isAvailable } =
-					await checkDashboardSubdomainAvailability(subdomain);
+    setStatus("checking");
+    setError(null);
 
-				// Crucial Check: Only apply the result if the debounce value hasn't changed
-				// while the async call was running. This prevents race conditions.
-				if (currentCheckValue !== form.getValues("subdomain")) {
-					return;
-				}
+    checkDashboardSubdomainAvailability(debouncedSubdomain)
+      .then(({ isAvailable }) => {
+        if (newAbortController.signal.aborted) {
+          return; // Ignore if aborted
+        }
+        if (isAvailable) {
+          setStatus("available");
+        } else {
+          setStatus("unavailable");
+        }
+      })
+      .catch((err) => {
+        if (newAbortController.signal.aborted) {
+          return; // Ignore if aborted
+        }
+        setStatus("error");
+        setError("Failed to check subdomain availability.");
+        console.error(err);
+      });
 
-				setIsSubDomainAvailable(isAvailable);
+    return () => {
+      newAbortController.abort();
+    };
+  }, [debouncedSubdomain]);
 
-				if (!isAvailable) {
-					// Subdomain is taken: Set a React Hook Form error
-					form.setError("subdomain", {
-						type: "manual", // Use 'manual' for server-side errors
-						message: `The subdomain "${subdomain}" is already taken.`,
-					});
-				}
-			} catch (_error) {
-				setIsSubDomainAvailable(false);
-				// Optionally set an error here if the check itself fails
-			} finally {
-				setIsSubDomainChecking(false);
-			}
-		};
-
-		// Run the validation
-		validate(debouncedSubdomain);
-	}, [debouncedSubdomain, form, subdomainError]); // Include subdomainError to correctly handle error clearing
-
-	return {
-		isSubDomainChecking,
-		isSubDomainAvailable,
-	};
+  return { status, error };
 }

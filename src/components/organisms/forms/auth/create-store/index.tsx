@@ -17,9 +17,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createDashboardStore } from "@/db/actions/dashboard/store/actions";
-import { useSubdomainAvailabilityCheck } from "@/hooks/dashboard/store/use-subdomain-availablity";
+import { useSubdomainAvailability } from "@/hooks/dashboard/store/use-subdomain-availablity";
 import { storeFormSchema } from "./schema";
 import { toastPromise } from "@/hooks/use-promise-toaster";
+import { useEffect } from "react";
 
 type StoreFormSchema = z.infer<typeof storeFormSchema>;
 
@@ -42,13 +43,25 @@ export function StoreCreateForm({
 	// Subdomain value to watch
 	const subdomainFormVal = form.watch("subdomain");
 
-	// 🤩 Use the extracted hook!
-	const { isSubDomainChecking, isSubDomainAvailable } =
-		useSubdomainAvailabilityCheck(
-			form,
-			subdomainFormVal,
-			500 // Debounce time in ms
-		);
+	// Use the new and improved hook
+	const { status, error } = useSubdomainAvailability(subdomainFormVal, 500);
+
+	useEffect(() => {
+		if (status === "unavailable") {
+			form.setError("subdomain", {
+				type: "manual",
+				message: `The subdomain "${subdomainFormVal}" is already taken.`,
+			});
+		} else if (status === "error") {
+			form.setError("subdomain", {
+				type: "manual",
+				message: error ?? "An unexpected error occurred.",
+			});
+		} else {
+			form.clearErrors("subdomain");
+		}
+	}, [status, error, form, subdomainFormVal]);
+
 	async function onSubmit(data: StoreFormSchema) {
 		await toastPromise(createDashboardStore(data), {
 			error: (error) => error.message || "Something went wrong!",
@@ -96,9 +109,9 @@ export function StoreCreateForm({
 										/>
 									</FormControl>
 									{/* Status Indicator */}
-									{isSubDomainChecking ? (
+									{status === "checking" ? (
 										<Loader2 className="-translate-y-1/2 absolute top-1/2 right-3 h-4 w-4 animate-spin text-primary" />
-									) : isSubDomainAvailable ? (
+									) : status === "available" ? (
 										<CheckCircle className="-translate-y-1/2 absolute top-1/2 right-3 h-4 w-4 text-green-500" />
 									) : null}
 								</div>
@@ -130,7 +143,7 @@ export function StoreCreateForm({
 				<div className="grid">
 					<Button
 						className="mt-2"
-						disabled={isLoading || !isSubDomainAvailable || isSubDomainChecking}
+						disabled={isLoading || status !== "available"}
 						type="submit"
 					>
 						{isLoading ? <Loader className="animate-spin" /> : null}

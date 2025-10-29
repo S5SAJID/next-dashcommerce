@@ -37,7 +37,13 @@ export default async function StoreFrontPage({ params }: Props) {
 				}}
 				title={store.settings.heroSection.title}
 			/>
-
+			{
+				products.length === 0 && (
+					<div className="p-12 flex items-center justify-center">
+						<p>No products found, We’re currently adding our product line.</p>
+					</div>
+				)
+			}
 			<StoreFrontProductList
 				products={products.slice(0, HOMEPAGE_PRODUCTS_LIMIT)}
 			/>

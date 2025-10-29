@@ -10,7 +10,11 @@
   },
   "linter": {
     "enabled": true,
-    "includes": ["!src/**/ui/*.tsx"],
+    "domains": {
+      "react": "recommended",
+      "next": "recommended"
+    },
+    "includes": ["!src/**/ui/*.tsx", "!src/hooks/use-debounce-value.tsx"],
     "rules": {
       "recommended": true,
       "style": {

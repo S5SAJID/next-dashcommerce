@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "biome check ./src",
+    "format": "biome format --write ./src",
+    "check": "biome check --apply --unsafe ./src"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.0",
@@ -62,6 +64,7 @@
     "@types/pg": "^8.15.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "babel-plugin-react-compiler": "^1.0.0",
     "drizzle-kit": "^0.31.4",
     "shadcn": "^2.10.0",
     "tailwindcss": "^4",
