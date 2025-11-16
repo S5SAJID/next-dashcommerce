@@ -5,7 +5,7 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
 export const metadata: Metadata = {
-	title: "Custom Eco",
+	title: "S5ARC | Eccomerce",
 	description: "Checking UI Stuff",
 };
 

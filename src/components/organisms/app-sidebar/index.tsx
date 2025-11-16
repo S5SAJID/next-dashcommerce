@@ -69,8 +69,8 @@ export default function AppSidebar() {
 							className="data-[slot=sidebar-menu-button]:!p-1.5"
 						>
 							<Link href="/products">
-								<Image alt="Acme inc logo" className="size-6" src={Logo} />
-								<span className="font-semibold text-base">Acme Inc.</span>
+								<Image alt="S5ARC logo" className="size-6" src={Logo} />
+								<span className="font-semibold text-base">S5ARC.</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>

@@ -4,7 +4,7 @@ import StoreFrontCartSummery from "@/components/storefront/organisms/cart/cart-s
 
 export const metadata: Metadata = {
 	title: "Checkout",
-	description: "Complete your purchase at Acme Store.",
+	description: "Complete your purchase",
 };
 
 export default function CheckoutPage() {

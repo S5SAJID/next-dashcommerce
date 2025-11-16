@@ -1,10 +1,10 @@
 type props = {
-	user: {
-		name: string;
-	};
+  user: {
+    name: string;
+  };
 };
 export function WelcomeEmailTemplate({ user }: props) {
-	return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <meta name="viewport" content="width=device-width" />
@@ -77,7 +77,7 @@ export function WelcomeEmailTemplate({ user }: props) {
                     </h1>
                     <p
                       style="font-size:15px;line-height:26.25px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:#374151;margin:0 0 20px 0;margin-top:0;margin-right:0;margin-bottom:20px;margin-left:0">
-                      We're thrilled to have you at <strong>Custom Eco</strong>.
+                      We're thrilled to have you at <strong>S5ARC.</strong>.
                     </p>
                     <table
                       align="center"
@@ -95,7 +95,7 @@ export function WelcomeEmailTemplate({ user }: props) {
                     </table>
                     <p
                       style="font-size:14px;line-height:24px;color:#64748B;margin-top:0px;margin-bottom:20px;text-align:center;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale">
-                      <span style="color:rgb(153, 153, 153)">Custom Eco © 2025</span>
+                      <span style="color:rgb(153, 153, 153)">S5ARC. © 2025</span>
                     </p>
                   </td>
                 </tr>

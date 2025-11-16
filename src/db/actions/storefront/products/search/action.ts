@@ -11,6 +11,7 @@ export const storefrontSearchProducts = storeFrontActionClient
 		const products = await db.query.ProductTable.findMany({
 			where: and(
 				eq(ProductTable.store_id, ctx.storeId.id),
+				eq(ProductTable.is_published, true),
 				or(
 					like(ProductTable.name, `%${parsedInput.query}%`),
 					like(ProductTable.description, `%${parsedInput.query}%`)

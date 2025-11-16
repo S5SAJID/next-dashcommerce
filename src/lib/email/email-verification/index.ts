@@ -13,11 +13,11 @@ export function sendAuthEmailVerification({ user, url }: props) {
 	return sendAuthEmail({
 		to: user.email,
 		html: AuthEmailVerificationTemplate({ user, url }),
-		subject: "Confirm Your Email Address | Custom Eco",
-		text: `Welcome to Custom Eco! To complete your registration and begin using your account, please verify your email address by clicking the url: ${url}\n\n
+		subject: "Confirm Your Email Address | S5ARC",
+		text: `Welcome to S5ARC! To complete your registration and begin using your account, please verify your email address by clicking the url: ${url}\n\n
     If you can't click the button, please copy and paste the following link into your web browser.
     If you did not sign up for an account with [Your Company Name], you can safely ignore this email.
     Thanks
-Custom Eco © 2025`,
+S5ARC © 2025`,
 	});
 }

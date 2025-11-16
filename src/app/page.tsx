@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const leftFeatures = [
 	{ icon: Store, tooltip: "Multi-tenant architecture" },
@@ -45,8 +46,8 @@ export default function Home() {
 		<TooltipProvider>
 			<section className="h-dvh overflow-hidden py-32">
 				<div className="container mx-auto flex flex-col items-center text-center">
-					<h1 className="my-6 mt-20 text-pretty font-light text-4xl lg:text-6xl">
-						NextDash Commerce
+					<h1 className="my-6 mt-20 text-pretty font-light relative text-4xl lg:text-6xl">
+						NEXT DASHCOMMERCE
 					</h1>
 					<p className="mb-8 max-w-2xl text-muted-foreground">
 						A modern e-commerce platform built with Next.js 15, featuring an

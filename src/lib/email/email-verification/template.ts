@@ -82,7 +82,7 @@ export function AuthEmailVerificationTemplate({ url }: props) {
                       style="font-size:15px;line-height:26.25px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:#374151;margin:0 0 20px 0;margin-top:0;margin-right:0;margin-bottom:20px;margin-left:0">
                       <span style="color:rgb(51, 51, 51)">Welcome to </span
                       ><span style="color:rgb(51, 51, 51)"
-                        ><strong>Custom Eco</strong></span
+                        ><strong>S5ARC.</strong></span
                       ><span style="color:rgb(51, 51, 51)"
                         >! To complete your registration and begin using your
                         account, please verify your email address by clicking
@@ -138,13 +138,13 @@ export function AuthEmailVerificationTemplate({ url }: props) {
                     </p>
                     <p
                       style="font-size:15px;line-height:26.25px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:#374151;margin:0 0 20px 0;margin-top:0;margin-right:0;margin-bottom:20px;margin-left:0">
-                      If you did not sign up for an account with Custom Eco, you
+                      If you did not sign up for an account with S5ARC., you
                       can safely ignore this email.
                     </p>
                     <p
                       style="font-size:14px;line-height:24px;color:#64748B;margin-top:0px;margin-bottom:20px;text-align:center;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale">
                       <span style="color:rgb(153, 153, 153)"
-                        >Custom Eco © 2025</span
+                        >S5ARC. © 2025</span
                       >
                     </p>
                   </td>

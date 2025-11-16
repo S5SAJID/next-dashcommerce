@@ -13,8 +13,8 @@ import { notFound, redirect } from "next/navigation";
 
 export const metadata: Metadata = {
 	title: {
-		template: "%s | Custom Eco", // %s will be replaced by the child page's title
-		default: "Custom Eco", // Fallback title for pages without a specific title
+		template: "%s | S5ARC.", // %s will be replaced by the child page's title
+		default: "S5ARC.", // Fallback title for pages without a specific title
 	},
 	icons: [
 		{
