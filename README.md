@@ -1,4 +1,5 @@
-# NextDash Commerce - Highly Experimental E-commerce Platform
+![Preview](./public/favico.svg)
+# NextDash Commerce (S5ARC.) - Highly Experimental E-commerce Platform
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.0-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.1.0-blue?style=flat-square&logo=react)](https://reactjs.org/)
@@ -10,9 +11,15 @@
 [![Status](https://img.shields.io/badge/Status-Experimental-orange?style=flat-square)]()
 [![Work in Progress](https://img.shields.io/badge/WIP-Active%20Development-yellow?style=flat-square)]()
 
+
 A modern e-commerce platform built with Next.js 15, featuring an admin dashboard and storefront. This project explores cutting-edge web development patterns with a focus on type safety, multi-tenancy, and developer experience. It's actively evolving - think of it as a solid foundation that's still growing. It's a working foundation that's getting better—and more stable—every day.
 
-![Preview](./public/preview-v2.png)
+
+## 🎥 Quick Preview
+
+_This video shows only some of the admin dashboard in action:_
+
+<video src="./assets/previews/latest-preview.mp4" alt="Dashboard preview" controls width="100%"></video>
 
 ## 🚀 What's This About?
 
@@ -32,11 +39,6 @@ Here's what's cooking:
 
 **Fair warning**: I'm actively developing this, so things change. But the core functionality is there and working. Real talk: You can clone this, set it up, and run a store. Some parts are ready for prime time; others still feel like a construction site.
 
-## 🎥 Quick Preview
-
-_This video shows only some of the admin dashboard in action:_
-
-<video src="./public/preview.mp4" alt="Dashboard preview" controls width="100%"></video>
 
 ## 🛠️ What's Actually Built
 
