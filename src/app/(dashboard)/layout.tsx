@@ -45,7 +45,7 @@ export default async function Layout({
 		<DashboardProviders>
 			<DashboardStoreInfoProvider initialStore={data}>
 				<SidebarProvider>
-					<AppSidebar user={session.user}/>
+					<AppSidebar user={session.user} />
 					<SidebarInset className="@container/content">
 						<main className="h-full w-full flex-1">
 							<SiteHeader />

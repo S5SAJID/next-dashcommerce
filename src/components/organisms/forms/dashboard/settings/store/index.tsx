@@ -67,8 +67,14 @@ export default function StoreSettingsForm() {
 				/>
 				{/* TODO: Add contact email & subdomain field */}
 				<DashboardSubdomainInput defaultValue={store.domain} />
-				<Button disabled={!form.formState.isDirty || form.formState.isLoading || form.formState.isSubmitting}>
-					{form.formState.isSubmitting && <Loader className="animate-spin"/>}
+				<Button
+					disabled={
+						!form.formState.isDirty ||
+						form.formState.isLoading ||
+						form.formState.isSubmitting
+					}
+				>
+					{form.formState.isSubmitting && <Loader className="animate-spin" />}
 					Save Changes
 				</Button>
 			</form>

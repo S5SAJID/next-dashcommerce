@@ -66,10 +66,7 @@ export function NavUser({ user }: { user: User }) {
 							<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 								<Avatar className="h-8 w-8 rounded-lg">
 									{user.image ? (
-										<AvatarImage
-											alt={user.name}
-											src={user.image as string}
-										/>
+										<AvatarImage alt={user.name} src={user.image as string} />
 									) : null}
 									<AvatarFallback className="rounded-lg uppercase">
 										{user.name.slice(0, 2)}

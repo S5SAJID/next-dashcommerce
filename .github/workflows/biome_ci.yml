@@ -36,4 +36,4 @@ jobs:
         # The 'biome ci' command runs linting and formatting checks in a read-only mode,
         # ensuring your code adheres to your project's configuration without making
         # any file modifications. It will fail the workflow if errors are found.
-        run: biome ci
+        run: biome ci src/

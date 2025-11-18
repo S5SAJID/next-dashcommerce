@@ -100,7 +100,10 @@ export function StoreCreateForm({
 						Create store
 					</Button>
 				</div>
-				<FormDescription>Don&apos;t worry too much, you can always change these in the settings page later.</FormDescription>
+				<FormDescription>
+					Don&apos;t worry too much, you can always change these in the settings
+					page later.
+				</FormDescription>
 			</form>
 		</Form>
 	);

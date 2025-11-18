@@ -6,12 +6,12 @@ import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-clien
 import { eq } from "drizzle-orm";
 
 export const updateStoreGeneralSettings = dashboardActionClient
-  .inputSchema(storeSettingsSchema)
-  .action(async ({ ctx, parsedInput }) => {
-    await db
-      .update(StoreTable)
-      .set(parsedInput)
-      .where(eq(StoreTable.id, ctx.storeId));
+	.inputSchema(storeSettingsSchema)
+	.action(async ({ ctx, parsedInput }) => {
+		await db
+			.update(StoreTable)
+			.set(parsedInput)
+			.where(eq(StoreTable.id, ctx.storeId));
 
-    return { success: true, message: "Changes saved successfully." };
-  });
+		return { success: true, message: "Changes saved successfully." };
+	});

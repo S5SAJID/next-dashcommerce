@@ -24,7 +24,7 @@ import { isActivePath } from "@/lib/utils";
 import Link from "next/link";
 import Logo from "../../../../public/favico.svg";
 import Image from "next/image";
-import type { User } from "better-auth/types"
+import type { User } from "better-auth/types";
 
 type SidebarLinkType = {
 	title: string;
@@ -60,7 +60,7 @@ export default function AppSidebar({ user }: { user: User }) {
 	const pathname = usePathname();
 
 	return (
-		<Sidebar collapsible="icon" >
+		<Sidebar collapsible="icon">
 			{/* Header */}
 			<SidebarHeader>
 				<SidebarMenu>
@@ -70,7 +70,11 @@ export default function AppSidebar({ user }: { user: User }) {
 							className="data-[slot=sidebar-menu-button]:!p-1.5"
 						>
 							<Link href="/products">
-								<Image alt="S5ARC logo" className="size-6 invert dark:invert-0" src={Logo} />
+								<Image
+									alt="S5ARC logo"
+									className="size-6 invert dark:invert-0"
+									src={Logo}
+								/>
 								<span className="font-semibold text-base">S5ARC.</span>
 							</Link>
 						</SidebarMenuButton>
@@ -106,7 +110,7 @@ export default function AppSidebar({ user }: { user: User }) {
 			</SidebarContent>
 			<SidebarFooter>
 				<SidebarMenuItem>
-					<NavUser user={user}/>
+					<NavUser user={user} />
 				</SidebarMenuItem>
 			</SidebarFooter>
 		</Sidebar>

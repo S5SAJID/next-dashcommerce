@@ -49,7 +49,10 @@ export default function StoreLayoutSettingsForm() {
 
 	return (
 		<Form {...form}>
-			<form className="space-y-8" onSubmit={form.handleSubmit((data) => onSubmit(data))}>
+			<form
+				className="space-y-8"
+				onSubmit={form.handleSubmit((data) => onSubmit(data))}
+			>
 				<FormField
 					control={form.control}
 					name="seo.title"
@@ -82,7 +85,7 @@ export default function StoreLayoutSettingsForm() {
 				<FormField
 					control={form.control}
 					name="seo.tags"
-					render={({ }) => (
+					render={({}) => (
 						<FormItem>
 							<FormLabel>
 								Tags{" "}
@@ -172,7 +175,13 @@ export default function StoreLayoutSettingsForm() {
 						</div>
 					</div>
 				</div>
-				<Button disabled={!form.formState.isDirty || form.formState.isLoading || form.formState.isSubmitting}>
+				<Button
+					disabled={
+						!form.formState.isDirty ||
+						form.formState.isLoading ||
+						form.formState.isSubmitting
+					}
+				>
 					{form.formState.isSubmitting && <Loader className="animate-spin" />}
 					Save Changes
 				</Button>
