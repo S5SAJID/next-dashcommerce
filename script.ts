@@ -58,7 +58,7 @@ function randomIntFromInterval(min: number, max: number) {
 
 async function _insertDemoProducts() {
 	const store = await db.query.StoreTable.findFirst({
-		where: eq(StoreTable.domain, "ubmri"),
+		where: eq(StoreTable.domain, "sleek"),
 	});
 
 	if (!store) {

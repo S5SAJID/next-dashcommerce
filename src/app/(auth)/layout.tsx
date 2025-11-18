@@ -75,11 +75,11 @@ export default async function AuthLayout({
 											</g>
 											<text
 												fill="var(--color-primary)"
-												font-family="PPMori-SemiBold, PP Mori"
-												font-size="67"
-												font-weight="600"
+												fontFamily="PPMori-SemiBold, PP Mori"
+												fontSize="67"
+												fontWeight="600"
 												id="S5ARC."
-												letter-spacing="-0.046em"
+												letterSpacing="-0.046em"
 												transform="translate(956 593)"
 											>
 												<tspan x="0" y="0">

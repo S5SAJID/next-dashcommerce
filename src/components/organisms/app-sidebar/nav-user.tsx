@@ -1,7 +1,5 @@
 "use client";
-
 import { IconDotsVertical, IconLogout } from "@tabler/icons-react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
 	DropdownMenu,
@@ -19,21 +17,11 @@ import {
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth/auth-client";
 import { useRouter } from "@bprogress/next";
+import type { User } from "better-auth";
 
-export function NavUser() {
+export function NavUser({ user }: { user: User }) {
 	const { isMobile } = useSidebar();
-	const { data, isPending, error } = authClient.useSession();
 	const router = useRouter();
-	if (isPending) {
-		return <div>Loading...</div>;
-	}
-	if (error || !data?.user) {
-		return (
-			<div className="text-destructive">
-				Error: {error ? error.message : "User not logged in"}
-			</div>
-		);
-	}
 
 	function handleSignOut() {
 		authClient.signOut();
@@ -49,20 +37,20 @@ export function NavUser() {
 							size="lg"
 						>
 							<Avatar className="h-8 w-8 rounded-lg grayscale">
-								{data.user.image ? (
+								{user.image ?? (
 									<AvatarImage
-										alt={data.user.name}
-										src={data.user.image as string}
+										alt={user.name}
+										src={user.image as undefined | string}
 									/>
-								) : null}
+								)}
 								<AvatarFallback className="rounded-lg">
-									{data.user.name.toUpperCase().slice(0, 2)}
+									{user.name.toUpperCase().slice(0, 2)}
 								</AvatarFallback>
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
-								<span className="truncate font-medium">{data.user.name}</span>
+								<span className="truncate font-medium">{user.name}</span>
 								<span className="truncate text-muted-foreground text-xs">
-									{data.user.email}
+									{user.email}
 								</span>
 							</div>
 							<IconDotsVertical className="ml-auto size-4" />
@@ -77,20 +65,20 @@ export function NavUser() {
 						<DropdownMenuLabel className="p-0 font-normal">
 							<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 								<Avatar className="h-8 w-8 rounded-lg">
-									{data.user.image ? (
+									{user.image ? (
 										<AvatarImage
-											alt={data.user.name}
-											src={data.user.image as string}
+											alt={user.name}
+											src={user.image as string}
 										/>
 									) : null}
 									<AvatarFallback className="rounded-lg uppercase">
-										{data.user.name.slice(0, 2)}
+										{user.name.slice(0, 2)}
 									</AvatarFallback>
 								</Avatar>
 								<div className="grid flex-1 text-left text-sm leading-tight">
-									<span className="truncate font-medium">{data.user.name}</span>
+									<span className="truncate font-medium">{user.name}</span>
 									<span className="truncate text-muted-foreground text-xs">
-										{data.user.email}
+										{user.email}
 									</span>
 								</div>
 							</div>

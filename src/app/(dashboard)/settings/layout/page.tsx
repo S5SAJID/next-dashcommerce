@@ -1,21 +1,19 @@
 import { SubSettingsPageLayout } from "@/components/layout/dashboard/settings/layout";
 import StoreLayoutSettingsForm from "@/components/organisms/forms/dashboard/settings/layout";
-import { getDashboadStore } from "@/db/actions/dashboard/settings/layout/actions";
+import { useDashboardStoreInfo } from "@/lib/context/dashboard/store-context-provider";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Layout Settings",
 };
 
-export default async function StoreSettingsPage() {
-	const { data: store } = await getDashboadStore();
-
+export default function StoreSettingsPage() {
 	return (
 		<SubSettingsPageLayout
-			desc="SEO for your store to make it rank in the search engine."
-			title="SEO"
+			desc="Layout & SEO for your store to customise it your way."
+			title="Layout & SEO"
 		>
-			<StoreLayoutSettingsForm settings={store?.settings} />
+			<StoreLayoutSettingsForm />
 		</SubSettingsPageLayout>
 	);
 }

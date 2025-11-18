@@ -12,7 +12,8 @@ type SubdomainStatus =
 
 export function useSubdomainAvailability(
 	subdomain: string,
-	debounceTime = 500
+	debounceTime = 500,
+	defaultValue?: string
 ) {
 	const debouncedSubdomain = useDebounce(subdomain, debounceTime);
 	const [status, setStatus] = useState<SubdomainStatus>("idle");
@@ -22,7 +23,7 @@ export function useSubdomainAvailability(
 	const abortControllerRef = useRef<AbortController | null>(null);
 
 	useEffect(() => {
-		if (debouncedSubdomain.length < 3) {
+		if (debouncedSubdomain.length < 3 || debouncedSubdomain === defaultValue) {
 			setStatus("idle");
 			return;
 		}

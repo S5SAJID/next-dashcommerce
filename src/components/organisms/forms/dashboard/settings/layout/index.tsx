@@ -18,62 +18,38 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { updateLayoutSettings } from "@/db/actions/dashboard/settings/layout/actions";
-import { toast } from "sonner";
+import { useDashboardStoreInfo } from "@/lib/context/dashboard/store-context-provider";
+import { toastPromise } from "@/hooks/use-promise-toaster";
+import { Loader } from "lucide-react";
 
-// const layoutSettingsDefaultValues: StoreLayoutSettingsSchemaType = {
-//   seo: {
-//     title: "Acme Store | The Best Premium Products Online",
-//     description: "Welcome to Acme Store, your go-to destination for high-quality and premium products. Shop now and experience the best in online shopping.",
-//     tags: ["premium", "quality", "online shopping", "acme"]
-//   },
-//   heroSection: {
-//     title: "Fast, Quick and Easy",
-//     description: "Discover our exclusive range of premium products designed to meet your needs. Enjoy top-notch quality and exceptional service at Acme Store.",
-//     ctaLink: "/products",
-//     ctaTarget: "self",
-//     ctaText: "Explore Products",
-//   }
-// }
+export default function StoreLayoutSettingsForm() {
+	const { store } = useDashboardStoreInfo();
+	if (!store) return "Error";
 
-type StoreLayoutSettingsFormProps = {
-	settings?: StoreLayoutSettingsSchemaType;
-};
-
-export default function StoreLayoutSettingsForm(
-	props: StoreLayoutSettingsFormProps
-) {
 	const form = useForm<StoreLayoutSettingsSchemaType>({
 		resolver: zodResolver(storeLayoutSettingsSchema),
-		defaultValues: props.settings,
+		defaultValues: store.settings,
 	});
 
 	const onSubmit = async (data: StoreLayoutSettingsSchemaType) => {
-		toast.promise(updateLayoutSettings(data), {
+		await toastPromise(updateLayoutSettings(data), {
 			loading: "Applying settings...",
-			success: async ({ data: responce }) => {
+			success: ({ data: responce }) => {
 				// TODO: Add queryclient for it
 				if (responce?.success) {
+					// IMPROVE: better way to do this
+					window.location.reload();
 					return "Settings applied successfully";
 				}
 				return "Settings applying failed";
 			},
-			error: {
-				message: "Settings applying failed",
-				description: "Please try again.",
-			},
+			error: "Settings applying failed",
 		});
 	};
 
-	const handleSubmit = form.handleSubmit(
-		(data) => {
-			onSubmit(data);
-		},
-		(_errors) => {}
-	);
-
 	return (
 		<Form {...form}>
-			<form className="space-y-8" onSubmit={handleSubmit}>
+			<form className="space-y-8" onSubmit={form.handleSubmit((data) => onSubmit(data))}>
 				<FormField
 					control={form.control}
 					name="seo.title"
@@ -106,7 +82,7 @@ export default function StoreLayoutSettingsForm(
 				<FormField
 					control={form.control}
 					name="seo.tags"
-					render={({}) => (
+					render={({ }) => (
 						<FormItem>
 							<FormLabel>
 								Tags{" "}
@@ -196,7 +172,8 @@ export default function StoreLayoutSettingsForm(
 						</div>
 					</div>
 				</div>
-				<Button disabled={!form.formState.isDirty || form.formState.isLoading}>
+				<Button disabled={!form.formState.isDirty || form.formState.isLoading || form.formState.isSubmitting}>
+					{form.formState.isSubmitting && <Loader className="animate-spin" />}
 					Save Changes
 				</Button>
 			</form>
