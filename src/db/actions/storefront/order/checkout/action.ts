@@ -145,6 +145,16 @@ export const checkoutFormAction = storeFrontActionClient
 						customer_id,
 						status: "PENDING",
 						total_amount: roundedTotal.toString(),
+						shipping_address: {
+							full_name: parsedInput.name,
+							email: parsedInput.email,
+							phone: parsedInput.phone,
+							street_address: parsedInput.address,
+							city: parsedInput.city,
+							country: parsedInput.country,
+							postal_code: parsedInput.postalCode,
+							state: parsedInput.state,
+						},
 					})
 					.returning({ id: OrderTable.id });
 

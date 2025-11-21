@@ -97,13 +97,19 @@ export default async function OrderDetailsPage({
 					{/* TODO: Fix this */}
 					<OrderShippingCard
 						shipping={{
-							address1: customer?.address as string,
-							city: "Odigram",
-							country: "Pakistan",
-							name: customer?.full_name as string,
+							address1:
+								order.shipping_address.street_address ||
+								customer?.address ||
+								"",
+							city: order.shipping_address.city || "",
+							country: order.shipping_address.country || "",
+							name:
+								order.shipping_address.full_name ||
+								customer?.full_name ||
+								"",
 							method: "COD",
-							state: "Swat",
-							zip: "23302",
+							state: order.shipping_address.state || "",
+							zip: order.shipping_address.postal_code || "",
 						}}
 					/>
 				</FormPageGridSecondary>

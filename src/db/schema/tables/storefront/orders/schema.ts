@@ -19,6 +19,17 @@ export const orderStatusEnum = pgEnum("order_status", [
 	"CANCELLED",
 ]);
 
+export interface ShippingAddress {
+	full_name: string;
+	email: string;
+	phone: string;
+	street_address: string;
+	city: string;
+	country: string;
+	postal_code: string;
+	state?: string;
+}
+
 export const OrderTable = pgTable("orders", {
 	id: uuid().defaultRandom().primaryKey(),
 	store_id: uuid()
@@ -29,6 +40,7 @@ export const OrderTable = pgTable("orders", {
 		.notNull(), // can be null for guest checkout
 	status: orderStatusEnum().default("PENDING").notNull(),
 	total_amount: decimal().notNull(),
+	shipping_address: jsonb().$type<ShippingAddress>().notNull(),
 	created_at: timestamp().defaultNow().notNull(),
 	updated_at: timestamp().defaultNow().notNull(),
 });
