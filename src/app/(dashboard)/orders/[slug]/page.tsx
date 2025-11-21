@@ -6,15 +6,7 @@ import {
 	FormPageLayout,
 	FormPageTitle,
 } from "@/components/layout/form-page-layout/layout";
-import { Button } from "@/components/ui/button";
 import type { Metadata } from "next";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { CheckCircle2, CircleX, Loader } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import OrderSummaryCard from "@/components/organisms/orders/order-summary";
@@ -23,6 +15,7 @@ import { getDashboardOrder } from "@/db/actions/dashboard/orders/actions";
 import { notFound } from "next/navigation";
 import OrderCustomerCard from "@/components/organisms/orders/order-customer";
 import OrderShippingCard from "@/components/organisms/orders/order-shipping";
+import OrderActions from "@/components/organisms/orders/order-actions";
 
 export const metadata: Metadata = {
 	title: "Order Details",
@@ -47,29 +40,7 @@ export default async function OrderDetailsPage({
 					enableBack
 					title="Order Details"
 				/>
-				<div className="flex items-center gap-2">
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Button variant="outline">Update status</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end">
-							<DropdownMenuLabel>Set status</DropdownMenuLabel>
-							<DropdownMenuItem>
-								<Loader className="text-muted-foreground" /> Processing
-							</DropdownMenuItem>
-							{/* now corresponding icons for the rest */}
-							<DropdownMenuItem>
-								<CheckCircle2 className="text-muted-green-400" /> Fulfilled
-							</DropdownMenuItem>
-							<DropdownMenuItem>
-								<CircleX className="text-muted-red-400" /> Cancelled
-							</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
-					<Button>
-						<span>Mark Delivered</span>
-					</Button>
-				</div>
+				<OrderActions currentStatus={order.status} orderId={orderSlug} />
 			</FormPageHeader>
 			<FormPageGridContainer>
 				<FormPageGridPrimary>
@@ -94,7 +65,6 @@ export default async function OrderDetailsPage({
 				<FormPageGridSecondary>
 					{customer && <OrderCustomerCard customer={customer} />}
 					<Separator />
-					{/* TODO: Fix this */}
 					<OrderShippingCard
 						shipping={{
 							address1:

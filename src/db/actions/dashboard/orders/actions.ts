@@ -1,3 +1,4 @@
+"use server";
 import { db } from "@/db/db";
 import {
 	CustomerTable,
@@ -8,6 +9,7 @@ import {
 import { and, count, desc, eq, sql } from "drizzle-orm";
 import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-client";
 import z from "zod";
+import { revalidatePath } from "next/cache";
 
 export const getDashboardOrders = dashboardActionClient.action(
 	async ({ ctx }) => {
@@ -81,4 +83,31 @@ export const getDashboardOrder = dashboardActionClient
 			.groupBy(OrderTable.id, CustomerTable.id);
 
 		return result[0];
+	});
+
+export const updateOrderStatus = dashboardActionClient
+	.inputSchema(
+		z.object({
+			orderId: z.string(),
+			status: z.enum([
+				"PENDING",
+				"PROCESSING",
+				"SHIPPED",
+				"DELIVERED",
+				"CANCELLED",
+			]),
+		})
+	)
+	.action(async ({ ctx, parsedInput }) => {
+		await db
+			.update(OrderTable)
+			.set({ status: parsedInput.status })
+			.where(
+				and(
+					eq(OrderTable.id, parsedInput.orderId),
+					eq(OrderTable.store_id, ctx.storeId)
+				)
+			);
+
+		revalidatePath(`/orders/${parsedInput.orderId}`);
 	});

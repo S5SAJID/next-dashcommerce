@@ -5,6 +5,7 @@ import {
 } from "@/components/layout/dashboard/layout";
 import { CustomersPrimaryButtons } from "@/components/molecules/primary-buttons/customers";
 import CustomersTable from "@/components/organisms/tables/customers-table";
+import { getDashboardCustomers } from "@/db/actions/dashboard/customers/actions";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 	description: "Manage your all your customers.",
 };
 
-export default function CustomersPage() {
+export default async function CustomersPage() {
+	const { data } = await getDashboardCustomers();
+
 	return (
 		<DashboardLayout>
 			<DashboardHeader>
@@ -22,7 +25,7 @@ export default function CustomersPage() {
 				/>
 				<CustomersPrimaryButtons />
 			</DashboardHeader>
-			<CustomersTable />
+			<CustomersTable data={data || []} />
 		</DashboardLayout>
 	);
 }

@@ -1,5 +1,4 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { CustomersType } from "./data";
 import { formatPrice } from "@/lib/utils";
 import { DataTableColumnHeader } from "@/components/molecules/data-table/data-table-column-header";
 import {
@@ -12,6 +11,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
+
+export type CustomersType = {
+	id: string;
+	name: string;
+	email: string;
+	phone: string;
+	created_at: Date;
+	orders: number;
+	total_spent: number;
+};
 
 export const customers_columns: ColumnDef<CustomersType>[] = [
 	{

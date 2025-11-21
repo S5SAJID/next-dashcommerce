@@ -1,13 +1,13 @@
 "use client";
 import DataTable from "@/components/molecules/data-table";
 import { customers_columns } from "./columns";
-import { customers } from "./data";
+import type { CustomersType } from "./columns";
 
-export default function CustomersTable() {
+export default function CustomersTable({ data }: { data: CustomersType[] }) {
 	return (
 		<DataTable
 			columns={customers_columns}
-			data={customers}
+			data={data}
 			toolbar={{
 				searchColumn: "name",
 				searchPlaceholder: "Filter customer names...",
