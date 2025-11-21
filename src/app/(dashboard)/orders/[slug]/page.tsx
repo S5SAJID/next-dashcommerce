@@ -104,9 +104,7 @@ export default async function OrderDetailsPage({
 							city: order.shipping_address.city || "",
 							country: order.shipping_address.country || "",
 							name:
-								order.shipping_address.full_name ||
-								customer?.full_name ||
-								"",
+								order.shipping_address.full_name || customer?.full_name || "",
 							method: "COD",
 							state: order.shipping_address.state || "",
 							zip: order.shipping_address.postal_code || "",
