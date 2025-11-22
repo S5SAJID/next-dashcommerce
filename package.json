@@ -30,6 +30,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tabler/icons-react": "^3.34.1",
     "@tanstack/react-table": "^8.21.3",
+    "@trigger.dev/sdk": "4.1.1",
     "better-auth": "^1.3.27",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -58,6 +59,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.2.6",
     "@tailwindcss/postcss": "^4",
+    "@trigger.dev/build": "4.1.1",
     "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20",
     "@types/nodemailer": "^7.0.2",
