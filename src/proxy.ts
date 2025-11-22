@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { extractSubdomain } from "./lib/subdomain";
 
-export const middleware = (request: NextRequest) => {
+export const proxy = (request: NextRequest) => {
 	const { pathname, search } = request.nextUrl;
 	const subdomain = extractSubdomain(request);
 
