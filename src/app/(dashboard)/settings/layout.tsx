@@ -1,7 +1,7 @@
 import { DashboardLayout } from "@/components/layout/dashboard/layout";
 import SettingsSidebar from "@/components/organisms/app-sidebar/settings-sidebar";
 import { Separator } from "@/components/ui/separator";
-import { Store, Layout } from "lucide-react";
+import { Store, Layout, Puzzle } from "lucide-react";
 
 const settingsSidebarNavItems = [
 	{
@@ -13,6 +13,11 @@ const settingsSidebarNavItems = [
 		title: "Layout",
 		href: "/settings/layout",
 		icon: <Layout size={18} />,
+	},
+	{
+		title: "Integrations",
+		href: "/settings/integrations",
+		icon: <Puzzle size={18} />,
 	},
 ];
 

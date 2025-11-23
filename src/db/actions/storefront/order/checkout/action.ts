@@ -10,6 +10,7 @@ import {
 } from "@/db/schema";
 import { storeFrontActionClient } from "@/lib/safe-action-clients/storefront-client";
 import { and, eq, inArray } from "drizzle-orm";
+import { publishEvent } from "@/lib/events/event-publisher";
 
 type CustomerInsert = typeof CustomerTable.$inferInsert;
 type OrderItemInsert = typeof OrderItemTable.$inferInsert;
@@ -187,6 +188,30 @@ export const checkoutFormAction = storeFrontActionClient
 							.where(eq(ProductTable.id, item.productId));
 					}
 				}
+
+				// 8. Publish order.created event for integrations
+				// Note: Using .catch() to prevent event publishing failures from affecting the order
+				publishEvent("order.created", storeId, {
+					orderId: order.id,
+					customerId: customer_id,
+					totalAmount: roundedTotal,
+					itemCount: items.length,
+					shippingAddress: {
+						full_name: parsedInput.name,
+						email: parsedInput.email,
+						city: parsedInput.city,
+						country: parsedInput.country,
+					},
+					items: items.map((item) => ({
+						productId: item.productId,
+						productName: item.snapshot.name,
+						quantity: item.qty,
+						price: item.price,
+					})),
+				}).catch((error) => {
+					// Log error but don't fail the order
+					console.error("Failed to publish order.created event:", error);
+				});
 
 				return {
 					success: true,

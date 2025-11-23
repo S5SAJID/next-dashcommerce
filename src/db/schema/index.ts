@@ -7,7 +7,6 @@ import {
 	orderStatusEnum,
 } from "./tables/storefront/orders/schema";
 import { user, session, account, verification, rateLimit } from "./tables/auth";
-// import {userRelations, accountRelations, invitationRelations, memberRelations, organizationRelations, passkeyRelations, sessionRelations, twoFactorRelations} from "./tables/auth/relations";
 import {
 	ProductStoreRelation,
 	StoreProductsRelation,
@@ -15,6 +14,14 @@ import {
 	OrderRelations,
 	OrderItemRelations,
 } from "./relations";
+import {
+	IntegrationDefinitionTable,
+	IntegrationInstallationTable,
+} from "./tables/integrations";
+import {
+	IntegrationDefinitionRelations,
+	IntegrationInstallationRelations,
+} from "./tables/integrations/relations";
 
 export {
 	StoreTable,
@@ -28,6 +35,11 @@ export {
 	CustomerStoreRelation,
 	OrderRelations,
 	OrderItemRelations,
+	// Integrations
+	IntegrationDefinitionTable,
+	IntegrationInstallationTable,
+	IntegrationDefinitionRelations,
+	IntegrationInstallationRelations,
 	// Auth
 	user,
 	session,
