@@ -6,7 +6,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
 	title: "S5ARC | Eccomerce",
-	description: "Checking UI Stuff",
+	description: "Checking Eccomerce Stuff",
 };
 
 export default function RootLayout({
@@ -15,7 +15,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning={true}>
 			<body
 				className={`${GeistSans.variable} font-sans ${GeistMono.variable} antialiased`}
 			>

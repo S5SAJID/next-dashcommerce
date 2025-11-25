@@ -25,6 +25,8 @@ export async function validateIntegrationEndpoint(
 		errors.push("Endpoint must use HTTPS for security");
 	}
 
+	url = url.replace(/^(https?:\/\/[^/]+).*$/, "$1");
+
 	// 2. Check if URL is reachable (with timeout)
 	let isLive = false;
 	let responseTime = 0;
