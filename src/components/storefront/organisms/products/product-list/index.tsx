@@ -27,7 +27,9 @@ export default function StoreFrontProductList({
 	);
 
 	const [viewMode] = useQueryStates({
-		view: parseAsStringEnum(["default", "dense"] as const).withDefault("default"),
+		view: parseAsStringEnum(["default", "dense"] as const).withDefault(
+			"default"
+		),
 	});
 
 	// Filter and sort products client-side
