@@ -22,6 +22,13 @@
       "when": 1763828068197,
       "tag": "0002_flat_silver_sable",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1764409079790,
+      "tag": "0003_yellow_the_order",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,133 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "S5ARC. API Documentation",
+    "description": "API documentation for S5ARC.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/products/": {
+      "get": {
+        "operationId": "list",
+        "responses": {
+          "200": {
+            "description": "Response for status 200",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/List200ResponseBody" }
+              }
+            }
+          },
+          "401": {
+            "description": "Response for status 401",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/List401ResponseBody" }
+              }
+            }
+          },
+          "403": {
+            "description": "Response for status 403",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/List403ResponseBody" }
+              }
+            }
+          },
+          "500": {
+            "description": "An unknown error occurred, trying again might help.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorMessage" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorMessage": {
+        "type": "object",
+        "properties": { "message": { "type": "string" } },
+        "additionalProperties": false
+      },
+      "List200ResponseBody": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "name": { "type": "string", "maxLength": 255 },
+                "slug": { "type": "string", "maxLength": 255 },
+                "description": { "type": "string" },
+                "price": {
+                  "type": "number",
+                  "minimum": -8388608,
+                  "maximum": 8388607
+                },
+                "compare_at": {
+                  "nullable": true,
+                  "type": "number",
+                  "minimum": -8388608,
+                  "maximum": 8388607
+                },
+                "stock": {
+                  "nullable": true,
+                  "type": "number",
+                  "minimum": -8388608,
+                  "maximum": 8388607
+                },
+                "sku": { "nullable": true, "type": "string", "maxLength": 255 },
+                "images": {
+                  "type": "array",
+                  "items": { "type": "string", "maxLength": 300 }
+                },
+                "is_published": { "type": "boolean" },
+                "created_at": {},
+                "updated_at": {}
+              },
+              "required": [
+                "id",
+                "name",
+                "slug",
+                "description",
+                "price",
+                "compare_at",
+                "stock",
+                "sku",
+                "images",
+                "is_published",
+                "created_at",
+                "updated_at"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["data"],
+        "additionalProperties": false
+      },
+      "List401ResponseBody": {
+        "type": "object",
+        "properties": { "error": { "type": "string" } },
+        "required": ["error"],
+        "additionalProperties": false
+      },
+      "List403ResponseBody": {
+        "type": "object",
+        "properties": { "error": { "type": "string" } },
+        "required": ["error"],
+        "additionalProperties": false
+      }
+    }
+  }
+}

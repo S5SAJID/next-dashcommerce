@@ -22,6 +22,7 @@ import {
 	IntegrationDefinitionRelations,
 	IntegrationInstallationRelations,
 } from "./tables/integrations/relations";
+import { ApiKeyTable } from "./tables/api-keys";
 
 export {
 	StoreTable,
@@ -40,6 +41,8 @@ export {
 	IntegrationInstallationTable,
 	IntegrationDefinitionRelations,
 	IntegrationInstallationRelations,
+	// API Keys
+	ApiKeyTable,
 	// Auth
 	user,
 	session,

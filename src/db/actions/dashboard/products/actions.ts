@@ -9,9 +9,12 @@ import { uploadDashboardFiles } from "../common/actions";
 import { product_details_form_schema } from "@/components/organisms/forms/dashboard/products/product-details/schema";
 import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-client";
 import { revalidatePath } from "next/cache";
+import { checkPermission } from "@/lib/auth/check-permission";
 
 export const getDashboardProducts = dashboardActionClient.action(
 	async ({ ctx }) => {
+		checkPermission(ctx, "products:read");
+
 		const storeId = ctx.storeId;
 
 		const products = await db.query.ProductTable.findMany({
@@ -29,6 +32,7 @@ export const getDashboardProducts = dashboardActionClient.action(
 export const getDashboardProduct = dashboardActionClient
 	.inputSchema(z.object({ slug: z.string() }))
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "products:read");
 		const slug = parsedInput.slug;
 
 		const product = await db.query.ProductTable.findFirst({
@@ -47,6 +51,8 @@ export const getDashboardProduct = dashboardActionClient
 export const updateDashboardProduct = dashboardActionClient
 	.inputSchema(product_details_form_schema)
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "products:write");
+
 		const fileImages = parsedInput.images.filter((img) => img instanceof File);
 		const urlImages = parsedInput.images.filter(
 			(img) => typeof img === "string"
@@ -72,6 +78,8 @@ export const updateDashboardProduct = dashboardActionClient
 export const deleteDashboardProduct = dashboardActionClient
 	.inputSchema(z.object({ id: z.string() }))
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "products:delete");
+
 		try {
 			await db
 				.delete(ProductTable)
@@ -91,6 +99,8 @@ export const deleteDashboardProduct = dashboardActionClient
 export const createDashboardProduct = dashboardActionClient
 	.inputSchema(product_form_schema)
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "products:write");
+
 		// TODO: implement image uploader. Currently saving to local harddisk
 		const images = await uploadDashboardFiles(parsedInput.images);
 
@@ -113,6 +123,8 @@ export const createDashboardProduct = dashboardActionClient
 export const updateDashboardProductDetails = dashboardActionClient
 	.inputSchema(product_details_form_schema)
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "products:write");
+
 		const fileImages = parsedInput.images.filter((img) => img instanceof File);
 		const urlImages = parsedInput.images.filter(
 			(img) => typeof img === "string"

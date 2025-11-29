@@ -1,22 +1,33 @@
 "use server";
 
-import { headers } from "next/headers";
 import { auth } from "../auth";
 import { db } from "@/db/db";
 import { and, eq } from "drizzle-orm";
 import { user } from "@/db/schema";
+import { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
+import {
+	AVAILABLE_PERMISSIONS,
+	AVAILABLE_PERMISSIONS_TYPE,
+} from "@/db/actions/dashboard/settings/api-keys/const";
 
 // type StoreRole = 'owner' | 'editor' | 'viewer';
 
+export type AuthType = "session" | "api-key";
+
 export type SecuredStoreContext = {
-	userId: string;
 	storeId: string;
-	// role: StoreRole;
+	authType: AuthType;
+	// Session-specific (only populated when authType === 'session')
+	userId?: string;
+	// API-specific (only populated when authType === 'api-key')
+	permissions?: AVAILABLE_PERMISSIONS_TYPE[];
 };
 
-export async function getSecuredStoreContext(): Promise<SecuredStoreContext> {
+export async function getSecuredStoreContext(
+	headers: ReadonlyHeaders
+): Promise<SecuredStoreContext> {
 	// Authentication Check
-	const session = await auth.api.getSession({ headers: await headers() });
+	const session = await auth.api.getSession({ headers });
 	if (session == null || session.user == null) {
 		throw new Error("Unauthorized: User not authenticated.");
 	}
@@ -42,6 +53,7 @@ export async function getSecuredStoreContext(): Promise<SecuredStoreContext> {
 	const context: SecuredStoreContext = {
 		userId: currentUser.id,
 		storeId,
+		authType: "session",
 	};
 
 	return context;

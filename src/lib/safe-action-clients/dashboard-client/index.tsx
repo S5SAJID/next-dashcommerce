@@ -1,16 +1,25 @@
 import { getSecuredStoreContext } from "@/lib/auth/safe-guard-helpers";
+import { getApiKeyContext } from "@/lib/auth/safe-guard-helpers/get-api-key-context";
 import { createSafeActionClient } from "next-safe-action";
+import { headers } from "next/headers";
 
 export const dashboardActionClient = createSafeActionClient().use(
 	async ({ next }) => {
 		try {
-			const context = await getSecuredStoreContext();
+			// Check for API key in headers
+			const headersList = await headers();
+			const apiKey = headersList.get("x-api-key");
 
-			// ✅ Inject the complete, verified context into the next function
+			if (apiKey) {
+				// API key authentication
+				const context = await getApiKeyContext(apiKey);
+				return next({ ctx: context });
+			}
+
+			// Session authentication (existing behavior)
+			const context = await getSecuredStoreContext(headersList);
 			return next({ ctx: context });
 		} catch (e) {
-			// Catch exceptions thrown by getSecuredStoreContext (e.g., "Unauthorized", "Forbidden")
-			// Re-throw as a standardized ActionError for clean client-side messaging
 			const errorMessage =
 				e instanceof Error ? e.message : "Security check failed.";
 			throw new Error(errorMessage);

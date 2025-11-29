@@ -140,7 +140,18 @@ We follow **Atomic Design** principles to maximize reusability.
 -   **Fonts**: Use `next/font`.
 -   **Lazy Loading**: Use `dynamic()` imports for heavy client components.
 
-## 11. Anti-Repetition & Safety Patterns
+## 11. API Development
+
+-   **Framework**: Use `next-rest-framework` for type-safe, auto-documented REST APIs.
+-   **Structure**: All APIs under `/api/v1/` (versioned). Separate by domain: `/(dashboard)/*` (protected), `/(storefront)/*` (public).
+-   **Pattern**: Always use `routeOperation` and `routeHandler` - never raw Next.js route handlers for REST endpoints.
+-   **Validation**: Define all request/response (if not available or the already present cant be used) schemas with Zod for runtime validation and auto-generated OpenAPI specs.
+-   **Responses**: Standardize formats - `{ data, pagination }` for lists, `{ error, code }` for errors.
+-   **Methods**: Follow REST conventions - `GET` (retrieve), `POST` (create), `PATCH` (update), `DELETE` (remove).
+-   **Reuse Logic**: Call existing Server Actions from API routes - don't duplicate database logic.
+-   **Documentation**: Run `bun run docs:generate` after changes. View at `/api/v1/docs`.
+
+## 12. Anti-Repetition & Safety Patterns
 
 We strictly avoid repetitive boilerplate code, especially for cross-cutting concerns like authentication, validation, and context injection.
 
