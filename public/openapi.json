@@ -6,15 +6,17 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/v1/products/": {
+    "/api/v1/customers/route.ts": {
       "get": {
-        "operationId": "list",
+        "operationId": "listCustomers",
         "responses": {
           "200": {
             "description": "Response for status 200",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/List200ResponseBody" }
+                "schema": {
+                  "$ref": "#/components/schemas/ListCustomers200ResponseBody"
+                }
               }
             }
           },
@@ -22,7 +24,9 @@
             "description": "Response for status 401",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/List401ResponseBody" }
+                "schema": {
+                  "$ref": "#/components/schemas/ListCustomers401ResponseBody"
+                }
               }
             }
           },
@@ -30,7 +34,9 @@
             "description": "Response for status 403",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/List403ResponseBody" }
+                "schema": {
+                  "$ref": "#/components/schemas/ListCustomers403ResponseBody"
+                }
               }
             }
           },
@@ -44,6 +50,97 @@
           }
         }
       }
+    },
+    "/api/v1/orders/route.ts": {
+      "get": {
+        "operationId": "listOrders",
+        "responses": {
+          "200": {
+            "description": "Response for status 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListOrders200ResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Response for status 401",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListOrders401ResponseBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Response for status 403",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListOrders403ResponseBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unknown error occurred, trying again might help.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorMessage" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/products/route.ts": {
+      "get": {
+        "operationId": "listProducts",
+        "responses": {
+          "200": {
+            "description": "Response for status 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListProducts200ResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Response for status 401",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListProducts401ResponseBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Response for status 403",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListProducts403ResponseBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unknown error occurred, trying again might help.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorMessage" }
+              }
+            }
+          }
+        },
+        "description": "Get all the products"
+      }
     }
   },
   "components": {
@@ -53,7 +150,98 @@
         "properties": { "message": { "type": "string" } },
         "additionalProperties": false
       },
-      "List200ResponseBody": {
+      "ListCustomers200ResponseBody": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string", "minLength": 2, "maxLength": 100 },
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                },
+                "phone": { "type": "string", "minLength": 7, "maxLength": 15 },
+                "orders": { "type": "number", "minimum": 0 },
+                "total_spent": { "type": "number", "minimum": 0 }
+              },
+              "required": ["name", "email"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["data"],
+        "additionalProperties": false
+      },
+      "ListCustomers401ResponseBody": {
+        "type": "object",
+        "properties": { "error": { "type": "string" } },
+        "required": ["error"],
+        "additionalProperties": false
+      },
+      "ListCustomers403ResponseBody": {
+        "type": "object",
+        "properties": { "error": { "type": "string" } },
+        "required": ["error"],
+        "additionalProperties": false
+      },
+      "ListOrders200ResponseBody": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "orderId": { "type": "string" },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "PENDING",
+                    "PROCESSING",
+                    "SHIPPED",
+                    "DELIVERED",
+                    "CANCELLED"
+                  ]
+                },
+                "totalAmount": { "type": "string" },
+                "createdAt": {},
+                "customerName": { "nullable": true, "type": "string" },
+                "customerEmail": { "nullable": true, "type": "string" },
+                "itemCount": { "type": "number" }
+              },
+              "required": [
+                "orderId",
+                "status",
+                "totalAmount",
+                "createdAt",
+                "customerName",
+                "customerEmail",
+                "itemCount"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["data"],
+        "additionalProperties": false
+      },
+      "ListOrders401ResponseBody": {
+        "type": "object",
+        "properties": { "error": { "type": "string" } },
+        "required": ["error"],
+        "additionalProperties": false
+      },
+      "ListOrders403ResponseBody": {
+        "type": "object",
+        "properties": { "error": { "type": "string" } },
+        "required": ["error"],
+        "additionalProperties": false
+      },
+      "ListProducts200ResponseBody": {
         "type": "object",
         "properties": {
           "data": {
@@ -116,13 +304,13 @@
         "required": ["data"],
         "additionalProperties": false
       },
-      "List401ResponseBody": {
+      "ListProducts401ResponseBody": {
         "type": "object",
         "properties": { "error": { "type": "string" } },
         "required": ["error"],
         "additionalProperties": false
       },
-      "List403ResponseBody": {
+      "ListProducts403ResponseBody": {
         "type": "object",
         "properties": { "error": { "type": "string" } },
         "required": ["error"],

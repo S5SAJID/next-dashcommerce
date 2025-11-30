@@ -1,23 +1,23 @@
-import { route, routeOperation, TypedNextResponse } from "next-rest-framework";
-import { getDashboardProducts } from "@/db/actions/dashboard/products/actions";
-import z from "zod";
+import { getDashboardOrders } from "@/db/actions/dashboard/orders/actions";
+import { apiDashboardOrderSchema } from "@/lib/apis/schemas/orders";
 import { checkAPIKeyFromAPI, COMMON_API_ERRORS } from "@/lib/apis/shared";
-import { apiDashboardProductSchema } from "@/lib/apis/schemas/products";
+import { route, routeOperation, TypedNextResponse } from "next-rest-framework";
+import z from "zod";
 
 export const { GET } = route({
-	listProducts: routeOperation({ method: "GET" })
+	listOrders: routeOperation({ method: "GET" })
 		.outputs([
 			{
 				status: 200,
 				contentType: "application/json",
-				body: z.object({ data: z.array(apiDashboardProductSchema) }),
+				body: z.object({ data: z.array(apiDashboardOrderSchema) }),
 			},
 			...COMMON_API_ERRORS,
 		])
 		.middleware(checkAPIKeyFromAPI)
 		.handler(async () => {
 			// Call Server Action directly - it will see the x-api-key header!
-			const result = await getDashboardProducts();
+			const result = await getDashboardOrders();
 
 			// Handle Server Action errors
 			if (result?.serverError) {
@@ -28,8 +28,8 @@ export const { GET } = route({
 			}
 
 			// Extract the actual data from SafeActionResult
-			const products = result?.data ?? [];
+			const orders = result?.data ?? [];
 
-			return TypedNextResponse.json({ data: products }, { status: 200 });
+			return TypedNextResponse.json({ data: orders }, { status: 200 });
 		}),
 });
