@@ -6,7 +6,7 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/v1/customers/route.ts": {
+    "/api/v1/customers/": {
       "get": {
         "operationId": "listCustomers",
         "responses": {
@@ -51,7 +51,7 @@
         }
       }
     },
-    "/api/v1/orders/route.ts": {
+    "/api/v1/orders/": {
       "get": {
         "operationId": "listOrders",
         "responses": {
@@ -96,7 +96,60 @@
         }
       }
     },
-    "/api/v1/products/route.ts": {
+    "/api/v1/orders/{id}/": {
+      "get": {
+        "operationId": "getOrder",
+        "responses": {
+          "200": {
+            "description": "Response for status 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrder200ResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Response for status 401",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrder401ResponseBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Response for status 403",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrder403ResponseBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unknown error occurred, trying again might help.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorMessage" }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ]
+      }
+    },
+    "/api/v1/products/": {
       "get": {
         "operationId": "listProducts",
         "responses": {
@@ -138,8 +191,7 @@
               }
             }
           }
-        },
-        "description": "Get all the products"
+        }
       }
     }
   },
@@ -148,6 +200,153 @@
       "ErrorMessage": {
         "type": "object",
         "properties": { "message": { "type": "string" } },
+        "additionalProperties": false
+      },
+      "GetOrder200ResponseBody": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "order": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  },
+                  "store_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  },
+                  "customer_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "PENDING",
+                      "PROCESSING",
+                      "SHIPPED",
+                      "DELIVERED",
+                      "CANCELLED"
+                    ]
+                  },
+                  "total_amount": { "type": "string" },
+                  "shipping_address": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          { "type": "string" },
+                          { "type": "number" },
+                          { "type": "boolean" },
+                          { "type": "string", "nullable": true, "enum": [null] }
+                        ]
+                      },
+                      { "type": "object", "additionalProperties": {} },
+                      { "type": "array", "items": {} }
+                    ]
+                  },
+                  "created_at": {},
+                  "updated_at": {}
+                },
+                "required": [
+                  "id",
+                  "store_id",
+                  "customer_id",
+                  "status",
+                  "total_amount",
+                  "shipping_address",
+                  "created_at",
+                  "updated_at"
+                ],
+                "additionalProperties": false
+              },
+              "customer": {
+                "nullable": true,
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  },
+                  "store_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  },
+                  "user_id": {
+                    "nullable": true,
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  },
+                  "email": { "type": "string", "maxLength": 255 },
+                  "full_name": { "type": "string", "maxLength": 255 },
+                  "phone": { "type": "string", "maxLength": 20 },
+                  "address": { "type": "string", "maxLength": 500 },
+                  "created_at": {},
+                  "updated_at": {}
+                },
+                "required": [
+                  "id",
+                  "store_id",
+                  "user_id",
+                  "email",
+                  "full_name",
+                  "phone",
+                  "address",
+                  "created_at",
+                  "updated_at"
+                ],
+                "additionalProperties": false
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "quantity": { "type": "number" },
+                    "price": { "type": "string" },
+                    "product_name": { "type": "string" },
+                    "product_sku": { "nullable": true, "type": "string" },
+                    "product_image": { "nullable": true, "type": "string" }
+                  },
+                  "required": [
+                    "id",
+                    "quantity",
+                    "price",
+                    "product_name",
+                    "product_sku",
+                    "product_image"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["order", "customer", "items"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["data"],
+        "additionalProperties": false
+      },
+      "GetOrder401ResponseBody": {
+        "type": "object",
+        "properties": { "error": { "type": "string" } },
+        "required": ["error"],
+        "additionalProperties": false
+      },
+      "GetOrder403ResponseBody": {
+        "type": "object",
+        "properties": { "error": { "type": "string" } },
+        "required": ["error"],
         "additionalProperties": false
       },
       "ListCustomers200ResponseBody": {
