@@ -4,11 +4,23 @@ import {
 } from "@/db/actions/dashboard/settings/general/actions";
 import { apiDashboardStoreSettingsSchema } from "@/lib/apis/schemas/settings";
 import { checkAPIKeyFromAPI, COMMON_API_ERRORS } from "@/lib/apis/shared";
+import { ApiMetadata } from "@/lib/apis/types";
 import { route, routeOperation, TypedNextResponse } from "next-rest-framework";
 import z from "zod";
 
+const getSettingsMetadata: ApiMetadata = {
+	tags: ["Settings"],
+};
+
+const updateSettingsMetadata: ApiMetadata = {
+	tags: ["Settings"],
+};
+
 export const { GET, PATCH } = route({
-	getSettings: routeOperation({ method: "GET" })
+	getSettings: routeOperation({
+		method: "GET",
+		openApiOperation: getSettingsMetadata,
+	})
 		.outputs([
 			{
 				status: 200,
@@ -41,7 +53,10 @@ export const { GET, PATCH } = route({
 			return TypedNextResponse.json({ data: store }, { status: 200 });
 		}),
 
-	updateSettings: routeOperation({ method: "PATCH" })
+	updateSettings: routeOperation({
+		method: "PATCH",
+		openApiOperation: updateSettingsMetadata,
+	})
 		.input({
 			contentType: "application/json",
 			body: apiDashboardStoreSettingsSchema.partial(),

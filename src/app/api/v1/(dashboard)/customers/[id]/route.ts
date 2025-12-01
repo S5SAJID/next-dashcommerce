@@ -1,11 +1,19 @@
 import { getDashboardCustomer } from "@/db/actions/dashboard/customers/actions";
 import { apiDashboardCustomerSchema } from "@/lib/apis/schemas/customers";
 import { checkAPIKeyFromAPI, COMMON_API_ERRORS } from "@/lib/apis/shared";
+import { ApiMetadata } from "@/lib/apis/types";
 import { route, routeOperation, TypedNextResponse } from "next-rest-framework";
 import z from "zod";
 
+const getCustomerMetadata: ApiMetadata = {
+	tags: ["Customers"],
+};
+
 export const { GET } = route({
-	getCustomer: routeOperation({ method: "GET" })
+	getCustomer: routeOperation({
+		method: "GET",
+		openApiOperation: getCustomerMetadata,
+	})
 		.outputs([
 			{
 				status: 200,

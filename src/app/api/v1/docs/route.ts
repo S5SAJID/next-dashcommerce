@@ -12,6 +12,31 @@ export const { GET } = docsRoute({
 				url: "https://s5sajid.github.io",
 			},
 		},
+		tags: [
+			{
+				name: "Products",
+				description:
+					"Getting products data, updating products, deleting products, and creation of products.",
+			},
+			{
+				name: "Orders",
+				description: "Getting orders data and updating orders.",
+			},
+			{
+				name: "Customers",
+				description: "Getting customers data and updating customers.",
+			},
+			{
+				name: "Integrations",
+				description:
+					"Getting integrations data, installing integrations, uninstalling integrations, and updating of integrations.",
+			},
+			{
+				name: "Settings",
+				description:
+					"Store configuration, preferences, and operational settings",
+			},
+		],
 		components: {
 			securitySchemes: {
 				"x-api-key": {

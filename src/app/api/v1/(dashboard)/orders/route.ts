@@ -1,11 +1,19 @@
 import { getDashboardOrders } from "@/db/actions/dashboard/orders/actions";
 import { apiDashboardOrderSchema } from "@/lib/apis/schemas/orders";
 import { checkAPIKeyFromAPI, COMMON_API_ERRORS } from "@/lib/apis/shared";
+import { ApiMetadata } from "@/lib/apis/types";
 import { route, routeOperation, TypedNextResponse } from "next-rest-framework";
 import z from "zod";
 
+const listOrdersMetadata: ApiMetadata = {
+	tags: ["Orders"],
+};
+
 export const { GET } = route({
-	listOrders: routeOperation({ method: "GET" })
+	listOrders: routeOperation({
+		method: "GET",
+		openApiOperation: listOrdersMetadata,
+	})
 		.outputs([
 			{
 				status: 200,

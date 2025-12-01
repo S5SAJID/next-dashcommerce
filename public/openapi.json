@@ -11,7 +11,7 @@
     }
   },
   "paths": {
-    "/api/v1/customers/route.ts": {
+    "/api/v1/customers/": {
       "get": {
         "operationId": "listCustomers",
         "responses": {
@@ -65,10 +65,11 @@
               }
             }
           }
-        }
+        },
+        "tags": ["Customers"]
       }
     },
-    "/api/v1/customers/{id}/route.ts": {
+    "/api/v1/customers/{id}/": {
       "get": {
         "operationId": "getCustomer",
         "responses": {
@@ -130,10 +131,11 @@
             "required": true,
             "schema": { "type": "string" }
           }
-        ]
+        ],
+        "tags": ["Customers"]
       }
     },
-    "/api/v1/integrations/route.ts": {
+    "/api/v1/integrations/": {
       "get": {
         "operationId": "listIntegrations",
         "responses": {
@@ -187,10 +189,11 @@
               }
             }
           }
-        }
+        },
+        "tags": ["Integrations"]
       }
     },
-    "/api/v1/integrations/{id}/route.ts": {
+    "/api/v1/integrations/{id}/": {
       "get": {
         "operationId": "getIntegration",
         "responses": {
@@ -252,7 +255,8 @@
             "required": true,
             "schema": { "type": "string" }
           }
-        ]
+        ],
+        "tags": ["Integrations"]
       },
       "post": {
         "operationId": "installIntegration",
@@ -324,7 +328,8 @@
             "required": true,
             "schema": { "type": "string" }
           }
-        ]
+        ],
+        "tags": ["Integrations"]
       },
       "patch": {
         "operationId": "updateIntegration",
@@ -396,7 +401,8 @@
             "required": true,
             "schema": { "type": "string" }
           }
-        ]
+        ],
+        "tags": ["Integrations"]
       },
       "delete": {
         "operationId": "uninstallIntegration",
@@ -468,10 +474,11 @@
             "required": true,
             "schema": { "type": "string" }
           }
-        ]
+        ],
+        "tags": ["Integrations"]
       }
     },
-    "/api/v1/orders/route.ts": {
+    "/api/v1/orders/": {
       "get": {
         "operationId": "listOrders",
         "responses": {
@@ -525,10 +532,11 @@
               }
             }
           }
-        }
+        },
+        "tags": ["Orders"]
       }
     },
-    "/api/v1/orders/{id}/route.ts": {
+    "/api/v1/orders/{id}/": {
       "get": {
         "operationId": "getOrder",
         "responses": {
@@ -590,7 +598,8 @@
             "required": true,
             "schema": { "type": "string" }
           }
-        ]
+        ],
+        "tags": ["Orders"]
       },
       "patch": {
         "operationId": "updateOrder",
@@ -662,10 +671,11 @@
             "required": true,
             "schema": { "type": "string" }
           }
-        ]
+        ],
+        "tags": ["Orders"]
       }
     },
-    "/api/v1/products/route.ts": {
+    "/api/v1/products/": {
       "get": {
         "operationId": "listProducts",
         "responses": {
@@ -719,7 +729,8 @@
               }
             }
           }
-        }
+        },
+        "tags": ["Products"]
       },
       "post": {
         "operationId": "createProduct",
@@ -793,10 +804,11 @@
               }
             }
           }
-        }
+        },
+        "tags": ["Products"]
       }
     },
-    "/api/v1/products/{id}/route.ts": {
+    "/api/v1/products/{id}/": {
       "get": {
         "operationId": "getProduct",
         "responses": {
@@ -858,7 +870,8 @@
             "required": true,
             "schema": { "type": "string" }
           }
-        ]
+        ],
+        "tags": ["Products"]
       },
       "patch": {
         "operationId": "updateProduct",
@@ -930,7 +943,8 @@
             "required": true,
             "schema": { "type": "string" }
           }
-        ]
+        ],
+        "tags": ["Products"]
       },
       "delete": {
         "operationId": "deleteProduct",
@@ -993,10 +1007,11 @@
             "required": true,
             "schema": { "type": "string" }
           }
-        ]
+        ],
+        "tags": ["Products"]
       }
     },
-    "/api/v1/settings/route.ts": {
+    "/api/v1/settings/": {
       "get": {
         "operationId": "getSettings",
         "responses": {
@@ -1050,7 +1065,8 @@
               }
             }
           }
-        }
+        },
+        "tags": ["Settings"]
       },
       "patch": {
         "operationId": "updateSettings",
@@ -1114,7 +1130,8 @@
               }
             }
           }
-        }
+        },
+        "tags": ["Settings"]
       }
     }
   },
@@ -2490,5 +2507,27 @@
       }
     }
   },
+  "tags": [
+    {
+      "name": "Products",
+      "description": "Getting products data, updating products, deleting products, and creation of products."
+    },
+    {
+      "name": "Orders",
+      "description": "Getting orders data and updating orders."
+    },
+    {
+      "name": "Customers",
+      "description": "Getting customers data and updating customers."
+    },
+    {
+      "name": "Integrations",
+      "description": "Getting integrations data, installing integrations, uninstalling integrations, and updating of integrations."
+    },
+    {
+      "name": "Settings",
+      "description": "Store configuration, preferences, and operational settings"
+    }
+  ],
   "security": [{ "x-api-key": [] }]
 }

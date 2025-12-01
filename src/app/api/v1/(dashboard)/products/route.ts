@@ -9,10 +9,19 @@ import { apiDashboardProductSchema } from "@/lib/apis/schemas/products";
 import { product_form_schema } from "@/components/organisms/forms/dashboard/products/product-form/schema";
 import { ApiMetadata } from "@/lib/apis/types";
 
-const listProductsMetadata: ApiMetadata = {};
+const listProductsMetadata: ApiMetadata = {
+	tags: ["Products"],
+};
+
+const createProductMetadata: ApiMetadata = {
+	tags: ["Products"],
+};
 
 export const { GET, POST } = route({
-	listProducts: routeOperation({ method: "GET" })
+	listProducts: routeOperation({
+		method: "GET",
+		openApiOperation: listProductsMetadata,
+	})
 		.outputs([
 			{
 				status: 200,
@@ -40,7 +49,10 @@ export const { GET, POST } = route({
 			return TypedNextResponse.json({ data: products }, { status: 200 });
 		}),
 
-	createProduct: routeOperation({ method: "POST" })
+	createProduct: routeOperation({
+		method: "POST",
+		openApiOperation: createProductMetadata,
+	})
 		.input({
 			contentType: "application/json",
 			body: product_form_schema,

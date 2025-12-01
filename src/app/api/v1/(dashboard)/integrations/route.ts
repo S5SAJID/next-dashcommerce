@@ -1,11 +1,19 @@
 import { getDashboardIntegrations } from "@/db/actions/dashboard/integrations/actions";
 import { apiDashboardIntegrationDefinitionSchema } from "@/lib/apis/schemas/integrations";
 import { checkAPIKeyFromAPI, COMMON_API_ERRORS } from "@/lib/apis/shared";
+import { ApiMetadata } from "@/lib/apis/types";
 import { route, routeOperation, TypedNextResponse } from "next-rest-framework";
 import z from "zod";
 
+const listIntegrationsMetadata: ApiMetadata = {
+	tags: ["Integrations"],
+};
+
 export const { GET } = route({
-	listIntegrations: routeOperation({ method: "GET" })
+	listIntegrations: routeOperation({
+		method: "GET",
+		openApiOperation: listIntegrationsMetadata,
+	})
 		.outputs([
 			{
 				status: 200,

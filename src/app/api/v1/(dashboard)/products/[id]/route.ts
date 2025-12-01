@@ -5,11 +5,27 @@ import {
 } from "@/db/actions/dashboard/products/actions";
 import { apiDashboardProductSchema } from "@/lib/apis/schemas/products";
 import { checkAPIKeyFromAPI, COMMON_API_ERRORS } from "@/lib/apis/shared";
+import { ApiMetadata } from "@/lib/apis/types";
 import { route, routeOperation, TypedNextResponse } from "next-rest-framework";
 import z from "zod";
 
+const getProductMetadata: ApiMetadata = {
+	tags: ["Products"],
+};
+
+const updateProductMetadata: ApiMetadata = {
+	tags: ["Products"],
+};
+
+const deleteProductMetadata: ApiMetadata = {
+	tags: ["Products"],
+};
+
 export const { GET, PATCH, DELETE } = route({
-	getProduct: routeOperation({ method: "GET" })
+	getProduct: routeOperation({
+		method: "GET",
+		openApiOperation: getProductMetadata,
+	})
 		.outputs([
 			{
 				status: 200,
@@ -50,7 +66,10 @@ export const { GET, PATCH, DELETE } = route({
 			return TypedNextResponse.json({ data: product }, { status: 200 });
 		}),
 
-	updateProduct: routeOperation({ method: "PATCH" })
+	updateProduct: routeOperation({
+		method: "PATCH",
+		openApiOperation: updateProductMetadata,
+	})
 		.input({
 			contentType: "application/json",
 			body: apiDashboardProductSchema,
@@ -99,7 +118,10 @@ export const { GET, PATCH, DELETE } = route({
 			);
 		}),
 
-	deleteProduct: routeOperation({ method: "DELETE" })
+	deleteProduct: routeOperation({
+		method: "DELETE",
+		openApiOperation: deleteProductMetadata,
+	})
 		.outputs([
 			{
 				status: 200,

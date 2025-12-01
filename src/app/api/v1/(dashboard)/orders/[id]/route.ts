@@ -4,6 +4,7 @@ import {
 } from "@/db/actions/dashboard/orders/actions";
 import { apiDashboardOrderDetailsSchema } from "@/lib/apis/schemas/orders";
 import { checkAPIKeyFromAPI, COMMON_API_ERRORS } from "@/lib/apis/shared";
+import { ApiMetadata } from "@/lib/apis/types";
 import { route, routeOperation, TypedNextResponse } from "next-rest-framework";
 import z from "zod";
 
@@ -17,8 +18,19 @@ const updateOrderStatusSchema = z.object({
 	]),
 });
 
+const getOrderMetadata: ApiMetadata = {
+	tags: ["Orders"],
+};
+
+const updateOrderMetadata: ApiMetadata = {
+	tags: ["Orders"],
+};
+
 export const { GET, PATCH } = route({
-	getOrder: routeOperation({ method: "GET" })
+	getOrder: routeOperation({
+		method: "GET",
+		openApiOperation: getOrderMetadata,
+	})
 		.outputs([
 			{
 				status: 200,
@@ -55,7 +67,10 @@ export const { GET, PATCH } = route({
 			return TypedNextResponse.json({ data: order }, { status: 200 });
 		}),
 
-	updateOrder: routeOperation({ method: "PATCH" })
+	updateOrder: routeOperation({
+		method: "PATCH",
+		openApiOperation: updateOrderMetadata,
+	})
 		.input({
 			contentType: "application/json",
 			body: updateOrderStatusSchema,

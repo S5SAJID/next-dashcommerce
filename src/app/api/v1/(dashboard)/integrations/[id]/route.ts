@@ -10,6 +10,7 @@ import {
 	apiDashboardIntegrationInstallationSchema,
 } from "@/lib/apis/schemas/integrations";
 import { checkAPIKeyFromAPI, COMMON_API_ERRORS } from "@/lib/apis/shared";
+import { ApiMetadata } from "@/lib/apis/types";
 import { route, routeOperation, TypedNextResponse } from "next-rest-framework";
 import z from "zod";
 
@@ -22,8 +23,27 @@ const updateIntegrationSchema = z.object({
 	config: z.record(z.string(), z.string()),
 });
 
+const getIntegrationMetadata: ApiMetadata = {
+	tags: ["Integrations"],
+};
+
+const installIntegrationMetadata: ApiMetadata = {
+	tags: ["Integrations"],
+};
+
+const updateIntegrationMetadata: ApiMetadata = {
+	tags: ["Integrations"],
+};
+
+const uninstallIntegrationMetadata: ApiMetadata = {
+	tags: ["Integrations"],
+};
+
 export const { GET, POST, PATCH, DELETE } = route({
-	getIntegration: routeOperation({ method: "GET" })
+	getIntegration: routeOperation({
+		method: "GET",
+		openApiOperation: getIntegrationMetadata,
+	})
 		.outputs([
 			{
 				status: 200,
@@ -76,7 +96,10 @@ export const { GET, POST, PATCH, DELETE } = route({
 			);
 		}),
 
-	installIntegration: routeOperation({ method: "POST" })
+	installIntegration: routeOperation({
+		method: "POST",
+		openApiOperation: installIntegrationMetadata,
+	})
 		.input({
 			contentType: "application/json",
 			body: installIntegrationSchema,
@@ -125,7 +148,10 @@ export const { GET, POST, PATCH, DELETE } = route({
 			);
 		}),
 
-	updateIntegration: routeOperation({ method: "PATCH" })
+	updateIntegration: routeOperation({
+		method: "PATCH",
+		openApiOperation: updateIntegrationMetadata,
+	})
 		.input({
 			contentType: "application/json",
 			body: updateIntegrationSchema,
@@ -173,7 +199,10 @@ export const { GET, POST, PATCH, DELETE } = route({
 			);
 		}),
 
-	uninstallIntegration: routeOperation({ method: "DELETE" })
+	uninstallIntegration: routeOperation({
+		method: "DELETE",
+		openApiOperation: uninstallIntegrationMetadata,
+	})
 		.input({
 			contentType: "application/json",
 			body: z.object({
