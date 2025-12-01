@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Trash2 } from "lucide-react";
-import { type ConfigSchemaField } from "@/db/schema";
+import { type ConfigSchemaField } from "@/db/schema/tables/integrations";
 
 type Props = {
 	value: ConfigSchemaField[];

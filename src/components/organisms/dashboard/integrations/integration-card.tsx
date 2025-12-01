@@ -1,6 +1,5 @@
 "use client";
 
-import { type IntegrationDefinition } from "@/db/schema";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -16,6 +15,7 @@ import { getIntegrationInstallation } from "@/db/actions/dashboard/integrations/
 import { Trash2 } from "lucide-react";
 import { DeleteIntegrationButton } from "./delete-integration-button";
 import { IntegrationDialog } from "./integration-dialog";
+import { type IntegrationDefinition } from "@/db/schema/tables/integrations";
 
 type Props = {
 	integration: IntegrationDefinition;

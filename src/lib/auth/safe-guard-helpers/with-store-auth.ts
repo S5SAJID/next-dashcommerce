@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { getSecuredStoreContext, type SecuredStoreContext } from ".";
 
 /**
@@ -10,7 +11,7 @@ export function withStoreAuth<T extends never[]>(
 ) {
 	return async (...args: T) => {
 		// 1. Establish Secure Context (TODO: ONE DB hit, cached for the request)
-		const context = await getSecuredStoreContext();
+		const context = await getSecuredStoreContext(await headers());
 
 		// // 2. Role Authorization Check (Pure CPU check)
 		// if (!requiredRoles.includes(context.role)) {

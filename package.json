@@ -6,8 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "biome check ./src",
-    "format": "biome check ./src --write --unsafe",
+    "check": "biome check ./src && tsc --noEmit",
+    "format": "biome check ./src --write --unsafe && tsc --noEmit",
     "prepare": "simple-git-hooks",
     "docs:generate": "NODE_OPTIONS='--import=tsx' next-rest-framework generate",
     "docs:validate": "NODE_OPTIONS='--import=tsx' next-rest-framework validate"
