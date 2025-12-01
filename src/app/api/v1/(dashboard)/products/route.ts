@@ -7,6 +7,11 @@ import z from "zod";
 import { checkAPIKeyFromAPI, COMMON_API_ERRORS } from "@/lib/apis/shared";
 import { apiDashboardProductSchema } from "@/lib/apis/schemas/products";
 import { product_form_schema } from "@/components/organisms/forms/dashboard/products/product-form/schema";
+import { ApiMetadata } from "@/lib/apis/types";
+
+const listProductsMetadata: ApiMetadata = {
+	
+};
 
 export const { GET, POST } = route({
 	listProducts: routeOperation({ method: "GET" })

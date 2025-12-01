@@ -3,10 +3,15 @@
   "info": {
     "title": "S5ARC. API Documentation",
     "description": "API documentation for S5ARC.",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "contact": {
+      "email": "s5sajidyt+s5arc_dev@gmail.com",
+      "name": "S5SAJID (SajidUllah K.)",
+      "url": "https://s5sajid.github.io"
+    }
   },
   "paths": {
-    "/api/v1/customers/": {
+    "/api/v1/customers/route.ts": {
       "get": {
         "operationId": "listCustomers",
         "responses": {
@@ -63,7 +68,7 @@
         }
       }
     },
-    "/api/v1/customers/{id}/": {
+    "/api/v1/customers/{id}/route.ts": {
       "get": {
         "operationId": "getCustomer",
         "responses": {
@@ -128,7 +133,7 @@
         ]
       }
     },
-    "/api/v1/integrations/": {
+    "/api/v1/integrations/route.ts": {
       "get": {
         "operationId": "listIntegrations",
         "responses": {
@@ -185,7 +190,7 @@
         }
       }
     },
-    "/api/v1/integrations/{id}/": {
+    "/api/v1/integrations/{id}/route.ts": {
       "get": {
         "operationId": "getIntegration",
         "responses": {
@@ -466,7 +471,7 @@
         ]
       }
     },
-    "/api/v1/orders/": {
+    "/api/v1/orders/route.ts": {
       "get": {
         "operationId": "listOrders",
         "responses": {
@@ -523,7 +528,7 @@
         }
       }
     },
-    "/api/v1/orders/{id}/": {
+    "/api/v1/orders/{id}/route.ts": {
       "get": {
         "operationId": "getOrder",
         "responses": {
@@ -660,7 +665,7 @@
         ]
       }
     },
-    "/api/v1/products/": {
+    "/api/v1/products/route.ts": {
       "get": {
         "operationId": "listProducts",
         "responses": {
@@ -791,7 +796,7 @@
         }
       }
     },
-    "/api/v1/products/{id}/": {
+    "/api/v1/products/{id}/route.ts": {
       "get": {
         "operationId": "getProduct",
         "responses": {
@@ -991,7 +996,7 @@
         ]
       }
     },
-    "/api/v1/settings/": {
+    "/api/v1/settings/route.ts": {
       "get": {
         "operationId": "getSettings",
         "responses": {
@@ -2475,6 +2480,15 @@
           }
         }
       }
+    },
+    "securitySchemes": {
+      "x-api-key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "API Key required for authentication."
+      }
     }
-  }
+  },
+  "security": [{ "x-api-key": [] }]
 }

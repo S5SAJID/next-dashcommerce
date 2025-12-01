@@ -6,7 +6,27 @@ export const { GET } = docsRoute({
 			title: "S5ARC. API Documentation",
 			version: "1.0.0",
 			description: "API documentation for S5ARC.",
+			contact: {
+				email: "s5sajidyt+s5arc_dev@gmail.com",
+				name: "S5SAJID (SajidUllah K.)",
+				url: "https://s5sajid.github.io",
+			},
 		},
+		components: {
+			securitySchemes: {
+				"x-api-key": {
+					type: "apiKey",
+					in: "header",
+					name: "X-API-Key",
+					description: "API Key required for authentication.",
+				},
+			},
+		},
+		security: [
+			{
+				"x-api-key": []
+			}
+		]
 	},
 	docsConfig: {
 		provider: "redoc",
