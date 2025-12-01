@@ -16,8 +16,8 @@ import { ConfigSchemaField } from "@/db/schema/tables/integrations";
  * Get all available integrations for the current store
  * Includes global integrations and store-specific custom integrations
  */
-export const getDashboardIntegrations = dashboardActionClient
-	.action(async ({ ctx }) => {
+export const getDashboardIntegrations = dashboardActionClient.action(
+	async ({ ctx }) => {
 		const integrations = await db.query.IntegrationDefinitionTable.findMany({
 			where: or(
 				eq(IntegrationDefinitionTable.is_global, true),
@@ -27,7 +27,8 @@ export const getDashboardIntegrations = dashboardActionClient
 		});
 
 		return integrations;
-	});
+	}
+);
 
 /**
  * Get a single integration by ID
