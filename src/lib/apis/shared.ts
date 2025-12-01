@@ -13,7 +13,17 @@ export const COMMON_API_ERRORS = [
 		contentType: "application/json",
 		body: z.object({ error: z.string() }),
 	},
-];
+	{
+		status: 404,
+		contentType: "application/json",
+		body: z.object({ error: z.string() }),
+	},
+	{
+		status: 500,
+		contentType: "application/json",
+		body: z.object({ error: z.string() }),
+	},
+] as const;
 
 export async function checkAPIKeyFromAPI(req: NextRequest) {
 	// just check api-key availbility, rest is handled by dashboardActionClient
@@ -21,7 +31,7 @@ export async function checkAPIKeyFromAPI(req: NextRequest) {
 	if (!apiKey) {
 		return TypedNextResponse.json(
 			{ error: "API key required" },
-			{ status: 401 }
+			{ status: 401, headers: { "content-type": "application/json" } }
 		);
 	}
 }

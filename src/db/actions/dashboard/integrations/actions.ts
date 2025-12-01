@@ -23,6 +23,9 @@ export const getDashboardIntegrations = dashboardActionClient.action(
 				eq(IntegrationDefinitionTable.is_global, true),
 				eq(IntegrationDefinitionTable.created_by_store_id, ctx.storeId)
 			),
+			columns: {
+				created_by_store_id: false,
+			},
 			orderBy: (integrations, { desc }) => [desc(integrations.created_at)],
 		});
 
@@ -44,6 +47,9 @@ export const getDashboardIntegration = dashboardActionClient
 					eq(IntegrationDefinitionTable.created_by_store_id, ctx.storeId)
 				)
 			),
+			columns: {
+				created_by_store_id: false,
+			},
 		});
 
 		return integration;
@@ -63,6 +69,9 @@ export const getIntegrationInstallation = dashboardActionClient
 				),
 				eq(IntegrationInstallationTable.store_id, ctx.storeId)
 			),
+			columns: {
+				store_id: false,
+			},
 		});
 
 		return installation;
