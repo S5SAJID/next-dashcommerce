@@ -24,9 +24,9 @@ export const { GET } = docsRoute({
 		},
 		security: [
 			{
-				"x-api-key": []
-			}
-		]
+				"x-api-key": [],
+			},
+		],
 	},
 	docsConfig: {
 		provider: "redoc",
