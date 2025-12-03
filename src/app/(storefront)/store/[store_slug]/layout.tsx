@@ -45,7 +45,7 @@ export default async function Layout({
 					{children}
 				</main>
 			</StoreFrontProviders>
-			<StoreFrontFooter store={store}/>
+			<StoreFrontFooter store={store} />
 		</div>
 	);
 }

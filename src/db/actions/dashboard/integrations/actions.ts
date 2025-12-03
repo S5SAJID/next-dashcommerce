@@ -20,7 +20,7 @@ import { checkPermission } from "@/lib/auth/check-permission";
 export const getDashboardIntegrations = dashboardActionClient.action(
 	async ({ ctx }) => {
 		checkPermission(ctx, "integrations:read");
-		
+
 		const integrations = await db.query.IntegrationDefinitionTable.findMany({
 			where: or(
 				eq(IntegrationDefinitionTable.is_global, true),

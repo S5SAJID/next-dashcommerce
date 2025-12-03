@@ -34,7 +34,7 @@ export const getDashboardCustomer = dashboardActionClient
 	.inputSchema(z.object({ customerId: z.string() }))
 	.action(async ({ parsedInput, ctx }) => {
 		checkPermission(ctx, "customers:read");
-		
+
 		const customer = await db
 			.select({
 				id: CustomerTable.id,

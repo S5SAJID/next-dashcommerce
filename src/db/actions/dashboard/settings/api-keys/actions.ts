@@ -73,7 +73,6 @@ export const revokeApiKey = dashboardActionClient
 			throw new Error("Forbidden: API keys cannot revoke other API keys");
 		}
 
-		
 		await db
 			.update(ApiKeyTable)
 			.set({ is_active: false })

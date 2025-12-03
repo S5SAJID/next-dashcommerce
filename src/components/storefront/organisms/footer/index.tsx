@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/button";
 import { InferSelectModel } from "drizzle-orm";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import Link from "next/link";
-import { StoreTable } from "@/db/schema"
+import { StoreTable } from "@/db/schema";
 
 type StoreFrontFooterProps = {
-	store: InferSelectModel<typeof StoreTable>
-}
+	store: InferSelectModel<typeof StoreTable>;
+};
 
 export default function StoreFrontFooter({ store }: StoreFrontFooterProps) {
 	return (

@@ -31,9 +31,7 @@ export default function StoreFrontAddToCart({
 			}}
 			size="lg"
 		>
-			{
-				isOutOfStock ? "Out of Stock" : "Add to cart"
-			}
+			{isOutOfStock ? "Out of Stock" : "Add to cart"}
 		</Button>
 	);
 }
