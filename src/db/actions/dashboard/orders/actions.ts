@@ -10,9 +10,11 @@ import { and, count, desc, eq, sql } from "drizzle-orm";
 import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-client";
 import z from "zod";
 import { revalidatePath } from "next/cache";
+import { checkPermission } from "@/lib/auth/check-permission";
 
 export const getDashboardOrders = dashboardActionClient.action(
 	async ({ ctx }) => {
+		checkPermission(ctx, "orders:read");
 		const orders = await db
 			.select({
 				orderId: OrderTable.id,
@@ -43,6 +45,7 @@ export const getDashboardOrders = dashboardActionClient.action(
 export const getDashboardOrder = dashboardActionClient
 	.inputSchema(z.object({ orderId: z.string() }))
 	.action(async ({ ctx, parsedInput }) => {
+		checkPermission(ctx, "orders:read");
 		const result = await db
 			.select({
 				// Select all fields from OrderTable
@@ -99,6 +102,7 @@ export const updateOrderStatus = dashboardActionClient
 		})
 	)
 	.action(async ({ ctx, parsedInput }) => {
+		checkPermission(ctx, "orders:write");
 		await db
 			.update(OrderTable)
 			.set({ status: parsedInput.status })

@@ -2,11 +2,12 @@
 import { storeFormSchema } from "@/components/organisms/forms/auth/create-store/schema";
 import { db } from "@/db/db";
 import { StoreTable, user } from "@/db/schema";
+import { checkPermission } from "@/lib/auth/check-permission";
 import { noAuthdashboardActionClient } from "@/lib/safe-action-clients/dashboard-client/no-auth-dashboard-client";
 
 export const createDashboardStore = noAuthdashboardActionClient
 	.inputSchema(storeFormSchema)
-	.action(async ({ parsedInput }) => {
+	.action(async ({ parsedInput, ctx }) => {
 		const { name, description, subdomain } = parsedInput;
 
 		const store = await db

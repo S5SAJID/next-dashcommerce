@@ -61,6 +61,9 @@ function handleLocalhostCORS(request: NextRequest, response: NextResponse) {
 	}
 }
 
+// const developmentMatcher = "/((?!_next|[\\w-]+\\.\\w+).*)"; // Matches everything
+// const productionMatcher = "/((?!api|_next|[\\w-]+\\.\\w+).*)"; // Excludes /api routes
+
 export const config = {
 	matcher: [
 		/*
@@ -69,8 +72,6 @@ export const config = {
 		 * 2. /_next (Next.js internals)
 		 * 3. all root files inside /public (e.g. /favicon.ico)
 		 */
-		process.env.NODE_ENV === "development"
-			? "/((?!_next|[\\w-]+\\.\\w+).*)"
-			: "/((?!api|_next|[\\w-]+\\.\\w+).*)",
+		"/((?!_next|[\\w-]+\\.\\w+).*)", // convert to production one when deploying
 	],
 };

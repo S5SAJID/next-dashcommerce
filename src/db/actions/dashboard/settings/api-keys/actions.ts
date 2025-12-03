@@ -52,6 +52,10 @@ export const createApiKey = dashboardActionClient
  * List all API keys for the authenticated store
  */
 export const listApiKeys = dashboardActionClient.action(async ({ ctx }) => {
+	if (ctx.authType !== "session") {
+		throw new Error("Forbidden: API keys cannot list other API keys");
+	}
+
 	return db.query.ApiKeyTable.findMany({
 		where: eq(ApiKeyTable.store_id, ctx.storeId),
 		columns: { key_hash: false }, // Hide hash
@@ -65,6 +69,11 @@ export const listApiKeys = dashboardActionClient.action(async ({ ctx }) => {
 export const revokeApiKey = dashboardActionClient
 	.inputSchema(z.object({ id: z.string() }))
 	.action(async ({ parsedInput, ctx }) => {
+		if (ctx.authType !== "session") {
+			throw new Error("Forbidden: API keys cannot revoke other API keys");
+		}
+
+		
 		await db
 			.update(ApiKeyTable)
 			.set({ is_active: false })

@@ -11,6 +11,7 @@ import { z } from "zod";
 import { validateIntegrationEndpoint } from "@/lib/integrations/validate-endpoint";
 import { revalidatePath } from "next/cache";
 import { ConfigSchemaField } from "@/db/schema/tables/integrations";
+import { checkPermission } from "@/lib/auth/check-permission";
 
 /**
  * Get all available integrations for the current store
@@ -18,6 +19,8 @@ import { ConfigSchemaField } from "@/db/schema/tables/integrations";
  */
 export const getDashboardIntegrations = dashboardActionClient.action(
 	async ({ ctx }) => {
+		checkPermission(ctx, "integrations:read");
+		
 		const integrations = await db.query.IntegrationDefinitionTable.findMany({
 			where: or(
 				eq(IntegrationDefinitionTable.is_global, true),
@@ -36,6 +39,8 @@ export const getDashboardIntegrations = dashboardActionClient.action(
 export const getDashboardIntegration = dashboardActionClient
 	.inputSchema(z.object({ id: z.uuid() }))
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "integrations:read");
+
 		const integration = await db.query.IntegrationDefinitionTable.findFirst({
 			where: and(
 				eq(IntegrationDefinitionTable.id, parsedInput.id),
@@ -55,6 +60,8 @@ export const getDashboardIntegration = dashboardActionClient
 export const getIntegrationInstallation = dashboardActionClient
 	.inputSchema(z.object({ integrationId: z.uuid() }))
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "integrations:read");
+
 		const installation = await db.query.IntegrationInstallationTable.findFirst({
 			where: and(
 				eq(
@@ -79,6 +86,8 @@ export const createIntegrationInstallation = dashboardActionClient
 		})
 	)
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "integrations:write");
+
 		const installation = await db
 			.insert(IntegrationInstallationTable)
 			.values({
@@ -104,6 +113,8 @@ export const updateIntegrationInstallation = dashboardActionClient
 		})
 	)
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "integrations:write");
+
 		const installation = await db
 			.update(IntegrationInstallationTable)
 			.set({
@@ -133,6 +144,8 @@ export const toggleIntegrationStatus = dashboardActionClient
 		})
 	)
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "integrations:write");
+
 		const installation = await db
 			.update(IntegrationInstallationTable)
 			.set({
@@ -155,8 +168,10 @@ export const toggleIntegrationStatus = dashboardActionClient
  * Disconnect/delete an integration installation
  */
 export const deleteIntegrationInstallation = dashboardActionClient
-	.inputSchema(z.object({ installationId: z.string().uuid() }))
+	.inputSchema(z.object({ installationId: z.uuid() }))
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "integrations:delete");
+
 		await db
 			.delete(IntegrationInstallationTable)
 			.where(
@@ -205,6 +220,8 @@ export const createCustomIntegration = dashboardActionClient
 		})
 	)
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "integrations:write");
+
 		// Validate endpoint first
 		const validation = await validateIntegrationEndpoint(
 			parsedInput.targetEndpointUrl
@@ -248,6 +265,7 @@ export const createCustomIntegration = dashboardActionClient
 export const deleteCustomIntegration = dashboardActionClient
 	.inputSchema(z.object({ integrationId: z.uuid() }))
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "integrations:delete");
 		// First, delete all installations of this integration for this store
 		await db
 			.delete(IntegrationInstallationTable)

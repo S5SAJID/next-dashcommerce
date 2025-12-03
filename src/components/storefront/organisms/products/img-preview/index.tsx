@@ -13,7 +13,7 @@ export default function StoreFrondProductImagePreview({
 
 	return (
 		<div className="grid w-full grid-rows-[1fr_80px] gap-2">
-			<div className="relative overflow-hidden rounded bg-muted">
+			<div className="relative overflow-hidden rounded-xl bg-muted">
 				{product.images.map((image) => (
 					<Image
 						alt={product.name}
@@ -29,7 +29,7 @@ export default function StoreFrondProductImagePreview({
 				{product.images.map((img) => (
 					<Image
 						alt={product.name}
-						className={`cursor-pointer border ${img === selectedImg ? "border-primary" : "border-transparent"} rounded`}
+						className={`cursor-pointer border ${img === selectedImg ? "border-primary" : "border-transparent"} rounded-xl`}
 						height={80}
 						key={img}
 						loading="lazy"

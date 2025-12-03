@@ -4,9 +4,12 @@ import { CustomerTable, OrderTable } from "@/db/schema";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-client";
 import z from "zod";
+import { checkPermission } from "@/lib/auth/check-permission";
 
 export const getDashboardCustomers = dashboardActionClient.action(
 	async ({ ctx }) => {
+		checkPermission(ctx, "customers:read");
+
 		const customers = await db
 			.select({
 				id: CustomerTable.id,
@@ -30,6 +33,8 @@ export const getDashboardCustomers = dashboardActionClient.action(
 export const getDashboardCustomer = dashboardActionClient
 	.inputSchema(z.object({ customerId: z.string() }))
 	.action(async ({ parsedInput, ctx }) => {
+		checkPermission(ctx, "customers:read");
+		
 		const customer = await db
 			.select({
 				id: CustomerTable.id,

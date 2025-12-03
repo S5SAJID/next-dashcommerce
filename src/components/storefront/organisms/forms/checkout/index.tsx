@@ -26,6 +26,7 @@ import { useCart } from "react-use-cart";
 import { useRouter } from "@bprogress/next";
 import { Spinner } from "@/components/ui/spinner";
 import { toastPromise } from "@/hooks/use-promise-toaster";
+import { CreditCard } from "lucide-react";
 
 const checkoutFormDefault = {
 	name: "",
@@ -86,7 +87,7 @@ export default function StoreFrontCheckoutForm() {
 	);
 	return (
 		<Form {...form}>
-			<form className="space-y-8 pt-6 pr-6" onSubmit={handleSubmit}>
+			<form className="space-y-8 pt-6 lg:pr-6" onSubmit={handleSubmit}>
 				<FormField
 					control={form.control}
 					name="name"
@@ -220,6 +221,19 @@ export default function StoreFrontCheckoutForm() {
 						</FormItem>
 					)}
 				/>
+				<div className="rounded-lg border bg-muted/50 p-4">
+					<div className="flex items-center gap-3">
+						<div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+							<CreditCard />
+						</div>
+						<div className="flex flex-col">
+							<span className="font-medium text-sm">Cash on Delivery</span>
+							<span className="text-muted-foreground text-xs">
+								Pay in cash upon delivery
+							</span>
+						</div>
+					</div>
+				</div>
 				<Button
 					className="mt-4 w-full rounded-full"
 					disabled={form.formState.isSubmitting}

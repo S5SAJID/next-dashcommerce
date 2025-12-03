@@ -7,12 +7,14 @@ import type { VariantProps } from "class-variance-authority";
 
 type StoreFrontAddToCartProps = React.ComponentProps<"button"> & {
 	variant?: VariantProps<typeof buttonVariants>;
+	isOutOfStock?: boolean;
 } & { product: CartModelItem };
 
 export default function StoreFrontAddToCart({
 	className,
 	variant = { variant: "default", size: "lg" },
 	product,
+	isOutOfStock = false,
 	...props
 }: StoreFrontAddToCartProps) {
 	const { addItem } = useCart();
@@ -22,13 +24,16 @@ export default function StoreFrontAddToCart({
 			{...props}
 			{...variant}
 			className={className}
+			disabled={isOutOfStock}
 			onClick={() => {
 				addItem(product);
 				setOpen(true);
 			}}
 			size="lg"
 		>
-			Add to cart
+			{
+				isOutOfStock ? "Out of Stock" : "Add to cart"
+			}
 		</Button>
 	);
 }

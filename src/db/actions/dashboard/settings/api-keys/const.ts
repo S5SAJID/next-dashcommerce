@@ -9,6 +9,10 @@ export const AVAILABLE_PERMISSIONS = [
 	"orders:write",
 	"customers:read",
 	"integrations:read",
+	"integrations:write",
+	"integrations:delete",
+	"store:read",
+	"store:write",
 	"*:*",
 ] as const;
 

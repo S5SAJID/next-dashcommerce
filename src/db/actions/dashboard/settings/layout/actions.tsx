@@ -2,12 +2,14 @@
 import { storeLayoutSettingsSchema } from "@/components/organisms/forms/dashboard/settings/layout/schema";
 import { db } from "@/db/db";
 import { StoreTable } from "@/db/schema";
+import { checkPermission } from "@/lib/auth/check-permission";
 import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-client";
 import { eq } from "drizzle-orm";
 
 export const updateLayoutSettings = dashboardActionClient
 	.inputSchema(storeLayoutSettingsSchema)
 	.action(async ({ ctx, parsedInput }) => {
+		checkPermission(ctx, "store:write");
 		const settings = {
 			...parsedInput,
 			heroSection: {
@@ -28,6 +30,7 @@ export const updateLayoutSettings = dashboardActionClient
 
 export const getDashboadStore = dashboardActionClient.action(
 	async ({ ctx }) => {
+		checkPermission(ctx, "store:read");
 		const store = await db.query.StoreTable.findFirst({
 			where: eq(StoreTable.id, ctx.storeId),
 		});
