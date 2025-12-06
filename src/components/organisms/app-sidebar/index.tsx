@@ -73,6 +73,7 @@ export default function AppSidebar({ user }: { user: User }) {
 								<Image
 									alt="S5ARC logo"
 									className="size-6 invert dark:invert-0"
+									loader={({ src }) => src}
 									src={Logo}
 								/>
 								<span className="font-semibold text-base">S5ARC.</span>

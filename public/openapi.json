@@ -2503,7 +2503,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "X-API-Key",
-        "description": "API Key required for authentication."
+        "description": "API Key required for all the paths for authentication. All the endpoints needs this apikey in the header."
       }
     }
   },

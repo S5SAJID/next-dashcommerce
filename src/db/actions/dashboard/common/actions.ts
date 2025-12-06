@@ -1,22 +1,25 @@
 "use server";
 import { db } from "@/db/db";
 import { StoreTable } from "@/db/schema";
+import { uploadMultipleToCloudinary } from "@/lib/media-management/cloudinary/functions/upload";
+import { CloudinaryUploadOptions } from "@/lib/media-management/cloudinary/types";
 import { eq } from "drizzle-orm";
-import { writeFile } from "node:fs/promises";
-import path from "node:path";
 
-export async function uploadDashboardFiles(files: File[]) {
-	const uploadDir = path.resolve(process.cwd(), "public/uploads");
+interface DashboardUploadResult {
+	url: string;
+	publicId: string;
+}
 
-	const fileUrls = [];
-	for (const file of files) {
-		const filePath = path.join(uploadDir, file.name);
-		const fileData = Buffer.from(await file.arrayBuffer());
-		await writeFile(filePath, fileData);
-		fileUrls.push(`/uploads/${file.name}`);
-	}
+export async function uploadDashboardFiles(
+	files: File[],
+	options: CloudinaryUploadOptions = { folder: "dashboard" }
+): Promise<DashboardUploadResult[]> {
+	const results = await uploadMultipleToCloudinary(files, options);
 
-	return fileUrls;
+	return results.map((result) => ({
+		url: result.url,
+		publicId: result.publicId,
+	}));
 }
 
 export async function checkDashboardSubdomainAvailability(

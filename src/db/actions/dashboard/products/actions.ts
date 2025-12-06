@@ -58,9 +58,10 @@ export const updateDashboardProduct = dashboardActionClient
 			(img) => typeof img === "string"
 		);
 
-		// TODO: implement image uploader. Currently saving to local harddisk
-		const uploadedImages = await uploadDashboardFiles(fileImages);
-		const images = [...urlImages, ...uploadedImages];
+		const uploadedImages = await uploadDashboardFiles(fileImages, {
+			folder: `dashboard/products/${ctx.storeId}`,
+		});
+		const images = [...urlImages, ...uploadedImages.map((img) => img.url)];
 
 		const results = await db
 			.update(ProductTable)
@@ -101,8 +102,10 @@ export const createDashboardProduct = dashboardActionClient
 	.action(async ({ parsedInput, ctx }) => {
 		checkPermission(ctx, "products:write");
 
-		// TODO: implement image uploader. Currently saving to local harddisk
-		const images = await uploadDashboardFiles(parsedInput.images);
+		const uploadResults = await uploadDashboardFiles(parsedInput.images, {
+			folder: `dashboard/products/${ctx.storeId}`,
+		});
+		const images = uploadResults.map((img) => img.url);
 
 		const product = await db
 			.insert(ProductTable)
@@ -129,9 +132,10 @@ export const updateDashboardProductDetails = dashboardActionClient
 		const urlImages = parsedInput.images.filter(
 			(img) => typeof img === "string"
 		);
-		// TODO: implement image uploader. Currently saving to local harddisk
-		const uploadedImages = await uploadDashboardFiles(fileImages);
-		const images = [...urlImages, ...uploadedImages];
+		const uploadedImages = await uploadDashboardFiles(fileImages, {
+			folder: `dashboard/products/${ctx.storeId}`,
+		});
+		const images = [...urlImages, ...uploadedImages.map((img) => img.url)];
 
 		await db
 			.update(ProductTable)

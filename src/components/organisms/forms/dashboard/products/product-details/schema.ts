@@ -1,5 +1,5 @@
 import z from "zod";
-import { imageFilesSchema } from "@/lib/shared/shema/image";
+import { mixedImagesSchema } from "@/lib/shared/shema/image";
 
 export const product_details_form_schema = z.object({
 	name: z
@@ -38,15 +38,9 @@ export const product_details_form_schema = z.object({
 		.max(50, "SKU must be at most 50 characters")
 		.nullable()
 		.optional(),
-	images: z.union([
-		imageFilesSchema
-			.min(1, "At least one image is required")
-			.max(6, "Maximum 6 images allowed"),
-		z
-			.array(z.string("Invalid image URL"))
-			.min(1, "At least one image is required")
-			.max(6, "Maximum 6 images allowed"),
-	]),
+	images: mixedImagesSchema
+		.min(1, "At least one image is required")
+		.max(6, "Maximum 6 images allowed"),
 	is_published: z.boolean(),
 });
 

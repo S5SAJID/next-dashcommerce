@@ -2,9 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
 	images: {
+		loaderFile: "./src/lib/image-loader.ts",
 		remotePatterns: [
 			// For Demo Products
 			{ hostname: "cdn.dummyjson.com" },
+			// For Cloudinary images
+			{ hostname: "res.cloudinary.com" },
 		],
 	},
 	experimental: {

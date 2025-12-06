@@ -111,6 +111,7 @@ export default async function AuthLayout({
 							className="block"
 							height={1140}
 							src={"/assets/pages/signin/dashboard-dark.png"}
+							unoptimized
 							width={1024}
 						/>
 					</div>
