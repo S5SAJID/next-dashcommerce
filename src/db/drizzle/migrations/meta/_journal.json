@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1761743793108,
-      "tag": "0000_strange_dark_beast",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1763722123877,
-      "tag": "0001_heavy_salo",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1763828068197,
-      "tag": "0002_flat_silver_sable",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1764409079790,
-      "tag": "0003_yellow_the_order",
+      "when": 1765107102180,
+      "tag": "0000_first_groot",
       "breakpoints": true
     }
   ]
