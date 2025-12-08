@@ -1,19 +1,17 @@
 import type { NextRequest } from "next/server";
 
-export const rootDomain =
-	process.env.NEXT_PUBLIC_ROOT_DOMAIN || "localhost:3000";
+export const rootDomain = process.env.CUSTOM_ROOT_DOMAIN || "localhost:3000";
 
 const localhostSubdomainRegex = /http:\/\/([^.]+)\.localhost/;
 
 export function extractSubdomain(request: NextRequest): string | null {
-	const url = request.url;
 	const host = request.headers.get("host") || "";
 	const hostname = host.split(":")[0];
 
 	// Local development environment
-	if (url.includes("localhost") || url.includes("127.0.0.1")) {
+	if (hostname.includes("localhost") || hostname.includes("127.0.0.1")) {
 		// Try to extract subdomain from the full URL
-		const fullUrlMatch = url.match(localhostSubdomainRegex);
+		const fullUrlMatch = hostname.match(localhostSubdomainRegex);
 		if (fullUrlMatch?.[1]) {
 			return fullUrlMatch[1];
 		}
@@ -40,6 +38,13 @@ export function extractSubdomain(request: NextRequest): string | null {
 		hostname !== rootDomainFormatted &&
 		hostname !== `www.${rootDomainFormatted}` &&
 		hostname.endsWith(`.${rootDomainFormatted}`);
+
+	console.log({
+		host,
+		hostname,
+		ENV_DOMAIN: rootDomain,
+		isSubdomain,
+	});
 
 	return isSubdomain ? hostname.replace(`.${rootDomainFormatted}`, "") : null;
 }

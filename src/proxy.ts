@@ -4,19 +4,6 @@ import { extractSubdomain } from "./lib/subdomain";
 export const proxy = (request: NextRequest) => {
 	// first we wanna see if the request is from localhost or not if so then we wanna disable cors
 	const { pathname, search } = request.nextUrl; // also used for subdoman
-	if (pathname.startsWith("/api")) {
-		if (request.method === "OPTIONS") {
-			const response = new NextResponse(null, { status: 204 });
-			handleLocalhostCORS(request, response);
-			return response;
-		}
-
-		const response = NextResponse.next();
-		handleLocalhostCORS(request, response);
-		return response;
-	}
-
-	// subdomain part
 	const subdomain = extractSubdomain(request);
 
 	if (subdomain && pathname.startsWith("/")) {
