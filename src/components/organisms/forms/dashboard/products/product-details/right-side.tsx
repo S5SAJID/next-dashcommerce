@@ -13,6 +13,7 @@ import type { UseFormReturn } from "react-hook-form";
 import { Switch } from "@/components/ui/switch";
 import type { ProductDetailsFormType } from "./schema";
 import { NumberInput } from "@/components/ui/number-input";
+import PriceInput from "@/components/molecules/forms/inputs/price-input";
 
 type ProductDetailsFormRightSideProps = {
 	form: UseFormReturn<ProductDetailsFormType>;
@@ -35,7 +36,7 @@ export function ProductDetailsFormRightSide({
 							<FormItem>
 								<FormLabel>Price</FormLabel>
 								<FormControl>
-									<NumberInput placeholder="400" {...field} />
+									<PriceInput field={field} placeholder="400" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -48,7 +49,7 @@ export function ProductDetailsFormRightSide({
 							<FormItem>
 								<FormLabel>Compare at price</FormLabel>
 								<FormControl>
-									<NumberInput placeholder="300" {...field} />
+									<PriceInput field={field} placeholder="300" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

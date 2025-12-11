@@ -13,6 +13,7 @@ import { FormPageGridSecondary } from "@/components/layout/form-page-layout/layo
 import type { UseFormReturn } from "react-hook-form";
 import { Switch } from "@/components/ui/switch";
 import { NumberInput } from "@/components/ui/number-input";
+import PriceInput from "@/components/molecules/forms/inputs/price-input";
 
 type ProductFormRightSideProps = {
 	form: UseFormReturn<ProductFormType>;
@@ -33,7 +34,7 @@ export function ProductFormRightSide({ form }: ProductFormRightSideProps) {
 							<FormItem>
 								<FormLabel>Price</FormLabel>
 								<FormControl>
-									<NumberInput placeholder="400" {...field} />
+									<PriceInput field={field} placeholder="400" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -46,7 +47,7 @@ export function ProductFormRightSide({ form }: ProductFormRightSideProps) {
 							<FormItem>
 								<FormLabel>Compare at price</FormLabel>
 								<FormControl>
-									<NumberInput placeholder="300" {...field} />
+									<PriceInput field={field} placeholder="300" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
