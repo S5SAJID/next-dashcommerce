@@ -1,0 +1,65 @@
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
+
+export default function HomePageNavbar() {
+  return (
+    <nav className="fixed top-0 w-full z-50 border-b border-border/40 backdrop-blur-md bg-background/80 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="flex items-center">
+          <div className="w-8 h-8 flex items-center justify-center">
+            <Image
+              alt="S5ARC. Logo"
+              height={22}
+              src="/favico-black.svg"
+              width={22}
+            />
+          </div>
+          <span className="font-semibold text-xl tracking-tight">S5ARC.</span>
+        </div>
+
+        <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
+          <a
+            className="hover:text-foreground hover:underline underline-offset-2 transition-colors"
+            href="https://github.com/S5SAJID/next-dashcommerce"
+            target="_blank"
+          >
+            Github
+          </a>
+          <a
+            className="hover:text-foreground hover:underline underline-offset-2 transition-colors"
+            href="/api/v1/docs"
+            target="_blank"
+          >
+            API Docs
+          </a>
+          <a
+            className="hover:text-foreground hover:underline underline-offset-2 transition-colors"
+            href="https://s5sajid.github.io"
+            target="_blank"
+          >
+            About
+          </a>
+          <a
+            className="hover:text-foreground hover:underline underline-offset-2 transition-colors"
+            href="mailto:s5sajidyt+s5arc@gmail.com"
+          >
+            Contact
+          </a>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <Link
+            className="text-sm font-medium hover:text-primary hidden sm:block"
+            href="/signin"
+          >
+            Log in
+          </Link>
+          <Button asChild>
+            <Link href="/signup">Start Selling</Link>
+          </Button>
+        </div>
+      </div>
+    </nav>
+  );
+}

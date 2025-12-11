@@ -7,12 +7,6 @@ export const proxy = (request: NextRequest) => {
 	const subdomain = extractSubdomain(request);
 
 	if (subdomain && pathname.startsWith("/")) {
-		// Block access to admin page from subdomains
-		// if (pathname.startsWith('/admin')) {
-		//   return NextResponse.redirect(new URL('/', request.url));
-		// }
-		// For the root path on a subdomain, rewrite to the subdomain page
-		// if (pathname === '/') {
 		return NextResponse.rewrite(
 			new URL(`/store/${subdomain}${pathname}${search}`, request.url)
 		);
@@ -23,30 +17,6 @@ export const proxy = (request: NextRequest) => {
 	// On the root domain, allow normal access
 	return NextResponse.next();
 };
-
-// Function to handle dynamic CORS headers for localhost
-function handleLocalhostCORS(request: NextRequest, response: NextResponse) {
-	// Check environment first: only run this logic if we are in development
-	if (process.env.NODE_ENV !== "development") {
-		return;
-	}
-
-	const origin = request.headers.get("origin");
-	const localhostRegex = /^https?:\/\/localhost(:\d+)?$/;
-
-	if (origin && localhostRegex.test(origin)) {
-		response.headers.set("Access-Control-Allow-Origin", origin);
-		response.headers.set(
-			"Access-Control-Allow-Methods",
-			"GET, POST, PUT, DELETE, OPTIONS"
-		);
-		response.headers.set(
-			"Access-Control-Allow-Headers",
-			"Content-Type, Authorization, X-API-Key"
-		);
-		response.headers.set("Access-Control-Allow-Credentials", "true");
-	}
-}
 
 // const developmentMatcher = "/((?!_next|[\\w-]+\\.\\w+).*)"; // Matches everything
 // const productionMatcher = "/((?!api|_next|[\\w-]+\\.\\w+).*)"; // Excludes /api routes
