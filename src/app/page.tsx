@@ -11,7 +11,7 @@ export default function Home() {
 		<main className="font-sans">
 			<HomePageNavbar />
 			<HomePageHeroSection />
-			<HomePageSocialProofSection/>
+			<HomePageSocialProofSection />
 			<HomePageWorkingSection />
 			<HomePageDevelopersSection />
 			<HomePageCtaSection />

@@ -29,9 +29,7 @@ export const homePageMetaData: Metadata = {
 			"S5ARC: The easiest ecommerce platform. Add Products, launch, and grow your online store effortlessly. Start selling products and succeed online with our intuitive tools.",
 		creator: "@s5sajid_dev",
 	},
-	icons: [
-		"/favico.svg"
-	],
+	icons: ["/favico.svg"],
 	robots: {
 		index: true,
 		follow: true,
