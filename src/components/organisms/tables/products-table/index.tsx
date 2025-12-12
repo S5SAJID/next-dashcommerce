@@ -3,12 +3,16 @@ import DataTable from "@/components/molecules/data-table";
 import { product_columns } from "./columns";
 import type { DataTableToolbarFilters } from "@/components/molecules/data-table/data-table-toolbar";
 import type { DashboardProduct } from "@/db/actions/dashboard/products/types";
+import { use } from "react";
+import { DashboardUsable } from "@/lib/shared/types/dashboard-types";
 
 export default function ProductsTable({
-	products = [],
+	productsPromise,
 }: {
-	products?: DashboardProduct[];
+	productsPromise: DashboardUsable<DashboardProduct[]>;
 }) {
+	const products = use(productsPromise);
+
 	const filters: DataTableToolbarFilters[] = [
 		{
 			columnName: "status",
@@ -24,7 +28,7 @@ export default function ProductsTable({
 		<div>
 			<DataTable
 				columns={product_columns}
-				data={products}
+				data={products.data}
 				toolbar={{
 					searchColumn: "name",
 					searchPlaceholder: "Filter products...",

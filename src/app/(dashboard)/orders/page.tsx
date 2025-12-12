@@ -7,18 +7,16 @@ import {
 import { OrdersPrimaryButtons } from "@/components/molecules/primary-buttons/orders";
 import OrdersTable from "@/components/organisms/tables/orders-table";
 import { getDashboardOrders } from "@/db/actions/dashboard/orders/actions";
-import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { DataTableSkeleton } from "@/components/molecules/data-table/data-table-skeleton";
 
 export const metadata: Metadata = {
 	title: "Orders",
 	description: "Manage your orders in the dashboard.",
 };
 
-export default async function ProductsPage() {
-	const { data } = await getDashboardOrders();
-	if (!data) {
-		notFound();
-	}
+export default function OrdersPage() {
+	const ordersDataPromise = getDashboardOrders();
 
 	return (
 		<DashboardLayout>
@@ -29,7 +27,9 @@ export default async function ProductsPage() {
 				/>
 				<OrdersPrimaryButtons />
 			</DashboardHeader>
-			<OrdersTable orders={data} />
+			<Suspense fallback={<DataTableSkeleton columnCount={6} />}>
+				<OrdersTable ordersDataPromise={ordersDataPromise} />
+			</Suspense>
 		</DashboardLayout>
 	);
 }
