@@ -33,7 +33,9 @@ export default function StoreFrontHero({
 		<Card className="flex aspect-square items-center gap-2 border-none bg-muted shadow-none md:aspect-[21/9] md:flex-row">
 			<div className="w-full py-8 md:px-8">
 				<CardHeader className="my-auto h-auto">
-					<CardTitle className="text-4xl md:text-6xl">{title}</CardTitle>
+					<CardTitle className="text-4xl md:text-6xl tracking-tighter">
+						{title}
+					</CardTitle>
 					<CardDescription>{description}</CardDescription>
 				</CardHeader>
 				<CardFooter className="mt-4">

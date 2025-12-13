@@ -4,6 +4,7 @@ import { getPublicStoreFront } from "@/db/actions/storefront/store/public/action
 import StoreFrontProviders from "@/providers/storefront/providers";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { DM_Sans } from "next/font/google";
 
 type Props = {
 	params: Promise<{ store_slug: string }>;
@@ -27,6 +28,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	};
 }
 
+const dmSans = DM_Sans({ subsets: ["latin"] });
+
 export default async function Layout({
 	children,
 	params,
@@ -38,7 +41,7 @@ export default async function Layout({
 	}
 
 	return (
-		<div className="[&>*]:font-['PP_Mori']">
+		<div className={dmSans.className}>
 			<StoreFrontProviders>
 				<StoreFrontNavbar store={store} />
 				<main className="mx-auto min-h-[70dvh] w-full max-w-7xl px-4 pt-2 pb-6 sm:px-6 lg:px-8">

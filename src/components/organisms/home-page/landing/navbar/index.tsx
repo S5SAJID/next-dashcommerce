@@ -1,3 +1,4 @@
+import { ThemeSwitch } from "@/components/molecules/theme-switch";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,6 +11,7 @@ export default function HomePageNavbar() {
 					<div className="w-8 h-8 flex items-center justify-center">
 						<Image
 							alt="S5ARC. Logo"
+							className="dark:invert"
 							height={22}
 							src="/favico-black.svg"
 							width={22}
@@ -49,6 +51,7 @@ export default function HomePageNavbar() {
 				</div>
 
 				<div className="flex items-center gap-4">
+					<ThemeSwitch />
 					<Link
 						className="text-sm font-medium hover:text-primary hidden sm:block"
 						href="/signin"

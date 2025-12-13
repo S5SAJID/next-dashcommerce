@@ -52,12 +52,12 @@ export default async function ProductPage({ params }: Props) {
 				{/* Product Details */}
 				<div className="flex flex-col gap-6">
 					<div className="space-y-2">
-						<h1 className="font-bold text-4xl tracking-tight text-foreground">
+						<h1 className="font-semibold text-4xl tracking-tight text-foreground">
 							{product.name}
 						</h1>
 						<div className="flex items-center gap-4">
 							<div className="flex items-baseline gap-2">
-								<span className="font-bold text-3xl">
+								<span className="font-semibold text-3xl">
 									{formatPrice({ locale: "en-US", price: product.price })}
 								</span>
 								{product.compare_at && product.compare_at > product.price && (

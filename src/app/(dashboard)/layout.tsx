@@ -10,6 +10,7 @@ import DashboardProviders from "@/providers/dashboard/providers";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
+import { GeistSans } from "geist/font/sans";
 
 export const metadata: Metadata = {
 	title: {
@@ -42,19 +43,21 @@ export default async function Layout({
 	}
 
 	return (
-		<DashboardProviders>
-			<DashboardStoreInfoProvider initialStore={data}>
-				<SidebarProvider>
-					<AppSidebar user={session.user} />
-					<SidebarInset className="@container/content">
-						<main className="h-full w-full flex-1">
-							<SiteHeader />
-							<Main>{children}</Main>
-							<Toaster />
-						</main>
-					</SidebarInset>
-				</SidebarProvider>
-			</DashboardStoreInfoProvider>
-		</DashboardProviders>
+		<div className={`${GeistSans.className}`}>
+			<DashboardProviders>
+				<DashboardStoreInfoProvider initialStore={data}>
+					<SidebarProvider>
+						<AppSidebar user={session.user} />
+						<SidebarInset className="@container/content">
+							<main className="h-full w-full flex-1">
+								<SiteHeader />
+								<Main>{children}</Main>
+								<Toaster />
+							</main>
+						</SidebarInset>
+					</SidebarProvider>
+				</DashboardStoreInfoProvider>
+			</DashboardProviders>
+		</div>
 	);
 }

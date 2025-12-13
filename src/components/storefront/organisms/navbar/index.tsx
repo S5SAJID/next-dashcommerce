@@ -26,7 +26,9 @@ export default function StoreFrontNavbar({
 					<div className="hidden md:block">
 						{links.map((link) => (
 							<Button asChild key={link.href} variant="link">
-								<Link href={link.href}>{link.title}</Link>
+								<Link href={link.href} prefetch={false}>
+									{link.title}
+								</Link>
 							</Button>
 						))}
 					</div>

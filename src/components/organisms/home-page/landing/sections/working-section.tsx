@@ -14,7 +14,7 @@ export default function HomePageWorkingSection() {
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[400px]">
 					<div className="bento-card group rounded-2xl border border-border bg-card p-8 flex flex-col shadow-sm hover:shadow-lg transition-shadow overflow-hidden relative">
 						<div className="z-10 relative">
-							<div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mb-6">
+							<div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-200 flex items-center justify-center mb-6">
 								<span className="font-bold text-lg">1</span>
 							</div>
 							<h3 className="text-xl font-bold mb-2">Add your products</h3>
@@ -31,7 +31,7 @@ export default function HomePageWorkingSection() {
 					</div>
 					<div className="bento-card group rounded-2xl border border-border bg-card p-8 flex flex-col shadow-sm hover:shadow-lg transition-shadow overflow-hidden relative">
 						<div className="z-10 relative">
-							<div className="w-12 h-12 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center mb-6">
+							<div className="w-12 h-12 rounded-lg bg-purple-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-200 flex items-center justify-center mb-6">
 								<span className="font-bold text-lg">2</span>
 							</div>
 							<h3 className="text-xl font-bold mb-2">Share your link</h3>
@@ -57,7 +57,7 @@ export default function HomePageWorkingSection() {
 					</div>
 					<div className="bento-card group rounded-2xl border border-border bg-card p-8 flex flex-col shadow-sm hover:shadow-lg transition-shadow overflow-hidden relative">
 						<div className="z-10 relative">
-							<div className="w-12 h-12 rounded-lg bg-green-100 text-green-600 flex items-center justify-center mb-6">
+							<div className="w-12 h-12 rounded-lg bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-200 flex items-center justify-center mb-6">
 								<span className="font-bold text-lg">3</span>
 							</div>
 							<h3 className="text-xl font-bold mb-2">Ship &amp; Earn</h3>

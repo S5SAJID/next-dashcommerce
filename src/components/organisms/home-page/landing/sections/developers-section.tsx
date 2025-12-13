@@ -24,7 +24,7 @@ export default function HomePageDevelopersSection() {
 							storefronts with Next.js, Vue, or Svelte while we handle the
 							checkout and inventory logic.
 						</p>
-						<div className="grid grid-cols-2 gap-6 pt-4">
+						<div className="grid lg:grid-cols-2 gap-6 pt-4">
 							<div className="border-l border-border hover:border-primary pl-4">
 								<h4 className="font-bold text-foreground mb-1">Webhooks</h4>
 								<p className="text-sm text-muted-foreground">
