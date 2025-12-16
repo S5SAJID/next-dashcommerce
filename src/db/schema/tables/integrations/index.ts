@@ -62,7 +62,7 @@ export const IntegrationInstallationTable = pgTable(
 	(table) => [
 		// Ensure a store can only install an integration once
 		unique("store_integration_unique").on(table.store_id, table.integration_id),
-	]
+	],
 );
 
 export type IntegrationInstallation = InferSelectModel<

@@ -11,8 +11,8 @@
   "linter": {
     "enabled": true,
     "domains": {
-      "react": "recommended",
-      "next": "recommended"
+      "react": "all",
+      "next": "all"
     },
     "includes": ["!src/**/ui/*.tsx", "!src/hooks/use-debounce-value.tsx"],
     "rules": {
@@ -45,6 +45,5 @@
         "organizeImports": "off"
       }
     }
-  },
-  "extends": ["ultracite"]
+  }
 }

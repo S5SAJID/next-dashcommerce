@@ -22,7 +22,7 @@ const IS_SERVER = typeof window === "undefined";
 export function useLocalStorage<T>(
 	key: string,
 	initialValue: T | (() => T),
-	options: UseLocalStorageOptions<T> = {}
+	options: UseLocalStorageOptions<T> = {},
 ): [T, Dispatch<SetStateAction<T>>, () => void] {
 	const { initializeWithValue = true } = options;
 
@@ -34,7 +34,7 @@ export function useLocalStorage<T>(
 
 			return JSON.stringify(value);
 		},
-		[options]
+		[options],
 	);
 
 	const deserializer = useCallback<(value: string) => T>(
@@ -59,7 +59,7 @@ export function useLocalStorage<T>(
 
 			return parsed as T;
 		},
-		[options, initialValue]
+		[options, initialValue],
 	);
 
 	// Get from local storage then
@@ -143,7 +143,7 @@ export function useLocalStorage<T>(
 			}
 			setStoredValue(readValue());
 		},
-		[key, readValue]
+		[key, readValue],
 	);
 
 	// this only works for other documents, not the current one

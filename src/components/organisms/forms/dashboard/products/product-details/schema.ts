@@ -15,7 +15,7 @@ export const product_details_form_schema = z.object({
 		.max(100, "Slug must be at most 100 characters")
 		.regex(
 			/^[a-z0-9-]+$/,
-			"Slug must contain only lowercase letters, numbers, and hyphens"
+			"Slug must contain only lowercase letters, numbers, and hyphens",
 		),
 	description: z
 		.string()

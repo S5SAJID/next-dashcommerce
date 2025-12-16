@@ -2,7 +2,7 @@ import { toast } from "sonner";
 
 export function showSubmittedData(
 	data: unknown,
-	title = "You submitted the following values:"
+	title = "You submitted the following values:",
 ) {
 	toast(title, {
 		// w-[340px]

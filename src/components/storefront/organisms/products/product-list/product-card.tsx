@@ -1,6 +1,8 @@
 import StoreFrontAddToCart from "@/components/storefront/molecules/add-to-cart";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import type { ProductTable } from "@/db/schema";
+import { Currency } from "@/db/schema/tables/stores";
+import { CURRENCY_INFO } from "@/lib/currency";
 import { formatPrice } from "@/lib/utils";
 import type { InferSelectModel } from "drizzle-orm";
 import Image from "next/image";
@@ -8,9 +10,13 @@ import Link from "next/link";
 
 export default function StoreFrontProductCard({
 	product,
+	currency,
 }: {
 	product: InferSelectModel<typeof ProductTable>;
+	currency: Currency;
 }) {
+	const currencyInfo = CURRENCY_INFO[currency];
+
 	return (
 		<Card className="gap-0 overflow-hidden border-none bg-none p-0 text-card-foreground shadow-none">
 			<CardHeader className="group relative gap-0 overflow-hidden p-0">
@@ -67,11 +73,19 @@ export default function StoreFrontProductCard({
 				</Link>
 				<div className="flex items-center gap-2">
 					<p className="text-sm font-medium">
-						{formatPrice({ locale: "en-US", price: product.price })}
+						{formatPrice({
+							locale: currencyInfo.locale,
+							currency: currencyInfo.code,
+							price: product.price,
+						})}
 					</p>
 					{product.compare_at && product.compare_at > product.price ? (
 						<p className="text-xs text-muted-foreground line-through decoration-red-300">
-							{formatPrice({ locale: "en-US", price: product.compare_at })}
+							{formatPrice({
+								locale: currencyInfo.locale,
+								currency: currencyInfo.code,
+								price: product.compare_at,
+							})}
 						</p>
 					) : null}
 				</div>

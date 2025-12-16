@@ -55,7 +55,7 @@ export function UserAuthForm({
 				onSuccess: () => {
 					toast.success(`Welcome back ${data.email}!`);
 				},
-			}
+			},
 		);
 	}
 

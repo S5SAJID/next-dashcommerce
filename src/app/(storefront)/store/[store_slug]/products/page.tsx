@@ -2,24 +2,28 @@ import StoreFrontProductList from "@/components/storefront/organisms/products/pr
 import ProductFilters from "@/components/storefront/organisms/products/product-filters";
 import { getPublicStorefrontProducts } from "@/db/actions/storefront/products/public/actionts";
 import type { Metadata } from "next";
+import {
+	getPublicStoreFront,
+	getPublicStoreFrontCurrency,
+} from "@/db/actions/storefront/store/public/actionts";
 
 export const metadata: Metadata = {
 	title: "All Products",
 	description: "Explore all products.",
 };
 
-type Props = {
-	params: Promise<{ store_slug: string }>;
-};
-
-export default async function ProductsPage({ params }: Props) {
-	const storeSlug = (await params).store_slug;
+export default async function ProductsPage({
+	params,
+}: PageProps<"/store/[store_slug]/products">) {
+	const pageParams = await params;
+	const storeSlug = pageParams.store_slug;
+	const currency = await getPublicStoreFrontCurrency(pageParams.store_slug);
 	const products = await getPublicStorefrontProducts(storeSlug);
 
 	return (
 		<div className="container mx-auto space-y-6 py-8">
 			<ProductFilters totalCount={products.length} />
-			<StoreFrontProductList products={products} />
+			<StoreFrontProductList products={products} currency={currency ?? "USD"} />
 		</div>
 	);
 }

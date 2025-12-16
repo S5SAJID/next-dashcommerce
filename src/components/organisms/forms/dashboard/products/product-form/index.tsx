@@ -56,7 +56,7 @@ export default function ProductForm() {
 		},
 		(_errors) => {
 			console.error(_errors);
-		}
+		},
 	);
 
 	return (

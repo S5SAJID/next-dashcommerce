@@ -9,7 +9,7 @@ export function getCloudinaryUrl(
 		crop?: "fill" | "fit" | "scale" | "crop" | "thumb";
 		format?: "auto" | "webp" | "jpg" | "png" | "avif";
 		quality?: "auto" | number;
-	} = {}
+	} = {},
 ): string {
 	const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
 	if (!cloudName) {

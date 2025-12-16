@@ -52,7 +52,7 @@ export function ImageUploadItem({
 				"group relative aspect-square cursor-move overflow-hidden transition-all duration-200",
 				isDragging && "scale-95 opacity-50",
 				isDragOver && "ring-2 ring-primary ring-offset-2",
-				"hover:shadow-md"
+				"hover:shadow-md",
 			)}
 			draggable
 			onDragLeave={onDragLeave}

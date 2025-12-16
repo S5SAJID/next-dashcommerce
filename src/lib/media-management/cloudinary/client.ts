@@ -10,7 +10,7 @@ if (typeof window !== "undefined") {
 
 if (!cloudName || !apiKey || !apiSecret) {
 	throw new Error(
-		"Missing Cloudinary configuration. Ensure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are set."
+		"Missing Cloudinary configuration. Ensure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are set.",
 	);
 }
 

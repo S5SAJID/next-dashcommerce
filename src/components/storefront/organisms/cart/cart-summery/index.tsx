@@ -10,9 +10,14 @@ import StoreFrontCartItem from "../cart-item";
 import { useCart } from "react-use-cart";
 import type { CartModelItem } from "../cart-modal";
 import { useState } from "react";
+import { useCartModel } from "../context/cart-context";
+import { CURRENCY_INFO } from "@/lib/currency";
+import { formatPrice } from "@/lib/utils";
 
 export default function StoreFrontCartSummery() {
 	const { cartTotal, items } = useCart();
+	const { currency } = useCartModel();
+	const currencyInfo = CURRENCY_INFO[currency];
 	const [open, setOpen] = useState(true);
 
 	return (
@@ -47,7 +52,13 @@ export default function StoreFrontCartSummery() {
 			</Collapsible>
 			<div className="mt-auto flex justify-between border-t px-6 py-4 text-sm md:text-base">
 				<span>Total</span>
-				<span>${cartTotal.toFixed(2)}</span>
+				<span>
+					{formatPrice({
+						price: cartTotal,
+						currency: currencyInfo.code,
+						locale: currencyInfo.locale,
+					})}
+				</span>
 			</div>
 		</div>
 	);

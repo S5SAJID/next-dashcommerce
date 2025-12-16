@@ -18,14 +18,14 @@ export async function hashApiKey(apiKey: string): Promise<string> {
  * Validate API key and return store context
  */
 export async function getApiKeyContext(
-	apiKey: string
+	apiKey: string,
 ): Promise<SecuredStoreContext> {
 	const keyHash = await hashApiKey(apiKey);
 
 	const apiKeyRecord = await db.query.ApiKeyTable.findFirst({
 		where: and(
 			eq(ApiKeyTable.key_hash, keyHash),
-			eq(ApiKeyTable.is_active, true)
+			eq(ApiKeyTable.is_active, true),
 		),
 		columns: { store_id: true, permissions: true, id: true },
 	});

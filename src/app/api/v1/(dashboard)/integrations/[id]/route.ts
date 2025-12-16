@@ -70,7 +70,7 @@ export const { GET, POST, PATCH, DELETE } = route({
 			if (definitionResult?.serverError) {
 				return TypedNextResponse.json(
 					{ error: definitionResult.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
@@ -79,7 +79,7 @@ export const { GET, POST, PATCH, DELETE } = route({
 			if (!definition) {
 				return TypedNextResponse.json(
 					{ error: "Integration not found" },
-					{ status: 404 }
+					{ status: 404 },
 				);
 			}
 
@@ -92,7 +92,7 @@ export const { GET, POST, PATCH, DELETE } = route({
 
 			return TypedNextResponse.json(
 				{ definition, installation },
-				{ status: 200 }
+				{ status: 200 },
 			);
 		}),
 
@@ -128,14 +128,14 @@ export const { GET, POST, PATCH, DELETE } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
 			if (!result?.data?.success || !result.data.installation) {
 				return TypedNextResponse.json(
 					{ error: "Failed to install integration" },
-					{ status: 500 }
+					{ status: 500 },
 				);
 			}
 
@@ -144,7 +144,7 @@ export const { GET, POST, PATCH, DELETE } = route({
 					message: "Integration installed successfully",
 					installation: result.data.installation,
 				},
-				{ status: 201 }
+				{ status: 201 },
 			);
 		}),
 
@@ -179,14 +179,14 @@ export const { GET, POST, PATCH, DELETE } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
 			if (!result?.data?.success || !result.data.installation) {
 				return TypedNextResponse.json(
 					{ error: "Failed to update integration" },
-					{ status: 500 }
+					{ status: 500 },
 				);
 			}
 
@@ -195,7 +195,7 @@ export const { GET, POST, PATCH, DELETE } = route({
 					message: "Integration updated successfully",
 					installation: result.data.installation,
 				},
-				{ status: 200 }
+				{ status: 200 },
 			);
 		}),
 
@@ -228,7 +228,7 @@ export const { GET, POST, PATCH, DELETE } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
@@ -237,7 +237,7 @@ export const { GET, POST, PATCH, DELETE } = route({
 					message:
 						result?.data?.message || "Integration uninstalled successfully",
 				},
-				{ status: 200 }
+				{ status: 200 },
 			);
 		}),
 });

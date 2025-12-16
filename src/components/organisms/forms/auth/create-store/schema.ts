@@ -1,3 +1,4 @@
+import { SUPPORTED_CURRENCIES } from "@/db/schema/tables/stores";
 import z from "zod";
 
 const SUBDOMAIN_REGEX = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -19,8 +20,12 @@ export const storeFormSchema = z.object({
 		.refine(
 			(val) =>
 				!["www", "api", "app", "mail", "admin", "blog", "cms"].includes(val),
-			{ error: "The subdomain is reserved and cannot be used." }
+			{ error: "The subdomain is reserved and cannot be used." },
 		),
+
+	currency: z.enum(SUPPORTED_CURRENCIES, {
+		error: "Please select a valid currency.",
+	}),
 
 	description: z
 		.string({ error: "Description is required." })

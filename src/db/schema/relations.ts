@@ -24,7 +24,7 @@ export const ProductStoreRelation = relations(
 			references: [StoreTable.id],
 		}),
 		orderItems: many(OrderItemTable),
-	})
+	}),
 );
 
 // Customer Relations
@@ -36,7 +36,7 @@ export const CustomerStoreRelation = relations(
 			references: [StoreTable.id],
 		}),
 		orders: many(OrderTable),
-	})
+	}),
 );
 
 // Order Relations

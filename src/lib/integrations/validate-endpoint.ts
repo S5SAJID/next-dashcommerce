@@ -15,7 +15,7 @@ export type ValidationResult = {
  * Checks HTTPS, availability, and compatibility
  */
 export async function validateIntegrationEndpoint(
-	url: string
+	url: string,
 ): Promise<ValidationResult> {
 	const errors: string[] = [];
 	const warnings: string[] = [];
@@ -75,13 +75,13 @@ export async function validateIntegrationEndpoint(
 				}
 			} else {
 				warnings.push(
-					"Endpoint does not expose /validate - compatibility unknown"
+					"Endpoint does not expose /validate - compatibility unknown",
 				);
 				isCompatible = true; // Allow creation with warning
 			}
 		} catch (error) {
 			warnings.push(
-				"Could not verify compatibility - /validate endpoint unavailable"
+				"Could not verify compatibility - /validate endpoint unavailable",
 			);
 			isCompatible = true; // Allow creation with warning
 		}

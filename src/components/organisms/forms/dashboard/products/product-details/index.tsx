@@ -49,7 +49,7 @@ export default function ProductDetailsForm({
 		(data) => {
 			onSubmit(data);
 		},
-		(_errors) => console.error(_errors)
+		(_errors) => console.error(_errors),
 	);
 
 	return (

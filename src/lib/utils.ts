@@ -15,18 +15,45 @@ export function isActivePath(itemUrl: string, pathname: string) {
 	return pathname === itemUrl || pathname.startsWith(`${itemUrl}/`);
 }
 
-type formatePriceParams = {
+import type { Currency } from "@/db/schema/tables/stores";
+
+type FormatPriceParams = {
 	price: string | number;
+	currency: Currency;
 	locale?: Intl.LocalesArgument;
+	notation?: "standard" | "compact";
 };
 
-export function formatPrice({ locale = "en-US", price }: formatePriceParams) {
+/**
+ * Format a price value with the specified currency.
+ * Framework-agnostic utility that can be used in Server Components, Client Components, and API routes.
+ *
+ * @param price - The price value to format (string or number)
+ * @param currency - The currency code (e.g., 'USD', 'EUR')
+ * @param locale - Optional locale for number formatting (defaults to 'en-US')
+ * @param notation - Optional notation style: 'standard' or 'compact' (defaults to 'standard')
+ * @returns Formatted price string with currency symbol
+ *
+ * @example
+ * ```ts
+ * formatPrice({ price: 29.99, currency: 'USD' }) // "$29.99"
+ * formatPrice({ price: 29.99, currency: 'EUR', locale: 'de-DE' }) // "29,99 €"
+ * formatPrice({ price: 1234.56, currency: 'USD', notation: 'compact' }) // "$1.2K"
+ * ```
+ */
+export function formatPrice({
+	price,
+	currency,
+	locale = "en-US",
+	notation = "standard",
+}: FormatPriceParams): string {
 	const amount = typeof price === "number" ? price : Number.parseFloat(price);
-	const formatted = new Intl.NumberFormat(locale, {
-		currency: "USD",
+
+	return new Intl.NumberFormat(locale, {
 		style: "currency",
+		currency,
+		notation,
 	}).format(amount);
-	return formatted;
 }
 
 /* Not in use

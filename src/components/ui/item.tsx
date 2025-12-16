@@ -48,7 +48,7 @@ const itemVariants = cva(
 			variant: "default",
 			size: "default",
 		},
-	}
+	},
 );
 
 function Item({
@@ -85,7 +85,7 @@ const itemMediaVariants = cva(
 		defaultVariants: {
 			variant: "default",
 		},
-	}
+	},
 );
 
 function ItemMedia({
@@ -108,7 +108,7 @@ function ItemContent({ className, ...props }: React.ComponentProps<"div">) {
 		<div
 			className={cn(
 				"flex flex-1 flex-col gap-1 [&+[data-slot=item-content]]:flex-none",
-				className
+				className,
 			)}
 			data-slot="item-content"
 			{...props}
@@ -121,7 +121,7 @@ function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
 		<div
 			className={cn(
 				"flex w-fit items-center gap-2 font-medium text-sm leading-snug",
-				className
+				className,
 			)}
 			data-slot="item-title"
 			{...props}
@@ -135,7 +135,7 @@ function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
 			className={cn(
 				"line-clamp-2 text-balance font-normal text-muted-foreground text-sm leading-normal",
 				"[&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4",
-				className
+				className,
 			)}
 			data-slot="item-description"
 			{...props}
@@ -158,7 +158,7 @@ function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {
 		<div
 			className={cn(
 				"flex basis-full items-center justify-between gap-2",
-				className
+				className,
 			)}
 			data-slot="item-header"
 			{...props}
@@ -171,7 +171,7 @@ function ItemFooter({ className, ...props }: React.ComponentProps<"div">) {
 		<div
 			className={cn(
 				"flex basis-full items-center justify-between gap-2",
-				className
+				className,
 			)}
 			data-slot="item-footer"
 			{...props}

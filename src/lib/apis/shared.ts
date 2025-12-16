@@ -31,7 +31,7 @@ export async function checkAPIKeyFromAPI(req: NextRequest) {
 	if (!apiKey) {
 		return TypedNextResponse.json(
 			{ error: "API key required" },
-			{ status: 401, headers: { "content-type": "application/json" } }
+			{ status: 401, headers: { "content-type": "application/json" } },
 		);
 	}
 }

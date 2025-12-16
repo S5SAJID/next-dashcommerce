@@ -1,5 +1,6 @@
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { formatDashboardPrice } from "@/lib/shared/utils/format-dashboard-price";
 import { formatPrice } from "@/lib/utils";
 
 export default function OrderSummaryCard({
@@ -24,28 +25,28 @@ export default function OrderSummaryCard({
 			<CardContent className="space-y-3">
 				<div className="flex items-center justify-between text-sm">
 					<span className="text-muted-foreground">Subtotal</span>
-					<span>{formatPrice({ price: subtotal })}</span>
+					<span>{formatDashboardPrice({ price: subtotal })}</span>
 				</div>
 				<div className="flex items-center justify-between text-sm">
 					<span className="text-muted-foreground">Shipping</span>
-					<span>{formatPrice({ price: shipping })}</span>
+					<span>{formatDashboardPrice({ price: shipping })}</span>
 				</div>
 				<div className="flex items-center justify-between text-sm">
 					<span className="text-muted-foreground">Tax</span>
-					<span>{formatPrice({ price: tax })}</span>
+					<span>{formatDashboardPrice({ price: tax })}</span>
 				</div>
 				{typeof discount === "number" && discount > 0 && (
 					<div className="flex items-center justify-between text-sm">
 						<span className="text-muted-foreground">Discount</span>
 						<span className="text-destructive">
-							-{formatPrice({ price: discount })}
+							-{formatDashboardPrice({ price: discount })}
 						</span>
 					</div>
 				)}
 				<Separator />
 				<div className="flex items-center justify-between">
 					<span className="font-medium">Total</span>
-					<span className="font-semibold">{formatPrice({ price: total })}</span>
+					<span className="font-semibold">{formatDashboardPrice({ price: total })}</span>
 				</div>
 			</CardContent>
 		</>

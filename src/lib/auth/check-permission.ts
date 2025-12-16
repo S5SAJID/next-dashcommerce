@@ -7,7 +7,7 @@ import type { SecuredStoreContext } from "./safe-guard-helpers";
  */
 export function checkPermission(
 	ctx: SecuredStoreContext,
-	required: AVAILABLE_PERMISSIONS_TYPE
+	required: AVAILABLE_PERMISSIONS_TYPE,
 ): void {
 	// Session auth has all permissions
 	if (ctx.authType === "session") return;

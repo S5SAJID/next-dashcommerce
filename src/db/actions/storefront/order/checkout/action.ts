@@ -57,8 +57,8 @@ export const checkoutFormAction = storeFrontActionClient
 					.where(
 						and(
 							eq(ProductTable.store_id, storeId),
-							inArray(ProductTable.id, productIds)
-						)
+							inArray(ProductTable.id, productIds),
+						),
 					);
 
 				// Validate all products exist and are available
@@ -73,13 +73,13 @@ export const checkoutFormAction = storeFrontActionClient
 
 					if (!product.is_published) {
 						throw new Error(
-							`Product "${product.name}" is not available for purchase.`
+							`Product "${product.name}" is not available for purchase.`,
 						);
 					}
 
 					if (product.stock !== null && product.stock < cartItem.quantity) {
 						throw new Error(
-							`Insufficient stock for product "${product.name}". Available: ${product.stock}, Requested: ${cartItem.quantity}`
+							`Insufficient stock for product "${product.name}". Available: ${product.stock}, Requested: ${cartItem.quantity}`,
 						);
 					}
 				}
@@ -102,8 +102,8 @@ export const checkoutFormAction = storeFrontActionClient
 						.where(
 							and(
 								eq(CustomerTable.store_id, storeId),
-								eq(CustomerTable.email, parsedInput.email)
-							)
+								eq(CustomerTable.email, parsedInput.email),
+							),
 						)
 						.limit(1);
 					customer_id = cus[0]?.id;
@@ -132,7 +132,7 @@ export const checkoutFormAction = storeFrontActionClient
 				// 4. Calculate total with proper decimal precision
 				const total = items.reduce(
 					(sum, item) => sum + Number(item.price) * item.qty,
-					0
+					0,
 				);
 
 				// Round to 2 decimal places for monetary precision

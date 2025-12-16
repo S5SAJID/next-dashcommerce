@@ -42,7 +42,7 @@ export default function ProductTableRowActions({
 							);
 						},
 						error: "Product updating failed.",
-					}
+					},
 				);
 				break;
 			case "delete":

@@ -27,7 +27,7 @@ export const getDashboardCustomers = dashboardActionClient.action(
 			.orderBy(desc(CustomerTable.created_at));
 
 		return customers;
-	}
+	},
 );
 
 export const getDashboardCustomer = dashboardActionClient
@@ -49,8 +49,8 @@ export const getDashboardCustomer = dashboardActionClient
 			.where(
 				and(
 					eq(CustomerTable.id, parsedInput.customerId),
-					eq(CustomerTable.store_id, ctx.storeId)
-				)
+					eq(CustomerTable.store_id, ctx.storeId),
+				),
 			)
 			.leftJoin(OrderTable, eq(CustomerTable.id, OrderTable.customer_id))
 			.groupBy(CustomerTable.id);

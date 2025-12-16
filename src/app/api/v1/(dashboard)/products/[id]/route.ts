@@ -48,7 +48,7 @@ export const { GET, PATCH, DELETE } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
@@ -59,7 +59,7 @@ export const { GET, PATCH, DELETE } = route({
 			if (!product) {
 				return TypedNextResponse.json(
 					{ error: "Product not found" },
-					{ status: 404 }
+					{ status: 404 },
 				);
 			}
 
@@ -98,7 +98,7 @@ export const { GET, PATCH, DELETE } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
@@ -108,13 +108,13 @@ export const { GET, PATCH, DELETE } = route({
 			if (!updatedProduct?.data) {
 				return TypedNextResponse.json(
 					{ error: "Product not found after update" },
-					{ status: 404 }
+					{ status: 404 },
 				);
 			}
 
 			return TypedNextResponse.json(
 				{ data: updatedProduct.data },
-				{ status: 200 }
+				{ status: 200 },
 			);
 		}),
 
@@ -144,7 +144,7 @@ export const { GET, PATCH, DELETE } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
@@ -152,13 +152,13 @@ export const { GET, PATCH, DELETE } = route({
 			if (result?.data?.success === false) {
 				return TypedNextResponse.json(
 					{ error: result.data.error || "Failed to delete product" },
-					{ status: 500 }
+					{ status: 500 },
 				);
 			}
 
 			return TypedNextResponse.json(
 				{ message: "Product deleted successfully" },
-				{ status: 200 }
+				{ status: 200 },
 			);
 		}),
 });

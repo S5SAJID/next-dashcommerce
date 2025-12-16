@@ -1,4 +1,4 @@
-import { StoreTable } from "./tables/stores";
+import { StoreTable, currencyEnum } from "./tables/stores";
 import { ProductTable } from "./tables/products";
 import { CustomerTable } from "./tables/storefront/customers/schema";
 import {
@@ -26,6 +26,7 @@ import { ApiKeyTable } from "./tables/api-keys";
 
 export {
 	StoreTable,
+	currencyEnum,
 	ProductTable,
 	CustomerTable,
 	OrderTable,

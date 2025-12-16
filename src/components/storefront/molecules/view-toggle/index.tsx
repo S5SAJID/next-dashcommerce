@@ -9,7 +9,7 @@ type ViewMode = "default" | "dense";
 export default function ViewToggle() {
 	const [viewMode, setViewMode] = useQueryState(
 		"view",
-		parseAsStringEnum<ViewMode>(["default", "dense"]).withDefault("default")
+		parseAsStringEnum<ViewMode>(["default", "dense"]).withDefault("default"),
 	);
 
 	return (

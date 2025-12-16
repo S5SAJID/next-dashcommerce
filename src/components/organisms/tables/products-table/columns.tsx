@@ -8,6 +8,7 @@ import Link from "next/link";
 import type { DashboardProduct } from "@/db/actions/dashboard/products/types";
 import Image from "next/image";
 import ProductTableRowActions from "./row-actions";
+import { formatDashboardPrice } from "@/lib/shared/utils/format-dashboard-price";
 
 export const product_columns: ColumnDef<DashboardProduct>[] = [
 	{
@@ -62,13 +63,11 @@ export const product_columns: ColumnDef<DashboardProduct>[] = [
 			</div>
 		),
 		cell: ({ row }) => {
-			const amount = Number.parseFloat(row.getValue("price"));
-			const formatted = new Intl.NumberFormat("en-US", {
-				currency: "USD",
-				style: "currency",
-			}).format(amount);
+			const formatedPrice = formatDashboardPrice({
+				price: row.getValue("price"),
+			});
 
-			return <div className="text-right font-medium">{formatted}</div>;
+			return <div className="text-right font-medium">{formatedPrice}</div>;
 		},
 	},
 	{

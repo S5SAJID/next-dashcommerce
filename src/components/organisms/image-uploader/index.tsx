@@ -48,7 +48,7 @@ export function ImageUploader({
 			}
 			return null;
 		},
-		[acceptedTypes, maxFileSize]
+		[acceptedTypes, maxFileSize],
 	);
 
 	const handleFileSelect = useCallback(
@@ -84,7 +84,7 @@ export function ImageUploader({
 				});
 			}
 		},
-		[images, maxImages, onImagesChange, validateFile]
+		[images, maxImages, onImagesChange, validateFile],
 	);
 
 	const handleDragStart = (index: number) => {
@@ -175,7 +175,7 @@ export function ImageUploader({
 					<Card
 						className={cn(
 							"group aspect-square cursor-pointer border-2 border-muted-foreground/25 border-dashed transition-colors hover:border-muted-foreground/50",
-							"flex flex-col items-center justify-center gap-2 p-4"
+							"flex flex-col items-center justify-center gap-2 p-4",
 						)}
 						onClick={handleAddImageClick}
 					>

@@ -1,7 +1,10 @@
 import StoreFrontHero from "@/components/storefront/organisms/hero";
 import StoreFrontProductList from "@/components/storefront/organisms/products/product-list";
 import { getPublicStorefrontProducts } from "@/db/actions/storefront/products/public/actionts";
-import { getPublicStoreFront } from "@/db/actions/storefront/store/public/actionts";
+import {
+	getPublicStoreFront,
+	getPublicStoreFrontCurrency,
+} from "@/db/actions/storefront/store/public/actionts";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -15,6 +18,7 @@ export default async function StoreFrontPage({ params }: Props) {
 	const store = await getPublicStoreFront(storeSlug);
 
 	const products = await getPublicStorefrontProducts(storeSlug);
+	const currency = await getPublicStoreFrontCurrency(storeSlug);
 
 	if (!store) {
 		return notFound();
@@ -44,6 +48,7 @@ export default async function StoreFrontPage({ params }: Props) {
 			)}
 			<StoreFrontProductList
 				products={products.slice(0, HOMEPAGE_PRODUCTS_LIMIT)}
+				currency={currency ?? "USD"}
 			/>
 		</main>
 	);

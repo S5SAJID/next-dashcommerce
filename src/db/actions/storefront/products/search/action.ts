@@ -14,8 +14,8 @@ export const storefrontSearchProducts = storeFrontActionClient
 				eq(ProductTable.is_published, true),
 				or(
 					like(ProductTable.name, `%${parsedInput.query}%`),
-					like(ProductTable.description, `%${parsedInput.query}%`)
-				)
+					like(ProductTable.description, `%${parsedInput.query}%`),
+				),
 			),
 			columns: {
 				name: true,

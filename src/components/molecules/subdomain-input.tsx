@@ -11,8 +11,14 @@ import {
 	FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { CheckCircle, Loader2 } from "lucide-react";
+import { CheckCircle, Globe, Loader2, XCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+	InputGroup,
+	InputGroupAddon,
+	InputGroupInput,
+	InputGroupText,
+} from "../ui/input-group";
 
 type DashboardSubdomainInputProps = React.ComponentProps<"div"> & {
 	defaultValue?: string;
@@ -29,7 +35,7 @@ export default function DashboardSubdomainInput({
 	const { status, error } = useSubdomainAvailability(
 		subdomainFormVal,
 		500,
-		defaultValue
+		defaultValue,
 	);
 
 	useEffect(() => {
@@ -58,21 +64,31 @@ export default function DashboardSubdomainInput({
 					<div className="relative">
 						<div className="flex items-center">
 							<FormControl>
-								<Input placeholder="Enter your store subdomain" {...field} />
+								<InputGroup>
+									<InputGroupInput
+										placeholder="Enter your store subdomain"
+										{...field}
+									/>
+									<InputGroupAddon align="inline-end">
+										<InputGroupText>.s5arc.vercel.app</InputGroupText>
+									</InputGroupAddon>
+									<InputGroupAddon>
+										{/* Status Indicator */}
+										{status === "checking" ? (
+											<Loader2 className="animate-spin" />
+										) : status === "available" ? (
+											<CheckCircle className=" text-green-500" />
+										) : status === "idle" ? (
+											<Globe />
+										) : status === "unavailable" ? (
+											<XCircle className=" text-red-500" />
+										) : null}
+									</InputGroupAddon>
+								</InputGroup>
 							</FormControl>
-							{/* Status Indicator */}
-							{status === "checking" ? (
-								<Loader2 className="-translate-y-1/2 absolute top-1/2 right-3 h-4 w-4 animate-spin text-primary" />
-							) : status === "available" ? (
-								<CheckCircle className="-translate-y-1/2 absolute top-1/2 right-3 h-4 w-4 text-green-500" />
-							) : null}
 						</div>
 					</div>
 					<FormMessage />
-					<FormDescription>
-						This subdomain will form your store&apos;s url. eg: acme -{">"}{" "}
-						acme.eco.com
-					</FormDescription>
 				</FormItem>
 			)}
 		/>

@@ -64,7 +64,7 @@ export default function SettingsSidebar({
 				<nav
 					className={cn(
 						"flex space-x-2 py-1 lg:flex-col lg:space-x-0 lg:space-y-1",
-						className
+						className,
 					)}
 					{...props}
 				>
@@ -75,7 +75,7 @@ export default function SettingsSidebar({
 								pathname === item.href
 									? "bg-muted hover:bg-accent"
 									: "hover:bg-accent hover:underline",
-								"justify-start"
+								"justify-start",
 							)}
 							href={item.href}
 							key={item.href}

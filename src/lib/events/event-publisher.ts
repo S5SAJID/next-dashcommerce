@@ -15,7 +15,7 @@ export type EventPayload = {
 export async function publishEvent(
 	eventName: string,
 	storeId: string,
-	payload: unknown
+	payload: unknown,
 ) {
 	await tasks.trigger<typeof eventDispatcherTask>("event-dispatcher", {
 		eventName,

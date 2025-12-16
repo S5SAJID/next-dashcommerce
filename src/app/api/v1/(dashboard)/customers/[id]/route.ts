@@ -36,7 +36,7 @@ export const { GET } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
@@ -47,7 +47,7 @@ export const { GET } = route({
 			if (!customer) {
 				return TypedNextResponse.json(
 					{ error: "Customer not found" },
-					{ status: 404 }
+					{ status: 404 },
 				);
 			}
 

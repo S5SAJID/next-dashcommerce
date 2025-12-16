@@ -1,7 +1,9 @@
+import HomePageNavbar from "@/components/organisms/home-page/landing/navbar";
 import { Toaster } from "@/components/ui/sonner";
 import { auth } from "@/lib/auth/auth";
 import { cn } from "@/lib/utils";
 import AuthPagesProviders from "@/providers/auth/providers";
+import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Image from "next/image";
@@ -31,13 +33,15 @@ export default async function AuthLayout({
 	}
 	return (
 		<>
-			<AuthPagesProviders>
-				<div className="container relative grid h-svh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
-					<div className="lg:p-8">
-						<div className="mx-auto flex w-full flex-col justify-center space-y-2 py-8 sm:w-[480px] sm:p-8">
-							<div className="flex items-center justify-center">
-								{/* <h1 className="font-medium text-xl">S5ARC.</h1> */}
-								<div className="h-8 flex item-center justify-center">
+			<ThemeProvider attribute="class" defaultTheme="dark">
+				<HomePageNavbar showLinks={false} />
+				<AuthPagesProviders>
+					<div className="container relative grid h-svh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
+						<div className="p-8">
+							<div className="mx-auto flex w-full flex-col justify-center space-y-2 py-8 sm:w-[480px] sm:p-8">
+								<div className="flex items-center justify-center">
+									{/* <h1 className="font-medium text-xl">S5ARC.</h1> */}
+									{/* <div className="h-8 flex item-center justify-center">
 									<svg
 										height="81.385%"
 										viewBox="0 0 323.5 81.385"
@@ -88,36 +92,36 @@ export default async function AuthLayout({
 											</text>
 										</g>
 									</svg>
+								</div> */}
 								</div>
 							</div>
+							{children}
 						</div>
-						{children}
-					</div>
-					<div
-						className={cn(
-							"relative h-full overflow-hidden bg-muted max-lg:hidden",
-							"[&>img]:h-full [&>img]:w-full [&>img]:select-none [&>img]:object-cover [&>img]:object-top-left"
-						)}
-					>
-						{/* <Image
+						<div
+							className={cn(
+								"relative h-full pt-18 pb-6 px-6 overflow-hidden max-lg:hidden",
+								"[&>img]:h-full [&>img]:w-full [&>img]:select-none [&>img]:object-cover [&>img]:object-top-left",
+							)}
+						>
+							{/* <Image
 							alt="S5ARC. Dashboard"
 							className="dark:hidden"
 							height={1152}
 							src={"/assets/pages/signin/dashboard-light.png"}
 							width={1024}
 						/> */}
-						<Image
-							alt="S5ARC. Dashboard"
-							className="block"
-							height={1140}
-							src={"/assets/pages/signin/dashboard-dark.png"}
-							unoptimized
-							width={1024}
-						/>
+							<Image
+								alt="S5ARC. Dashboard"
+								className="block rounded-xl overflow-hidden "
+								height={1140}
+								src={"/assets/pages/signin/dashboard-dark.png"}
+								width={1024}
+							/>
+						</div>
 					</div>
-				</div>
-			</AuthPagesProviders>
-			<Toaster />
+				</AuthPagesProviders>
+				<Toaster />
+			</ThemeProvider>
 		</>
 	);
 }

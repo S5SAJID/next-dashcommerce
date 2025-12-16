@@ -35,23 +35,23 @@ export const eventDispatcherTask = task({
 				IntegrationDefinitionTable,
 				eq(
 					IntegrationInstallationTable.integration_id,
-					IntegrationDefinitionTable.id
-				)
+					IntegrationDefinitionTable.id,
+				),
 			)
 			.where(
 				and(
 					eq(IntegrationInstallationTable.store_id, payload.storeId),
-					eq(IntegrationInstallationTable.is_enabled, true)
-				)
+					eq(IntegrationInstallationTable.is_enabled, true),
+				),
 			);
 
 		// Filter by subscribed events
 		const matchedInstallations = installations.filter((row) =>
-			row.definition.subscribed_events.includes(payload.eventName)
+			row.definition.subscribed_events.includes(payload.eventName),
 		);
 
 		logger.info(
-			`Found ${matchedInstallations.length} integrations listening to ${payload.eventName}`
+			`Found ${matchedInstallations.length} integrations listening to ${payload.eventName}`,
 		);
 
 		// Dispatch to each integration

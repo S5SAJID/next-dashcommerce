@@ -16,6 +16,6 @@ export const apiDashboardOrderDetailsSchema = z.object({
 			product_name: z.string(),
 			product_sku: z.string().nullable(),
 			product_image: z.string().nullable(),
-		})
+		}),
 	),
 });

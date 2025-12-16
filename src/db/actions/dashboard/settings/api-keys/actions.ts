@@ -17,7 +17,7 @@ export const createApiKey = dashboardActionClient
 		z.object({
 			name: z.string().min(1).max(255),
 			permissions: z.array(z.enum(AVAILABLE_PERMISSIONS)),
-		})
+		}),
 	)
 	.action(async ({ parsedInput, ctx }) => {
 		// Only session users can create keys
@@ -79,8 +79,8 @@ export const revokeApiKey = dashboardActionClient
 			.where(
 				and(
 					eq(ApiKeyTable.id, parsedInput.id),
-					eq(ApiKeyTable.store_id, ctx.storeId)
-				)
+					eq(ApiKeyTable.store_id, ctx.storeId),
+				),
 			);
 		return { success: true };
 	});

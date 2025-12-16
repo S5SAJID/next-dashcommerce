@@ -12,7 +12,7 @@ interface DashboardUploadResult {
 
 export async function uploadDashboardFiles(
 	files: File[],
-	options: CloudinaryUploadOptions = { folder: "dashboard" }
+	options: CloudinaryUploadOptions = { folder: "dashboard" },
 ): Promise<DashboardUploadResult[]> {
 	const results = await uploadMultipleToCloudinary(files, options);
 
@@ -23,7 +23,7 @@ export async function uploadDashboardFiles(
 }
 
 export async function checkDashboardSubdomainAvailability(
-	subdomain: string
+	subdomain: string,
 ): Promise<{ isAvailable: boolean }> {
 	// 1. Basic validation
 	if (!subdomain || subdomain.length < 3) {

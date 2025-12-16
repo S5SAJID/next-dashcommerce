@@ -37,7 +37,7 @@ export default function OrderActions({
 	});
 
 	const handleStatusUpdate = (
-		status: "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED"
+		status: "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED",
 	) => {
 		execute({ orderId, status });
 	};

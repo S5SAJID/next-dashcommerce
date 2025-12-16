@@ -7,7 +7,7 @@ import { getSecuredStoreContext, type SecuredStoreContext } from ".";
  */
 export function withStoreAuth<T extends never[]>(
 	// requiredRoles: StoreRole[],
-	action: (context: SecuredStoreContext, ...args: T) => Promise<never>
+	action: (context: SecuredStoreContext, ...args: T) => Promise<never>,
 ) {
 	return async (...args: T) => {
 		// 1. Establish Secure Context (TODO: ONE DB hit, cached for the request)

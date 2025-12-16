@@ -39,7 +39,7 @@ export const { GET, POST } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
@@ -80,7 +80,7 @@ export const { GET, POST } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
@@ -88,7 +88,7 @@ export const { GET, POST } = route({
 			if (result?.data?.success === false) {
 				return TypedNextResponse.json(
 					{ error: result.data.error || "Failed to create product" },
-					{ status: 400 }
+					{ status: 400 },
 				);
 			}
 
@@ -96,7 +96,7 @@ export const { GET, POST } = route({
 				{
 					message: result?.data?.message || "Product created successfully",
 				},
-				{ status: 201 }
+				{ status: 201 },
 			);
 		}),
 });

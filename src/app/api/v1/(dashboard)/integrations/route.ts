@@ -32,7 +32,7 @@ export const { GET } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 

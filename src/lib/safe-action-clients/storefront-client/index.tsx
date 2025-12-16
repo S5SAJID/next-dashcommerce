@@ -27,5 +27,5 @@ export const storeFrontActionClient = createSafeActionClient().use(
 
 		// Return the context object
 		return next({ ctx: { storeId } });
-	}
+	},
 );

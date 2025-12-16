@@ -1,0 +1,1 @@
+CREATE TYPE "public"."currency" AS ENUM('PKR', 'BDT', 'USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'INR');

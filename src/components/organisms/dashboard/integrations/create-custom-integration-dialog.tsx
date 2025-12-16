@@ -252,7 +252,7 @@ export function CreateCustomIntegrationDialog({ children }: Props) {
 															{validationResult.warnings.map(
 																(warning: string, i: number) => (
 																	<li key={i}>{warning}</li>
-																)
+																),
 															)}
 														</ul>
 													)}
@@ -264,7 +264,7 @@ export function CreateCustomIntegrationDialog({ children }: Props) {
 														{validationResult.errors?.map(
 															(error: string, i: number) => (
 																<li key={i}>{error}</li>
-															)
+															),
 														)}
 													</ul>
 												</>

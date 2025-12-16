@@ -10,7 +10,7 @@ export const IntegrationDefinitionRelations = relations(
 			fields: [IntegrationDefinitionTable.created_by_store_id],
 			references: [StoreTable.id],
 		}),
-	})
+	}),
 );
 
 export const IntegrationInstallationRelations = relations(
@@ -24,5 +24,5 @@ export const IntegrationInstallationRelations = relations(
 			fields: [IntegrationInstallationTable.integration_id],
 			references: [IntegrationDefinitionTable.id],
 		}),
-	})
+	}),
 );

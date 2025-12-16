@@ -36,5 +36,5 @@ export const getDashboadStore = dashboardActionClient.action(
 		});
 
 		return store;
-	}
+	},
 );

@@ -24,5 +24,5 @@ export const dashboardActionClient = createSafeActionClient().use(
 				e instanceof Error ? e.message : "Security check failed.";
 			throw new Error(errorMessage);
 		}
-	}
+	},
 );

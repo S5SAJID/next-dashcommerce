@@ -1,25 +1,30 @@
+"use client";
 import type { Metadata } from "next";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useCartModel } from "@/components/storefront/organisms/cart/context/cart-context";
+import { CURRENCY_INFO } from "@/lib/currency";
+import { formatPrice } from "@/lib/utils";
+import {
+	parseAsString,
+	parseAsFloat,
+	parseAsInteger,
+	useQueryState,
+} from "nuqs";
 
-export const metadata: Metadata = {
-	title: "Order confirmed",
-	description: "Your order has been placed successfully.",
-};
-
-export default async function OrderSuccessPage({
+export default function OrderSuccessPage({
 	searchParams,
 }: PageProps<"/store/[store_slug]/checkout/success">) {
-	const params = await searchParams;
-
-	const orderId = params.orderId;
-	const total = params.total;
-	const itemCount = params.itemCount;
-	const name = params.name;
-	const email = params.email;
-	const country = params.country;
-	const city = params.city;
+	const [orderId] = useQueryState("orderId", parseAsString);
+	const [total] = useQueryState("total", parseAsFloat);
+	const [itemCount] = useQueryState("itemCount", parseAsInteger);
+	const [name] = useQueryState("name", parseAsString);
+	const [email] = useQueryState("email", parseAsString);
+	const [country] = useQueryState("country", parseAsString);
+	const [city] = useQueryState("city", parseAsString);
+	const { currency } = useCartModel();
+	const currencyInfo = CURRENCY_INFO[currency];
 
 	if (!(orderId || total || itemCount || name || email || country || city)) {
 		return (
@@ -66,7 +71,15 @@ export default async function OrderSuccessPage({
 						</div>
 						<div className="flex items-center justify-between">
 							<dt className="text-muted-foreground">Total</dt>
-							<dd className="font-medium">{total ? `$${total}` : "—"}</dd>
+							<dd className="font-medium">
+								{total
+									? formatPrice({
+											price: total,
+											currency: currencyInfo.code,
+											locale: currencyInfo.locale,
+										})
+									: "—"}
+							</dd>
 						</div>
 					</dl>
 				</section>

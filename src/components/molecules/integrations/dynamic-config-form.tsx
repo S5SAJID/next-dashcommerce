@@ -44,8 +44,8 @@ export function DynamicConfigForm({
 
 				return acc;
 			},
-			{} as Record<string, z.ZodTypeAny>
-		)
+			{} as Record<string, z.ZodTypeAny>,
+		),
 	);
 
 	type FormData = z.infer<typeof zodSchema>;
@@ -63,7 +63,7 @@ export function DynamicConfigForm({
 		<form
 			className="space-y-4"
 			onSubmit={handleSubmit((data) =>
-				onSubmit(data as Record<string, string>)
+				onSubmit(data as Record<string, string>),
 			)}
 		>
 			{schema.map((field) => (

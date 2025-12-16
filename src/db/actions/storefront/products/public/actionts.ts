@@ -2,21 +2,11 @@ import { db } from "@/db/db";
 import { ProductTable, StoreTable } from "@/db/schema";
 import { and, desc, eq, exists } from "drizzle-orm";
 import { notFound } from "next/navigation";
-
-async function storeExists(domain: string) {
-	const store = await db
-		.select()
-		.from(StoreTable)
-		.where(eq(StoreTable.domain, domain));
-	if (!store) {
-		return;
-	}
-	return store[0].id;
-}
+import { getPublicStoreFront } from "../../store/public/actionts";
 
 export async function getPublicStorefrontProducts(domain: string) {
-	const store_id = storeExists(domain);
-	if (!store_id) {
+	const store = await getPublicStoreFront(domain);
+	if (!store) {
 		return notFound();
 	}
 
@@ -24,7 +14,12 @@ export async function getPublicStorefrontProducts(domain: string) {
 		.select()
 		.from(ProductTable)
 		.orderBy(desc(ProductTable.updated_at))
-		.where(eq(ProductTable.is_published, true));
+		.where(
+			and(
+				eq(ProductTable.is_published, true),
+				eq(ProductTable.store_id, store.id),
+			),
+		);
 	return products;
 }
 
@@ -42,10 +37,10 @@ export async function getPublicStorefrontProduct(domain: string, slug: string) {
 						.where(
 							and(
 								eq(StoreTable.domain, domain),
-								eq(StoreTable.id, productTable.store_id) // Assuming `storeId` is the foreign key on ProductTable
-							)
-						)
-				)
+								eq(StoreTable.id, productTable.store_id), // Assuming `storeId` is the foreign key on ProductTable
+							),
+						),
+				),
 			),
 		with: {
 			store: true,

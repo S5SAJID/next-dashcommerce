@@ -26,7 +26,7 @@ export const getDashboardProducts = dashboardActionClient.action(
 		});
 
 		return products;
-	}
+	},
 );
 
 export const getDashboardProduct = dashboardActionClient
@@ -38,7 +38,7 @@ export const getDashboardProduct = dashboardActionClient
 		const product = await db.query.ProductTable.findFirst({
 			where: and(
 				eq(ProductTable.slug, slug),
-				eq(ProductTable.store_id, ctx.storeId)
+				eq(ProductTable.store_id, ctx.storeId),
 			),
 			columns: {
 				store_id: false,
@@ -55,7 +55,7 @@ export const updateDashboardProduct = dashboardActionClient
 
 		const fileImages = parsedInput.images.filter((img) => img instanceof File);
 		const urlImages = parsedInput.images.filter(
-			(img) => typeof img === "string"
+			(img) => typeof img === "string",
 		);
 
 		const uploadedImages = await uploadDashboardFiles(fileImages, {
@@ -69,8 +69,8 @@ export const updateDashboardProduct = dashboardActionClient
 			.where(
 				and(
 					eq(ProductTable.id, parsedInput.id),
-					eq(ProductTable.store_id, ctx.storeId)
-				)
+					eq(ProductTable.store_id, ctx.storeId),
+				),
 			)
 			.returning({ id: ProductTable.id });
 		return results[0];
@@ -87,8 +87,8 @@ export const deleteDashboardProduct = dashboardActionClient
 				.where(
 					and(
 						eq(ProductTable.id, parsedInput.id),
-						eq(ProductTable.store_id, ctx.storeId)
-					)
+						eq(ProductTable.store_id, ctx.storeId),
+					),
 				);
 			revalidatePath("/products");
 			return { success: true, message: "Product deleted successfully" };
@@ -130,7 +130,7 @@ export const updateDashboardProductDetails = dashboardActionClient
 
 		const fileImages = parsedInput.images.filter((img) => img instanceof File);
 		const urlImages = parsedInput.images.filter(
-			(img) => typeof img === "string"
+			(img) => typeof img === "string",
 		);
 		const uploadedImages = await uploadDashboardFiles(fileImages, {
 			folder: `dashboard/products/${ctx.storeId}`,
@@ -143,8 +143,8 @@ export const updateDashboardProductDetails = dashboardActionClient
 			.where(
 				and(
 					eq(ProductTable.id, parsedInput.id),
-					eq(ProductTable.store_id, ctx.storeId)
-				)
+					eq(ProductTable.store_id, ctx.storeId),
+				),
 			);
 
 		return { success: true, message: "Product updated" };

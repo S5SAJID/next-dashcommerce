@@ -59,7 +59,7 @@ export function ApiKeysManager({ initialKeys }: { initialKeys: ApiKey[] }) {
 			onError: ({ error }) => {
 				toast.error(error.serverError || "Failed to create API key");
 			},
-		}
+		},
 	);
 
 	const { execute: executeRevoke } = useAction(revokeApiKey, {
@@ -250,7 +250,7 @@ export function ApiKeysManager({ initialKeys }: { initialKeys: ApiKey[] }) {
 													]);
 												} else {
 													setSelectedPermissions(
-														selectedPermissions.filter((p) => p !== permission)
+														selectedPermissions.filter((p) => p !== permission),
 													);
 												}
 											}}

@@ -13,6 +13,8 @@ import StoreFrontCartItem from "../cart-item";
 import { useCartModel } from "../context/cart-context";
 import { useCart } from "react-use-cart";
 import React from "react";
+import { formatPrice } from "@/lib/utils";
+import { CURRENCY_INFO } from "@/lib/currency";
 
 export type CartModelItem = {
 	id: string;
@@ -23,14 +25,17 @@ export type CartModelItem = {
 };
 
 export default function StoreFrontCartModel() {
-	const { open, setOpen } = useCartModel();
+	const { open, setOpen, currency } = useCartModel();
 	const { totalItems, cartTotal, items, emptyCart } = useCart();
+	const currencyInfo = CURRENCY_INFO[currency];
 
 	function handleClearCart() {
 		if (confirm("Clear the cart?")) {
 			emptyCart();
 		}
 	}
+
+	if (!currencyInfo) throw "Currency not found";
 
 	return (
 		<Sheet onOpenChange={setOpen} open={open}>
@@ -58,7 +63,7 @@ export default function StoreFrontCartModel() {
 							<TableRow>
 								<TableCell className="text-muted-foreground">Taxes</TableCell>
 								<TableCell align="right" className="text-lg">
-									$0.00
+									{currencyInfo.symbol}0.00
 								</TableCell>
 							</TableRow>
 							<TableRow>
@@ -72,7 +77,11 @@ export default function StoreFrontCartModel() {
 							<TableRow>
 								<TableCell className="text-muted-foreground">Total</TableCell>
 								<TableCell align="right" className="text-lg">
-									${cartTotal.toFixed(2)}
+									{formatPrice({
+										price: cartTotal,
+										currency: currencyInfo.code,
+										locale: currencyInfo.locale,
+									})}
 								</TableCell>
 							</TableRow>
 						</TableBody>

@@ -68,7 +68,7 @@ export function ResetPasswordForm({
 					});
 					router.push("/signin");
 				},
-			}
+			},
 		);
 	}
 

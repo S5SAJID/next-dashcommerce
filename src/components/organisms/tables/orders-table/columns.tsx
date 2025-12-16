@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { DataTableColumnHeader } from "@/components/molecules/data-table/data-table-column-header";
 import OrderTableRowActions from "./row-actions";
+import { useDashboardStoreInfo } from "@/lib/context/dashboard/store-context-provider";
+import { formatDashboardPrice } from "@/lib/shared/utils/format-dashboard-price";
 
 export const order_columns: ColumnDef<DashboardOrder>[] = [
 	{
@@ -82,11 +84,11 @@ export const order_columns: ColumnDef<DashboardOrder>[] = [
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Total Amount" />
 		),
-		cell: ({ row }) =>
-			formatPrice({
-				locale: "en-US",
+		cell: ({ row }) => {
+			return formatDashboardPrice({
 				price: row.getValue("totalAmount"),
-			}),
+			});
+		},
 	},
 	{
 		accessorKey: "itemCount",

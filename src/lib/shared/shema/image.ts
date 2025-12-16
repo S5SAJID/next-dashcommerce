@@ -10,7 +10,7 @@ export const imageFileSchema = z
 	.max(MAX_FILE_SIZE, "Max image size is 5MB.")
 	.mime(
 		["image/jpeg", "image/jpg", "image/png", "image/webp"],
-		"Only .jpg, .jpeg, .png, and .webp formats are supported."
+		"Only .jpg, .jpeg, .png, and .webp formats are supported.",
 	);
 
 // Reusable schema for an array of image files (new uploads only)

@@ -36,7 +36,7 @@ export function ProductDetailsFormRightSide({
 							<FormItem>
 								<FormLabel>Price</FormLabel>
 								<FormControl>
-									<PriceInput field={field} placeholder="400" />
+									<PriceInput field={field} placeholder="300" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -49,7 +49,7 @@ export function ProductDetailsFormRightSide({
 							<FormItem>
 								<FormLabel>Compare at price</FormLabel>
 								<FormControl>
-									<PriceInput field={field} placeholder="300" />
+									<PriceInput field={field} placeholder="400" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

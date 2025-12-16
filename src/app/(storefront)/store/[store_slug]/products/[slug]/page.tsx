@@ -5,19 +5,19 @@ import {
 	getPublicStorefrontProduct,
 	getPublicStorefrontProducts,
 } from "@/db/actions/storefront/products/public/actionts";
+import { getPublicStoreFrontCurrency } from "@/db/actions/storefront/store/public/actionts";
+import { CURRENCY_INFO } from "@/lib/currency";
 import { formatPrice, shuffleArray } from "@/lib/utils";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-type Props = {
-	params: Promise<{ store_slug: string; slug: string }>;
-};
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({
+	params,
+}: PageProps<"/store/[store_slug]/products/[slug]">): Promise<Metadata> {
 	const awaitedParams = await params;
 	const product = await getPublicStorefrontProduct(
 		awaitedParams.store_slug,
-		awaitedParams.slug
+		awaitedParams.slug,
 	);
 
 	if (!product) {
@@ -29,15 +29,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const RECOMMENDED_PRODUCTS_LIMIT = 4;
 
-export default async function ProductPage({ params }: Props) {
+export default async function ProductPage({
+	params,
+}: PageProps<"/store/[store_slug]/products/[slug]">) {
 	const awaitedParams = await params;
 	const product = await getPublicStorefrontProduct(
 		awaitedParams.store_slug,
-		awaitedParams.slug
+		awaitedParams.slug,
 	);
 	const recommendedProducts = await getPublicStorefrontProducts(
-		awaitedParams.store_slug
+		awaitedParams.store_slug,
 	);
+	const currency = await getPublicStoreFrontCurrency(awaitedParams.store_slug);
+	const currencyInfo = CURRENCY_INFO[currency ?? "USD"];
 
 	// if not found return notfound page
 	if (!product) {
@@ -58,12 +62,17 @@ export default async function ProductPage({ params }: Props) {
 						<div className="flex items-center gap-4">
 							<div className="flex items-baseline gap-2">
 								<span className="font-semibold text-3xl">
-									{formatPrice({ locale: "en-US", price: product.price })}
+									{formatPrice({
+										locale: currencyInfo.locale,
+										currency: currencyInfo.code,
+										price: product.price,
+									})}
 								</span>
 								{product.compare_at && product.compare_at > product.price && (
 									<span className="text-lg text-muted-foreground line-through decoration-red-300">
 										{formatPrice({
-											locale: "en-US",
+											locale: currencyInfo.locale,
+											currency: currencyInfo.code,
 											price: product.compare_at,
 										})}
 									</span>
@@ -73,7 +82,8 @@ export default async function ProductPage({ params }: Props) {
 								<span className="rounded-md bg-muted px-2.5 py-1 font-medium text-foreground text-xs">
 									Save{" "}
 									{formatPrice({
-										locale: "en-US",
+										locale: currencyInfo.locale,
+										currency: currencyInfo.code,
 										price: product.compare_at - product.price,
 									})}
 								</span>
@@ -139,8 +149,9 @@ export default async function ProductPage({ params }: Props) {
 					dense
 					products={shuffleArray(recommendedProducts).slice(
 						0,
-						RECOMMENDED_PRODUCTS_LIMIT
+						RECOMMENDED_PRODUCTS_LIMIT,
 					)}
+					currency={currency ?? "USD"}
 				/>
 			</div>
 		</>

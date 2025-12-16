@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
+import { formatDashboardPrice } from "@/lib/shared/utils/format-dashboard-price";
 
 export type CustomersType = {
 	id: string;
@@ -48,8 +49,7 @@ export const customers_columns: ColumnDef<CustomersType>[] = [
 			<DataTableColumnHeader column={column} title="Total Spent" />
 		),
 		cell: ({ row }) =>
-			formatPrice({
-				locale: "en-US",
+			formatDashboardPrice({
 				price: row.getValue("total_spent"),
 			}),
 	},
@@ -78,7 +78,7 @@ export const customers_columns: ColumnDef<CustomersType>[] = [
 							<DropdownMenuItem
 								onClick={() =>
 									navigator.clipboard.writeText(
-										customer.phone ?? "no phone number"
+										customer.phone ?? "no phone number",
 									)
 								}
 							>

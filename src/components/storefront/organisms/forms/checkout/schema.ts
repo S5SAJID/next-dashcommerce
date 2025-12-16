@@ -43,7 +43,7 @@ export const checkoutFormSchema = z.object({
 			z.object({
 				productId: z.uuid().min(1).nonoptional(),
 				quantity: z.number().min(1, "Quantity must be at least 1"),
-			})
+			}),
 		)
 		.min(1, "Cart cannot be empty"),
 });

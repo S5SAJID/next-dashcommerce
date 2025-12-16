@@ -17,7 +17,7 @@ export default function StoreFrontQuantityInput({
 		<div
 			className={cn(
 				"flex h-9 items-center overflow-hidden rounded-full border border-input",
-				className
+				className,
 			)}
 		>
 			<Button

@@ -7,7 +7,7 @@ import { cloudinaryClient } from "../client";
  */
 export async function deleteFromCloudinary(
 	publicId: string,
-	resourceType: "image" | "video" | "raw" = "image"
+	resourceType: "image" | "video" | "raw" = "image",
 ): Promise<{ result: string }> {
 	return new Promise((resolve, reject) => {
 		cloudinaryClient.uploader.destroy(
@@ -21,7 +21,7 @@ export async function deleteFromCloudinary(
 				} else {
 					reject(new Error("Cloudinary deletion failed: No result returned"));
 				}
-			}
+			},
 		);
 	});
 }

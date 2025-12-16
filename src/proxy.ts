@@ -8,7 +8,7 @@ export const proxy = (request: NextRequest) => {
 
 	if (subdomain && pathname.startsWith("/")) {
 		return NextResponse.rewrite(
-			new URL(`/store/${subdomain}${pathname}${search}`, request.url)
+			new URL(`/store/${subdomain}${pathname}${search}`, request.url),
 		);
 	}
 

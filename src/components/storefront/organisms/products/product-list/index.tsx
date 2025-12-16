@@ -6,14 +6,17 @@ import type { ProductTable } from "@/db/schema";
 import type { ProductWithStore } from "@/db/actions/storefront/products/public/types";
 import { useQueryStates, parseAsString, parseAsStringEnum } from "nuqs";
 import { useMemo } from "react";
+import { Currency } from "@/db/schema/tables/stores";
 
 type StoreFrontProductListProps = {
 	products: InferSelectModel<typeof ProductTable>[] | ProductWithStore[];
 	dense?: boolean;
+	currency: Currency;
 };
 
 export default function StoreFrontProductList({
 	products,
+	currency,
 	dense = false,
 }: StoreFrontProductListProps) {
 	const [filters] = useQueryStates(
@@ -23,12 +26,12 @@ export default function StoreFrontProductList({
 		},
 		{
 			history: "push",
-		}
+		},
 	);
 
 	const [viewMode] = useQueryStates({
 		view: parseAsStringEnum(["default", "dense"] as const).withDefault(
-			"default"
+			"default",
 		),
 	});
 
@@ -42,7 +45,7 @@ export default function StoreFrontProductList({
 			filtered = filtered.filter(
 				(product) =>
 					product.name.toLowerCase().includes(searchLower) ||
-					product.description.toLowerCase().includes(searchLower)
+					product.description.toLowerCase().includes(searchLower),
 			);
 		}
 
@@ -51,13 +54,13 @@ export default function StoreFrontProductList({
 			case "newest":
 				filtered.sort(
 					(a, b) =>
-						new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+						new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime(),
 				);
 				break;
 			case "oldest":
 				filtered.sort(
 					(a, b) =>
-						new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
+						new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime(),
 				);
 				break;
 			case "price-asc":
@@ -113,7 +116,11 @@ export default function StoreFrontProductList({
 			className={`grid grid-cols-1 ${viewMode.view === "dense" ? "md:grid-cols-3 lg:grid-cols-4" : "md:grid-cols-2 lg:grid-cols-3"} gap-4`}
 		>
 			{filteredProducts.map((product) => (
-				<StoreFrontProductCard key={product.id} product={product} />
+				<StoreFrontProductCard
+					key={product.id}
+					product={product}
+					currency={currency}
+				/>
 			))}
 		</section>
 	);

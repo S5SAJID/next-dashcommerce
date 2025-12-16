@@ -6,15 +6,18 @@ import { ProgressProvider } from "@bprogress/next/app";
 import type React from "react";
 import { CartProvider } from "react-use-cart";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Currency } from "@/db/schema/tables/stores";
 
 export default function StoreFrontProviders({
+	currency,
 	children,
 }: {
 	children: React.ReactNode;
+	currency: Currency;
 }) {
 	return (
 		<NuqsAdapter>
-			<CartModalProvider>
+			<CartModalProvider currency={currency}>
 				<CartProvider>
 					<ProgressProvider>
 						{children}

@@ -49,7 +49,7 @@ export const { GET, PATCH } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
@@ -60,7 +60,7 @@ export const { GET, PATCH } = route({
 			if (!order) {
 				return TypedNextResponse.json(
 					{ error: "Order not found" },
-					{ status: 404 }
+					{ status: 404 },
 				);
 			}
 
@@ -102,13 +102,13 @@ export const { GET, PATCH } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
 			return TypedNextResponse.json(
 				{ message: "Order status updated successfully" },
-				{ status: 200 }
+				{ status: 200 },
 			);
 		}),
 });

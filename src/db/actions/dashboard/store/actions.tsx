@@ -7,14 +7,15 @@ import { noAuthdashboardActionClient } from "@/lib/safe-action-clients/dashboard
 
 export const createDashboardStore = noAuthdashboardActionClient
 	.inputSchema(storeFormSchema)
-	.action(async ({ parsedInput, ctx }) => {
-		const { name, description, subdomain } = parsedInput;
+	.action(async ({ parsedInput }) => {
+		const { name, description, subdomain, currency } = parsedInput;
 
 		const store = await db
 			.insert(StoreTable)
 			.values({
 				name,
 				domain: subdomain,
+				currency,
 				settings: {
 					seo: {
 						title: `${name} | The Best Premium Products Online`,

@@ -9,7 +9,7 @@ import type { CloudinaryUploadOptions, CloudinaryUploadResult } from "../types";
  */
 export async function uploadToCloudinary(
 	file: File,
-	options: CloudinaryUploadOptions = {}
+	options: CloudinaryUploadOptions = {},
 ): Promise<CloudinaryUploadResult> {
 	const arrayBuffer = await file.arrayBuffer();
 	const buffer = Buffer.from(arrayBuffer);
@@ -34,9 +34,9 @@ export async function uploadToCloudinary(
 					} else {
 						reject(new Error("Cloudinary upload failed: No result returned"));
 					}
-				}
+				},
 			);
-		}
+		},
 	);
 
 	return {
@@ -56,7 +56,7 @@ export async function uploadToCloudinary(
  */
 export async function uploadMultipleToCloudinary(
 	files: File[],
-	options: CloudinaryUploadOptions = {}
+	options: CloudinaryUploadOptions = {},
 ): Promise<CloudinaryUploadResult[]> {
 	const uploadPromises = files.map((file) => uploadToCloudinary(file, options));
 	return Promise.all(uploadPromises);

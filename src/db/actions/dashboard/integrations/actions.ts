@@ -24,13 +24,13 @@ export const getDashboardIntegrations = dashboardActionClient.action(
 		const integrations = await db.query.IntegrationDefinitionTable.findMany({
 			where: or(
 				eq(IntegrationDefinitionTable.is_global, true),
-				eq(IntegrationDefinitionTable.created_by_store_id, ctx.storeId)
+				eq(IntegrationDefinitionTable.created_by_store_id, ctx.storeId),
 			),
 			orderBy: (integrations, { desc }) => [desc(integrations.created_at)],
 		});
 
 		return integrations;
-	}
+	},
 );
 
 /**
@@ -46,8 +46,8 @@ export const getDashboardIntegration = dashboardActionClient
 				eq(IntegrationDefinitionTable.id, parsedInput.id),
 				or(
 					eq(IntegrationDefinitionTable.is_global, true),
-					eq(IntegrationDefinitionTable.created_by_store_id, ctx.storeId)
-				)
+					eq(IntegrationDefinitionTable.created_by_store_id, ctx.storeId),
+				),
 			),
 		});
 
@@ -66,9 +66,9 @@ export const getIntegrationInstallation = dashboardActionClient
 			where: and(
 				eq(
 					IntegrationInstallationTable.integration_id,
-					parsedInput.integrationId
+					parsedInput.integrationId,
 				),
-				eq(IntegrationInstallationTable.store_id, ctx.storeId)
+				eq(IntegrationInstallationTable.store_id, ctx.storeId),
 			),
 		});
 
@@ -83,7 +83,7 @@ export const createIntegrationInstallation = dashboardActionClient
 		z.object({
 			integrationId: z.uuid(),
 			config: z.record(z.string(), z.string()),
-		})
+		}),
 	)
 	.action(async ({ parsedInput, ctx }) => {
 		checkPermission(ctx, "integrations:write");
@@ -110,7 +110,7 @@ export const updateIntegrationInstallation = dashboardActionClient
 		z.object({
 			installationId: z.uuid(),
 			config: z.record(z.string(), z.string()),
-		})
+		}),
 	)
 	.action(async ({ parsedInput, ctx }) => {
 		checkPermission(ctx, "integrations:write");
@@ -124,8 +124,8 @@ export const updateIntegrationInstallation = dashboardActionClient
 			.where(
 				and(
 					eq(IntegrationInstallationTable.id, parsedInput.installationId),
-					eq(IntegrationInstallationTable.store_id, ctx.storeId)
-				)
+					eq(IntegrationInstallationTable.store_id, ctx.storeId),
+				),
 			)
 			.returning();
 
@@ -141,7 +141,7 @@ export const toggleIntegrationStatus = dashboardActionClient
 		z.object({
 			installationId: z.uuid(),
 			isEnabled: z.boolean(),
-		})
+		}),
 	)
 	.action(async ({ parsedInput, ctx }) => {
 		checkPermission(ctx, "integrations:write");
@@ -155,8 +155,8 @@ export const toggleIntegrationStatus = dashboardActionClient
 			.where(
 				and(
 					eq(IntegrationInstallationTable.id, parsedInput.installationId),
-					eq(IntegrationInstallationTable.store_id, ctx.storeId)
-				)
+					eq(IntegrationInstallationTable.store_id, ctx.storeId),
+				),
 			)
 			.returning();
 
@@ -177,8 +177,8 @@ export const deleteIntegrationInstallation = dashboardActionClient
 			.where(
 				and(
 					eq(IntegrationInstallationTable.id, parsedInput.installationId),
-					eq(IntegrationInstallationTable.store_id, ctx.storeId)
-				)
+					eq(IntegrationInstallationTable.store_id, ctx.storeId),
+				),
 			);
 
 		revalidatePath("/settings/integrations");
@@ -215,16 +215,16 @@ export const createCustomIntegration = dashboardActionClient
 					required: z.boolean(),
 					placeholder: z.string().optional(),
 					description: z.string().optional(),
-				})
+				}),
 			),
-		})
+		}),
 	)
 	.action(async ({ parsedInput, ctx }) => {
 		checkPermission(ctx, "integrations:write");
 
 		// Validate endpoint first
 		const validation = await validateIntegrationEndpoint(
-			parsedInput.targetEndpointUrl
+			parsedInput.targetEndpointUrl,
 		);
 
 		if (!validation.isValid) {
@@ -273,10 +273,10 @@ export const deleteCustomIntegration = dashboardActionClient
 				and(
 					eq(
 						IntegrationInstallationTable.integration_id,
-						parsedInput.integrationId
+						parsedInput.integrationId,
 					),
-					eq(IntegrationInstallationTable.store_id, ctx.storeId)
-				)
+					eq(IntegrationInstallationTable.store_id, ctx.storeId),
+				),
 			);
 
 		// Then delete the integration itself (only if owned by this store)
@@ -286,8 +286,8 @@ export const deleteCustomIntegration = dashboardActionClient
 				and(
 					eq(IntegrationDefinitionTable.id, parsedInput.integrationId),
 					eq(IntegrationDefinitionTable.created_by_store_id, ctx.storeId),
-					eq(IntegrationDefinitionTable.is_global, false)
-				)
+					eq(IntegrationDefinitionTable.is_global, false),
+				),
 			);
 
 		revalidatePath("/settings/integrations");

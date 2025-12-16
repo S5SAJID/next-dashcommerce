@@ -1,8 +1,8 @@
 "use client";
-import type { z } from "zod";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle, Loader, Loader2 } from "lucide-react";
+import { AlertCircle, Loader } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,12 +16,20 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { createDashboardStore } from "@/db/actions/dashboard/store/actions";
-import { useSubdomainAvailability } from "@/hooks/dashboard/store/use-subdomain-availablity";
 import { storeFormSchema } from "./schema";
 import { toastPromise } from "@/hooks/use-promise-toaster";
-import { useEffect } from "react";
 import DashboardSubdomainInput from "@/components/molecules/subdomain-input";
+import { SUPPORTED_CURRENCIES } from "@/db/schema/tables/stores";
+import { getCurrencyDisplayName } from "@/lib/currency";
 
 type StoreFormSchema = z.infer<typeof storeFormSchema>;
 
@@ -36,6 +44,7 @@ export function StoreCreateForm({
 			name: "",
 			description: "",
 			subdomain: "",
+			currency: "PKR",
 		},
 	});
 
@@ -44,7 +53,11 @@ export function StoreCreateForm({
 	async function onSubmit(data: StoreFormSchema) {
 		await toastPromise(createDashboardStore(data), {
 			error: (error) => error.message || "Something went wrong!",
-			success: () => {
+			success: ({ serverError }) => {
+				if (serverError) {
+					console.error(serverError);
+					return `Something went wrong.`;
+				}
 				window.location.replace("/products");
 				form.reset();
 				return "Store created, Redirecting...";
@@ -90,10 +103,43 @@ export function StoreCreateForm({
 						</FormItem>
 					)}
 				/>
+				<FormField
+					control={form.control}
+					name="currency"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Store Currency *</FormLabel>
+							<Select onValueChange={field.onChange} defaultValue={field.value}>
+								<FormControl>
+									<SelectTrigger className="w-full">
+										<SelectValue placeholder="Select your store currency" />
+									</SelectTrigger>
+								</FormControl>
+								<SelectContent>
+									{SUPPORTED_CURRENCIES.map((currency) => (
+										<SelectItem key={currency} value={currency}>
+											{getCurrencyDisplayName(currency)}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+							<Alert>
+								<AlertCircle className="size-4" />
+								<AlertDescription className="text-xs">
+									Your currency selection is permanent and cannot be changed
+									after store creation. Choose carefully.
+								</AlertDescription>
+							</Alert>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 				<div className="grid">
 					<Button
 						className="mt-2"
-						disabled={isLoading || status !== "available"}
+						disabled={
+							isLoading || Object.keys(form.formState.errors).length > 0
+						}
 						type="submit"
 					>
 						{isLoading ? <Loader className="animate-spin" /> : null}

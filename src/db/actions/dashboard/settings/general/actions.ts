@@ -14,7 +14,7 @@ export const getDashboardStore = dashboardActionClient.action(
 		});
 
 		return store;
-	}
+	},
 );
 
 export const updateStoreGeneralSettings = dashboardActionClient

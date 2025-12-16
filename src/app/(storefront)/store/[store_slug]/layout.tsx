@@ -42,7 +42,7 @@ export default async function Layout({
 
 	return (
 		<div className={dmSans.className}>
-			<StoreFrontProviders>
+			<StoreFrontProviders currency={store.currency}>
 				<StoreFrontNavbar store={store} />
 				<main className="mx-auto min-h-[70dvh] w-full max-w-7xl px-4 pt-2 pb-6 sm:px-6 lg:px-8">
 					{children}

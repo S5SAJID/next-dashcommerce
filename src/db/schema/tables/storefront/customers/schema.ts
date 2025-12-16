@@ -17,5 +17,5 @@ export const CustomerTable = pgTable(
 		created_at: timestamp().defaultNow().notNull(),
 		updated_at: timestamp().defaultNow().notNull(),
 	},
-	(table) => [unique("store_email_idx").on(table.store_id, table.email)]
+	(table) => [unique("store_email_idx").on(table.store_id, table.email)],
 );

@@ -24,7 +24,7 @@ export type SecuredStoreContext = {
 };
 
 export async function getSecuredStoreContext(
-	headers: ReadonlyHeaders
+	headers: ReadonlyHeaders,
 ): Promise<SecuredStoreContext> {
 	// Authentication Check
 	const session = await auth.api.getSession({ headers });

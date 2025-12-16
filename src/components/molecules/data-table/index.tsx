@@ -49,7 +49,7 @@ export default function DataTable<TData, TValue>({
 
 	const tableData: typeof data = useMemo(
 		() => (isLoading ? new Array(30).fill({}) : data),
-		[isLoading, data]
+		[isLoading, data],
 	);
 
 	const tableColumns = useMemo(
@@ -60,7 +60,7 @@ export default function DataTable<TData, TValue>({
 						cell: () => <Skeleton className="h-6" />,
 					}))
 				: columns,
-		[isLoading, columns]
+		[isLoading, columns],
 	);
 
 	const table = useReactTable<TData>({
@@ -99,7 +99,7 @@ export default function DataTable<TData, TValue>({
 											? null
 											: flexRender(
 													header.column.columnDef.header,
-													header.getContext()
+													header.getContext(),
 												)}
 									</TableHead>
 								))}
@@ -117,7 +117,7 @@ export default function DataTable<TData, TValue>({
 										<TableCell key={cell.id}>
 											{flexRender(
 												cell.column.columnDef.cell,
-												cell.getContext()
+												cell.getContext(),
 											)}
 										</TableCell>
 									))}

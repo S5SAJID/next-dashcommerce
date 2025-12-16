@@ -6,7 +6,7 @@ export function toastPromise<T>(
 		loading?: string;
 		success: string | ((data: T) => string);
 		error: string | ((err: Error) => string);
-	}
+	},
 ): Promise<T> {
 	return new Promise((resolve, reject) => {
 		toast.promise(promise, {

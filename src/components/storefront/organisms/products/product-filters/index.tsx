@@ -24,7 +24,7 @@ export default function ProductFilters({ totalCount }: ProductFiltersProps) {
 		},
 		{
 			history: "push",
-		}
+		},
 	);
 
 	return (

@@ -71,7 +71,7 @@ export function SearchModal() {
 				performSearch(value);
 			}, 300);
 		},
-		[performSearch]
+		[performSearch],
 	);
 
 	// Keyboard navigation
@@ -98,7 +98,7 @@ export function SearchModal() {
 					break;
 			}
 		},
-		[results, handleSelectProduct]
+		[results, handleSelectProduct],
 	);
 
 	// Focus input when modal opens
@@ -113,7 +113,7 @@ export function SearchModal() {
 				clearTimeout(debounceTimer.current);
 			}
 		},
-		[]
+		[],
 	);
 
 	return (
@@ -181,13 +181,13 @@ export function SearchModal() {
 															{product.description}
 														</p>
 													)}
-													<p className="mt-2 text-muted-foreground text-xs">
-														ARABIC
-													</p>
+													{/* <p className="mt-2 text-muted-foreground text-xs">
+														{product.price }
+													</p> */}
 												</div>
 												<div className="text-right">
 													<p className="whitespace-nowrap font-semibold text-foreground">
-														${product.price.toFixed(2)}
+														{product.price.toFixed(2)}
 													</p>
 												</div>
 											</div>

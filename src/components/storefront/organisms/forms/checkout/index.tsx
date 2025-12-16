@@ -80,10 +80,10 @@ export default function StoreFrontCheckoutForm() {
 			const firstErrorKey = Object.keys(errors)[0];
 			toast.error("Please fix errors");
 			const el = document.querySelector(
-				`[name="${firstErrorKey}"]`
+				`[name="${firstErrorKey}"]`,
 			) as HTMLElement | null;
 			el?.focus();
-		}
+		},
 	);
 	return (
 		<Form {...form}>
@@ -182,7 +182,7 @@ export default function StoreFrontCheckoutForm() {
 													>
 														{country}
 													</SelectItem>
-												)
+												),
 											)}
 										</SelectContent>
 									</Select>

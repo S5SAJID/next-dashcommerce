@@ -1,22 +1,31 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
+import { Currency } from "@/db/schema/tables/stores";
 
 type CartModalProviderValue = {
 	open: boolean;
 	setOpen: (open: boolean) => void;
+	currency: Currency;
 };
 const CartModelContext = createContext<CartModalProviderValue | null>(null);
 
-export function CartModalProvider({ children }: { children: React.ReactNode }) {
+export function CartModalProvider({
+	children,
+	currency,
+}: {
+	children: React.ReactNode;
+	currency: Currency;
+}) {
 	const [open, setOpen] = useState(false);
-	const _pathname = usePathname();
+
 	useEffect(() => {
 		setOpen(false);
 	}, []);
 	return (
-		<CartModelContext value={{ open, setOpen }}>{children}</CartModelContext>
+		<CartModelContext value={{ open, setOpen, currency }}>
+			{children}
+		</CartModelContext>
 	);
 }
 

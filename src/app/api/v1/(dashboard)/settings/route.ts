@@ -37,7 +37,7 @@ export const { GET, PATCH } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
@@ -46,7 +46,7 @@ export const { GET, PATCH } = route({
 			if (!store) {
 				return TypedNextResponse.json(
 					{ error: "Store not found" },
-					{ status: 404 }
+					{ status: 404 },
 				);
 			}
 
@@ -79,7 +79,7 @@ export const { GET, PATCH } = route({
 			if (result?.serverError) {
 				return TypedNextResponse.json(
 					{ error: result.serverError },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
@@ -87,7 +87,7 @@ export const { GET, PATCH } = route({
 				{
 					message: result?.data?.message || "Settings updated successfully",
 				},
-				{ status: 200 }
+				{ status: 200 },
 			);
 		}),
 });

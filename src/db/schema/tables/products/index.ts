@@ -28,5 +28,5 @@ export const ProductTable = pgTable(
 		created_at: timestamp("created_at").defaultNow().notNull(),
 		updated_at: timestamp("updated_at").defaultNow().notNull(),
 	},
-	(table) => [unique("store_slug_idx").on(table.store_id, table.slug)]
+	(table) => [unique("store_slug_idx").on(table.store_id, table.slug)],
 );

@@ -26,7 +26,7 @@ export function BreadcrumbLink({
 		<Link
 			className={cn(
 				"text-muted-foreground text-sm transition-colors hover:text-foreground",
-				className
+				className,
 			)}
 			href={href}
 		>

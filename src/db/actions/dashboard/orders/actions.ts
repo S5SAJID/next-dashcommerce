@@ -39,7 +39,7 @@ export const getDashboardOrders = dashboardActionClient.action(
 			.orderBy(desc(OrderTable.created_at)); // Show the most recent orders first
 
 		return orders;
-	}
+	},
 );
 
 export const getDashboardOrder = dashboardActionClient
@@ -75,8 +75,8 @@ export const getDashboardOrder = dashboardActionClient
 			.where(
 				and(
 					eq(OrderTable.store_id, ctx.storeId),
-					eq(OrderTable.id, parsedInput.orderId)
-				)
+					eq(OrderTable.id, parsedInput.orderId),
+				),
 			)
 			// Joins
 			.leftJoin(CustomerTable, eq(OrderTable.customer_id, CustomerTable.id))
@@ -99,7 +99,7 @@ export const updateOrderStatus = dashboardActionClient
 				"DELIVERED",
 				"CANCELLED",
 			]),
-		})
+		}),
 	)
 	.action(async ({ ctx, parsedInput }) => {
 		checkPermission(ctx, "orders:write");
@@ -109,8 +109,8 @@ export const updateOrderStatus = dashboardActionClient
 			.where(
 				and(
 					eq(OrderTable.id, parsedInput.orderId),
-					eq(OrderTable.store_id, ctx.storeId)
-				)
+					eq(OrderTable.store_id, ctx.storeId),
+				),
 			);
 
 		revalidatePath(`/orders/${parsedInput.orderId}`);
