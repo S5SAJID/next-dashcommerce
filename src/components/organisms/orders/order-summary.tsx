@@ -46,7 +46,9 @@ export default function OrderSummaryCard({
 				<Separator />
 				<div className="flex items-center justify-between">
 					<span className="font-medium">Total</span>
-					<span className="font-semibold">{formatDashboardPrice({ price: total })}</span>
+					<span className="font-semibold">
+						{formatDashboardPrice({ price: total })}
+					</span>
 				</div>
 			</CardContent>
 		</>
