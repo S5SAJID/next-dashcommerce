@@ -56,12 +56,7 @@ export default function HomePageHeroSection() {
 					<div className="absolute inset-0 bg-gradient-to-tr from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full blur-3xl opacity-60 scale-75 -z-10 animate-pulse-slow" />
 					<div>
 						{/* FIX: Make it responsive */}
-						<CardSwapContainer
-							height={500}
-							pauseOnHover
-							verticalDistance={50}
-							width={600}
-						>
+						<CardSwapContainer height={500} verticalDistance={50} width={600}>
 							<CardSwapCard>
 								<Card>
 									<CardHeader>

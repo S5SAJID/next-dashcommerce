@@ -15,7 +15,7 @@ export function useSubdomainAvailability(
 	debounceTime = 500,
 	defaultValue?: string,
 ) {
-	const debouncedSubdomain = useDebounce(subdomain, debounceTime);
+	const debouncedSubdomain = useDebounce(subdomain.toLowerCase(), debounceTime);
 	const [status, setStatus] = useState<SubdomainStatus>("idle");
 	const [error, setError] = useState<string | null>(null);
 

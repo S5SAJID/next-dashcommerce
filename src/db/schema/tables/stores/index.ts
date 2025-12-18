@@ -40,6 +40,7 @@ type StoreSettingsType = {
 		ctaLink: string;
 		ctaTarget: "self" | "_blank";
 	};
+	customHeadCode?: string;
 };
 
 export const StoreTable = pgTable("stores", {

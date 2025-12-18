@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Image from "next/image";
+import { DM_Sans } from "next/font/google";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
@@ -20,6 +21,11 @@ export const metadata: Metadata = {
 		},
 	],
 };
+
+const dmSans = DM_Sans({
+	subsets: ["latin"],
+	weight: ["400", "500", "700"],
+});
 
 export default async function AuthLayout({
 	children,
@@ -36,7 +42,10 @@ export default async function AuthLayout({
 			<ThemeProvider attribute="class" defaultTheme="dark">
 				<HomePageNavbar showLinks={false} />
 				<AuthPagesProviders>
-					<div className="container relative grid h-svh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
+					<div
+						className="container relative grid h-svh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0 font-[DM_Sans]"
+						style={dmSans.style}
+					>
 						<div className="p-8">
 							<div className="mx-auto flex w-full flex-col justify-center space-y-2 py-8 sm:w-[480px] sm:p-8">
 								<div className="flex items-center justify-center">

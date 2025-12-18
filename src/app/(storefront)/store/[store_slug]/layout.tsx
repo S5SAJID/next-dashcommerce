@@ -5,6 +5,7 @@ import StoreFrontProviders from "@/providers/storefront/providers";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DM_Sans } from "next/font/google";
+import CustomCode from "@/components/storefront/organisms/custom-code";
 
 type Props = {
 	params: Promise<{ store_slug: string }>;
@@ -42,6 +43,8 @@ export default async function Layout({
 
 	return (
 		<div className={dmSans.className}>
+			<CustomCode customHeadCode={store.settings.customHeadCode} />
+
 			<StoreFrontProviders currency={store.currency}>
 				<StoreFrontNavbar store={store} />
 				<main className="mx-auto min-h-[70dvh] w-full max-w-7xl px-4 pt-2 pb-6 sm:px-6 lg:px-8">

@@ -127,7 +127,7 @@ export function SearchModal() {
 					<Search />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="overflow-hidden font-['PP_Mori']">
+			<DialogContent className="overflow-hidden font-['DM_Sans']">
 				<DialogHeader>
 					<DialogTitle>Search Products</DialogTitle>
 				</DialogHeader>

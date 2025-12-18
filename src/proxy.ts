@@ -12,8 +12,6 @@ export const proxy = (request: NextRequest) => {
 		);
 	}
 
-	const response = NextResponse.next();
-
 	// On the root domain, allow normal access
 	return NextResponse.next();
 };

@@ -21,10 +21,47 @@ export const updateStoreGeneralSettings = dashboardActionClient
 	.inputSchema(storeSettingsSchema.partial())
 	.action(async ({ ctx, parsedInput }) => {
 		checkPermission(ctx, "store:write");
-		await db
-			.update(StoreTable)
-			.set(parsedInput)
-			.where(eq(StoreTable.id, ctx.storeId));
+		console.log(parsedInput);
+		try {
+			// Separate customHeadCode from other fields
+			const { customHeadCode, ...directFields } = parsedInput;
 
-		return { success: true, message: "Changes saved successfully." };
+			// If customHeadCode is present, we need to update the settings field
+			if (customHeadCode !== undefined && customHeadCode !== "") {
+				// Get current store to merge with existing settings
+				const currentStore = await db.query.StoreTable.findFirst({
+					where: eq(StoreTable.id, ctx.storeId),
+				});
+
+				if (!currentStore) {
+					throw new Error("Store not found");
+				}
+
+				// Update with merged settings
+				await db
+					.update(StoreTable)
+					.set({
+						...directFields,
+						settings: {
+							...currentStore.settings,
+							customHeadCode,
+						},
+					})
+					.where(eq(StoreTable.id, ctx.storeId));
+			} else {
+				// No customHeadCode update, just update direct fields
+				await db
+					.update(StoreTable)
+					.set(directFields)
+					.where(eq(StoreTable.id, ctx.storeId));
+			}
+		} catch (error) {
+			console.error(error);
+		}
+
+		return {
+			success: true,
+			message: "Changes saved successfully.",
+			parsedInput,
+		};
 	});

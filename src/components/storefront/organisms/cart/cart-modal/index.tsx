@@ -39,7 +39,7 @@ export default function StoreFrontCartModel() {
 
 	return (
 		<Sheet onOpenChange={setOpen} open={open}>
-			<SheetContent className="w-full font-['PP_Mori'] md:w-3/4">
+			<SheetContent className="w-full !font-['DM_Sans'] md:w-3/4">
 				<SheetHeader>
 					<SheetTitle>My Cart</SheetTitle>
 				</SheetHeader>
