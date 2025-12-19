@@ -11,21 +11,15 @@ import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-clien
 import { revalidatePath } from "next/cache";
 import { checkPermission } from "@/lib/auth/check-permission";
 
+import {
+	getCachedDashboardProduct,
+	getCachedDashboardProducts,
+} from "./cached-actions";
+
 export const getDashboardProducts = dashboardActionClient.action(
 	async ({ ctx }) => {
 		checkPermission(ctx, "products:read");
-
-		const storeId = ctx.storeId;
-
-		const products = await db.query.ProductTable.findMany({
-			where: eq(ProductTable.store_id, storeId),
-			columns: {
-				store_id: false,
-			},
-			orderBy: [desc(ProductTable.updated_at)],
-		});
-
-		return products;
+		return await getCachedDashboardProducts(ctx.storeId);
 	},
 );
 
@@ -35,17 +29,7 @@ export const getDashboardProduct = dashboardActionClient
 		checkPermission(ctx, "products:read");
 		const slug = parsedInput.slug;
 
-		const product = await db.query.ProductTable.findFirst({
-			where: and(
-				eq(ProductTable.slug, slug),
-				eq(ProductTable.store_id, ctx.storeId),
-			),
-			columns: {
-				store_id: false,
-			},
-		});
-
-		return product;
+		return await getCachedDashboardProduct(ctx.storeId, slug);
 	});
 
 export const updateDashboardProduct = dashboardActionClient
@@ -73,6 +57,7 @@ export const updateDashboardProduct = dashboardActionClient
 				),
 			)
 			.returning({ id: ProductTable.id });
+		revalidatePath("/products");
 		return results[0];
 	});
 
@@ -119,7 +104,7 @@ export const createDashboardProduct = dashboardActionClient
 		if (!product[0].id) {
 			return { success: false, error: "Product not created." };
 		}
-
+		revalidatePath("/products");
 		return { success: true, message: "Product created" };
 	});
 
@@ -146,6 +131,6 @@ export const updateDashboardProductDetails = dashboardActionClient
 					eq(ProductTable.store_id, ctx.storeId),
 				),
 			);
-
+		revalidatePath("/products");
 		return { success: true, message: "Product updated" };
 	});

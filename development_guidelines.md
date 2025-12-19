@@ -1,0 +1,1 @@
+I acknowledge and will strictly adhere to the caching strategy constraints outlined. My approach will exclusively use the `use cache` directive, prioritize multi-tenancy security by passing `tenantId` as an argument, implement granular `cacheTag` invalidation, recommend appropriate cache lifetimes, and clearly distinguish between static and dynamic components using Suspense.
