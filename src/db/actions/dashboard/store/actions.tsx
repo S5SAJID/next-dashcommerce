@@ -2,8 +2,11 @@
 import { storeFormSchema } from "@/components/organisms/forms/auth/create-store/schema";
 import { db } from "@/db/db";
 import { StoreTable, user } from "@/db/schema";
-import { checkPermission } from "@/lib/auth/check-permission";
+import { auth } from "@/lib/auth/auth";
 import { noAuthdashboardActionClient } from "@/lib/safe-action-clients/dashboard-client/no-auth-dashboard-client";
+import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const createDashboardStore = noAuthdashboardActionClient
 	.inputSchema(storeFormSchema)
@@ -35,5 +38,14 @@ export const createDashboardStore = noAuthdashboardActionClient
 			})
 			.returning({ id: StoreTable.id });
 
-		await db.update(user).set({ storeId: store[0].id });
+		const session = await auth.api.getSession({ headers: await headers() });
+
+		if (!session) {
+			redirect("/signin");
+		}
+
+		await db
+			.update(user)
+			.set({ storeId: store[0].id })
+			.where(eq(user.id, session.user.id));
 	});
