@@ -142,7 +142,7 @@ export default function StoreSettingsForm() {
 										<code className="rounded bg-muted px-1 py-0.5 text-xs">
 											&lt;head&gt;
 										</code>{" "}
-										section. Allowed tags:{" "}
+										section for verifications purposes. Only tags:{" "}
 										{/* <code className="rounded bg-muted px-1 py-0.5">
 											&lt;script&gt;
 										</code> */}
@@ -153,11 +153,8 @@ export default function StoreSettingsForm() {
 										,{" "}
 										<code className="rounded bg-muted px-1 py-0.5">
 											&lt;link&gt;
-										</code>
-										,{" "}
-										<code className="rounded bg-muted px-1 py-0.5">
-											&lt;style&gt;
-										</code>
+										</code>{" "}
+										are allowed.
 									</>
 								</FormDescription>
 								<FormMessage />

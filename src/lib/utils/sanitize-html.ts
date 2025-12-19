@@ -1,10 +1,9 @@
-import DOMPurify from "isomorphic-dompurify";
-
+import sanitizeHtml from "sanitize-html";
 /**
  * Configuration for DOMPurify to allow safe HTML tags in custom head code.
  * Permits script, meta, link, and style tags while blocking XSS vectors.
  */
-const ALLOWED_TAGS = ["meta", "link", "style", "noscript"];
+const ALLOWED_TAGS = ["meta", "link"];
 
 const ALLOWED_ATTR = [
 	"src",
@@ -42,18 +41,12 @@ const ALLOWED_ATTR = [
  * ```
  */
 export function sanitizeHeadCode(html: string): string {
-	const sanitized = DOMPurify.sanitize(html, {
-		ALLOWED_TAGS,
-		ALLOWED_ATTR,
-		WHOLE_DOCUMENT: true,
-		FORCE_BODY: false,
-
-		// Ensures text inside <style> is not wiped out
-		KEEP_CONTENT: true,
+	const sanitized = sanitizeHtml(html, {
+		allowedTags: ALLOWED_TAGS,
+		allowedAttributes: {
+			"*": ALLOWED_ATTR,
+		},
 	});
 
-	// Since WHOLE_DOCUMENT returns a full <html>...</html> string,
-	// extract only what ended up inside the <head>
-	const headMatch = sanitized.match(/<head>([\s\S]*?)<\/head>/i);
-	return headMatch ? headMatch[1].trim() : "";
+	return sanitized.trim();
 }
