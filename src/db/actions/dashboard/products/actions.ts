@@ -10,6 +10,7 @@ import { product_details_form_schema } from "@/components/organisms/forms/dashbo
 import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-client";
 import { revalidatePath } from "next/cache";
 import { checkPermission } from "@/lib/auth/check-permission";
+import { applyCache, tags, updateCache } from "@/lib/cache/cache-manager";
 
 export const getDashboardProducts = dashboardActionClient.action(
 	async ({ ctx }) => {
@@ -32,6 +33,9 @@ export const getDashboardProducts = dashboardActionClient.action(
 export const getDashboardProduct = dashboardActionClient
 	.inputSchema(z.object({ slug: z.string() }))
 	.action(async ({ parsedInput, ctx }) => {
+		"use cache";
+		applyCache(tags.storeProducts(ctx.storeId));
+
 		checkPermission(ctx, "products:read");
 		const slug = parsedInput.slug;
 
@@ -100,8 +104,9 @@ export const deleteDashboardProduct = dashboardActionClient
 export const createDashboardProduct = dashboardActionClient
 	.inputSchema(product_form_schema)
 	.action(async ({ parsedInput, ctx }) => {
-		checkPermission(ctx, "products:write");
+		updateCache(tags.storeProducts(ctx.storeId));
 
+		checkPermission(ctx, "products:write");
 		const uploadResults = await uploadDashboardFiles(parsedInput.images, {
 			folder: `dashboard/products/${ctx.storeId}`,
 		});

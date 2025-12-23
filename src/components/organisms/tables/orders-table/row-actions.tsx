@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import type { DashboardOrder } from "./data";
+import Link from "next/link";
 
 export default function OrderTableRowActions({
 	order,
@@ -32,8 +33,10 @@ export default function OrderTableRowActions({
 						Copy product id
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
-					<DropdownMenuItem>View customer</DropdownMenuItem>
-					<DropdownMenuItem>View order details</DropdownMenuItem>
+					{/* <DropdownMenuItem>View customer</DropdownMenuItem> */}
+					<DropdownMenuItem>
+						<Link href={`orders/${order.orderId}`}>View order details</Link>
+					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
 		</div>

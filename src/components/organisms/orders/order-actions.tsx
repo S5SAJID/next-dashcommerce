@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { updateOrderStatus } from "@/db/actions/dashboard/orders/actions";
 import { useAction } from "next-safe-action/hooks";
-import { CheckCircle2, CircleX, Loader, Package, Truck } from "lucide-react";
+import { CircleX, Loader, Truck } from "lucide-react";
 import { toast } from "sonner";
 
 interface OrderActionsProps {

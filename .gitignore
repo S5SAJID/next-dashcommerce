@@ -48,3 +48,4 @@ public/uploads
 .vscode
 .trigger
 certificates
+test.ts

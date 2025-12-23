@@ -6,6 +6,8 @@ import { and, eq } from "drizzle-orm";
 import { createHash } from "node:crypto";
 import type { SecuredStoreContext } from ".";
 import { AVAILABLE_PERMISSIONS_TYPE } from "@/db/actions/dashboard/settings/api-keys/const";
+import { after } from "next/server";
+import { applyCache, tags } from "@/lib/cache/cache-manager";
 
 /**
  * Hash API key using SHA-256
@@ -14,13 +16,10 @@ export async function hashApiKey(apiKey: string): Promise<string> {
 	return createHash("sha256").update(apiKey).digest("hex");
 }
 
-/**
- * Validate API key and return store context
- */
-export async function getApiKeyContext(
-	apiKey: string,
-): Promise<SecuredStoreContext> {
+export async function getCachedApiKeyContext(apiKey: string) {
+	"use cache";
 	const keyHash = await hashApiKey(apiKey);
+	applyCache(tags.apiKey(keyHash));
 
 	const apiKeyRecord = await db.query.ApiKeyTable.findFirst({
 		where: and(
@@ -34,12 +33,26 @@ export async function getApiKeyContext(
 		throw new Error("Unauthorized: Invalid or inactive API key");
 	}
 
+	return apiKeyRecord;
+}
+
+/**
+ * Validate API key and return store context
+ */
+export async function getApiKeyContext(
+	apiKey: string,
+): Promise<SecuredStoreContext> {
+	const apiKeyRecord = await getCachedApiKeyContext(apiKey);
+
 	// Update last_used_at asynchronously (non-blocking)
-	db.update(ApiKeyTable)
-		.set({ last_used_at: new Date() })
-		.where(eq(ApiKeyTable.id, apiKeyRecord.id))
-		.then(() => {})
-		.catch(() => {});
+	after(async () => {
+		await db
+			.update(ApiKeyTable)
+			.set({ last_used_at: new Date() })
+			.where(eq(ApiKeyTable.id, apiKeyRecord.id))
+			.then(() => {})
+			.catch(() => {});
+	});
 
 	return {
 		storeId: apiKeyRecord.store_id,

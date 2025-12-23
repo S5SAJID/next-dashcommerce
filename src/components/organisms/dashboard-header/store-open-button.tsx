@@ -1,19 +1,24 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useDashboardStoreInfo } from "@/lib/context/dashboard/store-context-provider";
+import { getDashboadStoreDomain } from "@/db/actions/dashboard/settings/layout/actions";
+import { applyCache, tags } from "@/lib/cache/cache-manager";
 import { Store } from "lucide-react";
+import { cacheTag } from "next/cache";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
-export default function DashboardStoreOpenButton() {
-	const { store } = useDashboardStoreInfo();
+export default async function DashboardStoreOpenButton() {
+	"use cache: private";
+	const { data: store } = await getDashboadStoreDomain();
 	if (!store) {
-		return null;
+		notFound();
 	}
+
+	applyCache(tags.store(store.id));
 
 	const baseDomain = (
 		process.env.BETTER_AUTH_URL ?? "http://localhost:3000"

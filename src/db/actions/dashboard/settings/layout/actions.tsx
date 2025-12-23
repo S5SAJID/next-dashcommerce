@@ -3,8 +3,10 @@ import { storeLayoutSettingsSchema } from "@/components/organisms/forms/dashboar
 import { db } from "@/db/db";
 import { StoreTable } from "@/db/schema";
 import { checkPermission } from "@/lib/auth/check-permission";
+import { applyCache, tags } from "@/lib/cache/cache-manager";
 import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-client";
 import { eq } from "drizzle-orm";
+import { cacheTag } from "next/cache";
 
 export const updateLayoutSettings = dashboardActionClient
 	.inputSchema(storeLayoutSettingsSchema)
@@ -30,9 +32,28 @@ export const updateLayoutSettings = dashboardActionClient
 
 export const getDashboadStore = dashboardActionClient.action(
 	async ({ ctx }) => {
+		"use cache";
+		applyCache(tags.store(ctx.storeId));
 		checkPermission(ctx, "store:read");
 		const store = await db.query.StoreTable.findFirst({
 			where: eq(StoreTable.id, ctx.storeId),
+		});
+
+		return store;
+	},
+);
+
+export const getDashboadStoreDomain = dashboardActionClient.action(
+	async ({ ctx }) => {
+		"use cache";
+		applyCache(tags.store(ctx.storeId));
+		checkPermission(ctx, "store:read");
+		const store = await db.query.StoreTable.findFirst({
+			where: eq(StoreTable.id, ctx.storeId),
+			columns: {
+				domain: true,
+				id: true,
+			},
 		});
 
 		return store;

@@ -56,7 +56,7 @@ const SIDEBAR_LINKS: SidebarLinkType[] = [
 	},
 ];
 
-export default function AppSidebar({ user }: { user: User }) {
+export default function AppSidebar() {
 	const pathname = usePathname();
 
 	return (
@@ -111,7 +111,7 @@ export default function AppSidebar({ user }: { user: User }) {
 			</SidebarContent>
 			<SidebarFooter>
 				<SidebarMenuItem>
-					<NavUser user={user} />
+					<NavUser />
 				</SidebarMenuItem>
 			</SidebarFooter>
 		</Sidebar>

@@ -11,10 +11,14 @@ import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-clien
 import z from "zod";
 import { revalidatePath } from "next/cache";
 import { checkPermission } from "@/lib/auth/check-permission";
+import { applyCache, tags, updateCache } from "@/lib/cache/cache-manager";
 
 export const getDashboardOrders = dashboardActionClient.action(
 	async ({ ctx }) => {
+		"use cache";
+		applyCache(tags.storeOrders(ctx.storeId));
 		checkPermission(ctx, "orders:read");
+
 		const orders = await db
 			.select({
 				orderId: OrderTable.id,
@@ -45,6 +49,8 @@ export const getDashboardOrders = dashboardActionClient.action(
 export const getDashboardOrder = dashboardActionClient
 	.inputSchema(z.object({ orderId: z.string() }))
 	.action(async ({ ctx, parsedInput }) => {
+		"use cache";
+
 		checkPermission(ctx, "orders:read");
 		const result = await db
 			.select({
@@ -85,7 +91,14 @@ export const getDashboardOrder = dashboardActionClient
 			// Group by the unique order and customer to collapse all items into the aggregate
 			.groupBy(OrderTable.id, CustomerTable.id);
 
-		return result[0];
+		const order = result[0];
+
+		applyCache(
+			tags.storeOrders(ctx.storeId),
+			tags.storeOrder(ctx.storeId, order.order.id),
+		);
+
+		return order;
 	});
 
 export const updateOrderStatus = dashboardActionClient
@@ -112,6 +125,11 @@ export const updateOrderStatus = dashboardActionClient
 					eq(OrderTable.store_id, ctx.storeId),
 				),
 			);
+
+		updateCache(
+			tags.storeOrders(ctx.storeId),
+			tags.storeOrder(ctx.storeId, parsedInput.orderId),
+		);
 
 		revalidatePath(`/orders/${parsedInput.orderId}`);
 	});

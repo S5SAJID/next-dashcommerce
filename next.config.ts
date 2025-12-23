@@ -33,6 +33,7 @@ const nextConfig: NextConfig = {
 			}]
 		}];
 	},
+	cacheComponents: true,
 	experimental: {
 		typedEnv: true,
 		serverActions: {

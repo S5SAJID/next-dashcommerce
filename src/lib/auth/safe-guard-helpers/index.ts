@@ -9,6 +9,9 @@ import {
 	AVAILABLE_PERMISSIONS,
 	AVAILABLE_PERMISSIONS_TYPE,
 } from "@/db/actions/dashboard/settings/api-keys/const";
+import { getCurrentSession } from "@/db/actions/dashboard/common/auth-actions";
+import { cacheTag } from "next/cache";
+import { applyCache, tags } from "@/lib/cache/cache-manager";
 
 // type StoreRole = 'owner' | 'editor' | 'viewer';
 
@@ -27,7 +30,7 @@ export async function getSecuredStoreContext(
 	headers: ReadonlyHeaders,
 ): Promise<SecuredStoreContext> {
 	// Authentication Check
-	const session = await auth.api.getSession({ headers });
+	const session = await getCurrentSession();
 	if (session == null || session.user == null) {
 		throw new Error("Unauthorized: User not authenticated.");
 	}
@@ -41,11 +44,10 @@ export async function getSecuredStoreContext(
 	}
 
 	// TODO: implement caching or something
-	const storeMembership = await db.query.user.findFirst({
-		where: and(eq(user.id, currentUser.id), eq(user.storeId, storeId)),
-		columns: { id: true },
+	const storeMembership = getStoreMembershipDetails({
+		storeId,
+		userId: currentUser.id,
 	});
-
 	if (!storeMembership) {
 		throw new Error("Forbidden: User is not a owner of this store.");
 	}
@@ -57,4 +59,22 @@ export async function getSecuredStoreContext(
 	};
 
 	return context;
+}
+
+export async function getStoreMembershipDetails({
+	userId,
+	storeId,
+}: {
+	userId: string;
+	storeId: string;
+}) {
+	"use cache";
+	applyCache(tags.storeUser(storeId, userId));
+
+	const storeMembership = await db.query.user.findFirst({
+		where: and(eq(user.id, userId), eq(user.storeId, storeId)),
+		columns: { id: true },
+	});
+
+	return storeMembership;
 }
