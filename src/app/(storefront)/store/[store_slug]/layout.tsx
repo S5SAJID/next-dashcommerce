@@ -7,7 +7,7 @@ import StoreFrontNavbar from "@/components/storefront/organisms/navbar";
 import StoreFrontProviders from "@/providers/storefront/providers";
 import CustomCode from "@/components/storefront/organisms/custom-code";
 import { FullPageSpinner } from "@/components/storefront/molecules/full-page-spinner";
-import { applyCache, tags } from "@/lib/cache/cache-manager";
+import { Metadata } from "next";
 
 const dmSans = DM_Sans({ subsets: ["latin"] });
 
@@ -16,18 +16,30 @@ type Props = {
 	children: React.ReactNode;
 };
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+	const storeSlug = (await params).store_slug;
+	const store = await getPublicStoreFront(storeSlug);
+	if (!store) {
+		return notFound();
+	}
+
+	return {
+		title: {
+			template: `%s | ${store.name}`,
+			default: store.settings.seo.title,
+		},
+		description: store.settings.seo.description,
+		keywords: store.settings.seo.tags,
+		icons: [{ url: "/store-favico.svg" }],
+	};
+}
+
 // Internal component to handle async data fetching
 async function LayoutContent({ children, params }: Props) {
 	const { store_slug } = await params;
 	const store = await getPublicStoreFront(store_slug);
 
 	if (!store) return notFound();
-
-	applyCache(
-		tags.store(store.id),
-		tags.storeProducts(store.id),
-		tags.storeOrders(store.id),
-	);
 
 	return (
 		<StoreFrontProviders currency={store.currency}>

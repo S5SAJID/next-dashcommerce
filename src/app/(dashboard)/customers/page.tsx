@@ -6,6 +6,7 @@ import {
 import { DataTableSkeleton } from "@/components/molecules/data-table/data-table-skeleton";
 import { CustomersPrimaryButtons } from "@/components/molecules/primary-buttons/customers";
 import CustomersTable from "@/components/organisms/tables/customers-table";
+import { getDashboardCustomers } from "@/db/actions/dashboard/customers/actions";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
@@ -25,8 +26,14 @@ export default function CustomersPage() {
 				<CustomersPrimaryButtons />
 			</DashboardHeader>
 			<Suspense fallback={<DataTableSkeleton columnCount={6} />}>
-				<CustomersTable />
+				<CustomersTableWrapper />
 			</Suspense>
 		</DashboardLayout>
 	);
+}
+
+async function CustomersTableWrapper() {
+	const customers = await getDashboardCustomers();
+
+	return <CustomersTable customers={customers.data} />;
 }

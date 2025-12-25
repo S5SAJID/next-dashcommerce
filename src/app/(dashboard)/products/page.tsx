@@ -6,6 +6,7 @@ import {
 import { DataTableSkeleton } from "@/components/molecules/data-table/data-table-skeleton";
 import { ProductsPrimaryButtons } from "@/components/molecules/primary-buttons/products";
 import ProductsTable from "@/components/organisms/tables/products-table";
+import { getDashboardProducts } from "@/db/actions/dashboard/products/actions";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
@@ -25,8 +26,14 @@ export default async function ProductsPage() {
 				<ProductsPrimaryButtons />
 			</DashboardHeader>
 			<Suspense fallback={<DataTableSkeleton columnCount={5} />}>
-				<ProductsTable />
+				<ProductsTableWrapper />
 			</Suspense>
 		</DashboardLayout>
 	);
+}
+
+async function ProductsTableWrapper() {
+	const products = await getDashboardProducts();
+
+	return <ProductsTable products={products.data} />;
 }

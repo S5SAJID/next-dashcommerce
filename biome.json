@@ -14,7 +14,7 @@
       "react": "all",
       "next": "all"
     },
-    "includes": ["!src/**/ui/*.tsx", "!src/hooks/use-debounce-value.tsx"],
+    "includes": ["!src/components/ui/*.tsx", "!src/hooks/use-debounce-value.tsx"],
     "rules": {
       "recommended": true,
       "style": {

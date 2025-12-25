@@ -69,12 +69,12 @@ export async function getStoreMembershipDetails({
 	storeId: string;
 }) {
 	"use cache";
-	applyCache(tags.storeUser(storeId, userId));
 
 	const storeMembership = await db.query.user.findFirst({
 		where: and(eq(user.id, userId), eq(user.storeId, storeId)),
 		columns: { id: true },
 	});
 
+	applyCache(tags.storeUser(storeId, userId), tags.userSession(userId));
 	return storeMembership;
 }

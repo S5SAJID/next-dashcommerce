@@ -53,10 +53,13 @@ export function StoreCreateForm({
 	async function onSubmit(data: StoreFormSchema) {
 		await toastPromise(createDashboardStore(data), {
 			error: (error) => error.message || "Something went wrong!",
-			success: ({ serverError }) => {
+			success: ({ serverError, data }) => {
 				if (serverError) {
 					console.error(serverError);
 					return `Something went wrong.`;
+				}
+				if (!data?.success) {
+					return data?.message || "Something went wrong!";
 				}
 				window.location.replace("/products");
 				form.reset();

@@ -8,6 +8,7 @@ import { OrdersPrimaryButtons } from "@/components/molecules/primary-buttons/ord
 import OrdersTable from "@/components/organisms/tables/orders-table";
 import { Suspense } from "react";
 import { DataTableSkeleton } from "@/components/molecules/data-table/data-table-skeleton";
+import { getDashboardOrders } from "@/db/actions/dashboard/orders/actions";
 
 export const metadata: Metadata = {
 	title: "Orders",
@@ -25,8 +26,14 @@ export default function OrdersPage() {
 				<OrdersPrimaryButtons />
 			</DashboardHeader>
 			<Suspense fallback={<DataTableSkeleton columnCount={6} />}>
-				<OrdersTable />
+				<OrdersTableWrapper />
 			</Suspense>
 		</DashboardLayout>
 	);
+}
+
+async function OrdersTableWrapper() {
+	const orders = await getDashboardOrders();
+
+	return <OrdersTable orders={orders.data} />;
 }

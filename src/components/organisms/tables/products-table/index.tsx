@@ -1,11 +1,14 @@
+"use client";
 import DataTable from "@/components/molecules/data-table";
 import { product_columns } from "./columns";
 import type { DataTableToolbarFilters } from "@/components/molecules/data-table/data-table-toolbar";
-import { getDashboardProducts } from "@/db/actions/dashboard/products/actions";
+import { DashboardProduct } from "@/db/actions/dashboard/products/types";
 
-export default async function ProductsTable() {
-	const products = await getDashboardProducts();
-
+export default function ProductsTable({
+	products = [],
+}: {
+	products?: DashboardProduct[];
+}) {
 	const filters: DataTableToolbarFilters[] = [
 		{
 			columnName: "status",
@@ -21,7 +24,7 @@ export default async function ProductsTable() {
 		<div>
 			<DataTable
 				columns={product_columns}
-				data={products.data}
+				data={products}
 				toolbar={{
 					searchColumn: "name",
 					searchPlaceholder: "Filter products...",

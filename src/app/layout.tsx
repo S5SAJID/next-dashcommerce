@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import "./globals.css";
 
 export default function RootLayout({
@@ -8,7 +7,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning={true}>
-			<body className={`font-sans antialiased`}>{children}</body>
+			<body className={`font-sans antialiased min-h-dvh`}>{children}</body>
 		</html>
 	);
 }

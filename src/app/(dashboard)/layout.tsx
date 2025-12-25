@@ -28,11 +28,11 @@ export default async function Layout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className={`${GeistSans.className}`}>
+		<div className={`${GeistSans.className} w-full h-full`}>
 			<DashboardProviders>
 				<Suspense
 					fallback={
-						<div className="w-full h-full flex gap-1 items-center justify-center">
+						<div className="min-w-full min-h-full flex gap-1 items-center justify-center">
 							<Spinner /> <span>Loading...</span>
 						</div>
 					}

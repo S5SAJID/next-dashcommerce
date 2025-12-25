@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/lib/auth/auth";
+import { applyCache, tags } from "@/lib/cache/cache-manager";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -22,6 +23,8 @@ async function getCachedAuthSession(cookieHeader: string) {
 	if (!session) {
 		redirect("/signin");
 	}
+
+	applyCache(tags.userSession(session.user.id));
 
 	return session;
 }
