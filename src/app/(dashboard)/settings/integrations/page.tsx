@@ -6,31 +6,15 @@ import { SubSettingsPageLayout } from "@/components/layout/dashboard/settings/la
 import { Separator } from "@/components/ui/separator";
 import type { Metadata } from "next";
 import { IntegrationListItem } from "@/components/organisms/dashboard/integrations/integration-list-item";
+import { Suspense } from "react";
+import type { InferSelectModel } from "drizzle-orm";
+import { IntegrationDefinitionTable } from "@/db/schema";
 
 export const metadata: Metadata = {
 	title: "Integrations",
 };
 
 export default async function IntegrationsPage() {
-	const result = await getDashboardIntegrations();
-
-	if (!result.data) {
-		return (
-			<SubSettingsPageLayout
-				desc="Connect your store to external services and automate workflows"
-				title="Integrations"
-			>
-				<div className="text-center py-12">
-					<p className="text-destructive">Failed to load integrations</p>
-				</div>
-			</SubSettingsPageLayout>
-		);
-	}
-
-	const integrations = result.data;
-	const globalIntegrations = integrations.filter((i) => i.is_global);
-	const customIntegrations = integrations.filter((i) => !i.is_global);
-
 	return (
 		<SubSettingsPageLayout
 			desc="Connect your store to external services and automate workflows"
@@ -52,50 +36,78 @@ export default async function IntegrationsPage() {
 					</CreateCustomIntegrationDialog>
 				</div>
 
-				{globalIntegrations.length > 0 && (
+				<Suspense fallback={null}>
+					<IntegrationsPageInner />
+				</Suspense>
+			</div>
+		</SubSettingsPageLayout>
+	);
+}
+
+export async function IntegrationsPageInner() {
+	const result = await getDashboardIntegrations();
+
+	if (!result.data) {
+		return (
+			<SubSettingsPageLayout
+				desc="Connect your store to external services and automate workflows"
+				title="Integrations"
+			>
+				<div className="text-center py-12">
+					<p className="text-destructive">Failed to load integrations</p>
+				</div>
+			</SubSettingsPageLayout>
+		);
+	}
+
+	const integrations = result.data;
+	const globalIntegrations = integrations.filter((i) => i.is_global);
+	const customIntegrations = integrations.filter((i) => !i.is_global);
+	return (
+		<>
+			{globalIntegrations.length > 0 && (
+				<div className="space-y-3">
+					{globalIntegrations.map((integration, index) => (
+						<div key={integration.id}>
+							<IntegrationListItem integration={integration} />
+							{index < globalIntegrations.length - 1 && (
+								<Separator className="mt-3" />
+							)}
+						</div>
+					))}
+				</div>
+			)}
+
+			{customIntegrations.length > 0 && (
+				<div className="space-y-4">
+					<Separator />
+					<div>
+						<h4 className="font-medium">Custom Integrations</h4>
+						<p className="text-sm text-muted-foreground">
+							Integrations created by you for this store
+						</p>
+					</div>
 					<div className="space-y-3">
-						{globalIntegrations.map((integration, index) => (
+						{customIntegrations.map((integration, index) => (
 							<div key={integration.id}>
-								<IntegrationListItem integration={integration} />
-								{index < globalIntegrations.length - 1 && (
+								<IntegrationListItem integration={integration} isCustom />
+								{index < customIntegrations.length - 1 && (
 									<Separator className="mt-3" />
 								)}
 							</div>
 						))}
 					</div>
-				)}
+				</div>
+			)}
 
-				{customIntegrations.length > 0 && (
-					<div className="space-y-4">
-						<Separator />
-						<div>
-							<h4 className="font-medium">Custom Integrations</h4>
-							<p className="text-sm text-muted-foreground">
-								Integrations created by you for this store
-							</p>
-						</div>
-						<div className="space-y-3">
-							{customIntegrations.map((integration, index) => (
-								<div key={integration.id}>
-									<IntegrationListItem integration={integration} isCustom />
-									{index < customIntegrations.length - 1 && (
-										<Separator className="mt-3" />
-									)}
-								</div>
-							))}
-						</div>
-					</div>
-				)}
-
-				{integrations.length === 0 && (
-					<div className="text-center py-12 border rounded-lg border-dashed">
-						<p className="text-muted-foreground">No integrations available</p>
-						<p className="text-sm text-muted-foreground mt-2">
-							Create a custom integration to get started
-						</p>
-					</div>
-				)}
-			</div>
-		</SubSettingsPageLayout>
+			{integrations.length === 0 && (
+				<div className="text-center py-12 border rounded-lg border-dashed">
+					<p className="text-muted-foreground">No integrations available</p>
+					<p className="text-sm text-muted-foreground mt-2">
+						Create a custom integration to get started
+					</p>
+				</div>
+			)}
+		</>
 	);
 }

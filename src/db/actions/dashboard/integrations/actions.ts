@@ -12,6 +12,7 @@ import { validateIntegrationEndpoint } from "@/lib/integrations/validate-endpoin
 import { revalidatePath } from "next/cache";
 import { ConfigSchemaField } from "@/db/schema/tables/integrations";
 import { checkPermission } from "@/lib/auth/check-permission";
+import { applyCache, tags } from "@/lib/cache/cache-manager";
 
 /**
  * Get all available integrations for the current store
@@ -19,6 +20,9 @@ import { checkPermission } from "@/lib/auth/check-permission";
  */
 export const getDashboardIntegrations = dashboardActionClient.action(
 	async ({ ctx }) => {
+		"use cache";
+
+		applyCache(tags.storeIntegrations(ctx.storeId));
 		checkPermission(ctx, "integrations:read");
 
 		const integrations = await db.query.IntegrationDefinitionTable.findMany({

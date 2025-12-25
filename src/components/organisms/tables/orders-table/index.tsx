@@ -1,16 +1,11 @@
-"use client";
 import DataTable from "@/components/molecules/data-table";
 import { order_columns } from "./columns";
 import type { DashboardOrder } from "./data";
 import { DashboardUsable } from "@/lib/shared/types/dashboard-types";
-import { use } from "react";
+import { getDashboardOrders } from "@/db/actions/dashboard/orders/actions";
 
-type OrdersTableProps = {
-	ordersDataPromise: DashboardUsable<DashboardOrder[]>;
-};
-
-export default function OrdersTable({ ordersDataPromise }: OrdersTableProps) {
-	const orders = use(ordersDataPromise);
+export default async function OrdersTable() {
+	const orders = await getDashboardOrders();
 
 	return (
 		<DataTable

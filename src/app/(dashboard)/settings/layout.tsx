@@ -1,7 +1,9 @@
 import { DashboardLayout } from "@/components/layout/dashboard/layout";
 import SettingsSidebar from "@/components/organisms/app-sidebar/settings-sidebar";
 import { Separator } from "@/components/ui/separator";
+import { Spinner } from "@/components/ui/spinner";
 import { Store, Layout, Puzzle, CodeSquareIcon } from "lucide-react";
+import { Suspense } from "react";
 
 const settingsSidebarNavItems = [
 	{
@@ -46,7 +48,17 @@ export default function SettingsPageLayout({
 				<aside className="top-0 lg:sticky lg:w-1/5">
 					<SettingsSidebar items={settingsSidebarNavItems} />
 				</aside>
-				<div className="flex w-full overflow-y-hidden p-1">{children}</div>
+				<div className="flex w-full overflow-y-hidden p-1">
+					<Suspense
+						fallback={
+							<div className="w-full h-full flex gap-1 items-center justify-center">
+								<Spinner /> <span>Loading...</span>
+							</div>
+						}
+					>
+						{children}
+					</Suspense>
+				</div>
 			</div>
 		</DashboardLayout>
 	);

@@ -3,12 +3,16 @@ import { storeSettingsSchema } from "@/components/organisms/forms/dashboard/sett
 import { db } from "@/db/db";
 import { StoreTable } from "@/db/schema";
 import { checkPermission } from "@/lib/auth/check-permission";
+import { applyCache, tags, updateCache } from "@/lib/cache/cache-manager";
 import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-client";
 import { eq } from "drizzle-orm";
 
 export const getDashboardStore = dashboardActionClient.action(
 	async ({ ctx }) => {
+		"use cache";
+		applyCache(tags.store(ctx.storeId));
 		checkPermission(ctx, "store:read");
+
 		const store = await db.query.StoreTable.findFirst({
 			where: eq(StoreTable.id, ctx.storeId),
 		});
@@ -20,8 +24,9 @@ export const getDashboardStore = dashboardActionClient.action(
 export const updateStoreGeneralSettings = dashboardActionClient
 	.inputSchema(storeSettingsSchema.partial())
 	.action(async ({ ctx, parsedInput }) => {
+		updateCache(tags.store(ctx.storeId));
 		checkPermission(ctx, "store:write");
-		console.log(parsedInput);
+
 		try {
 			// Separate customHeadCode from other fields
 			const { customHeadCode, ...directFields } = parsedInput;

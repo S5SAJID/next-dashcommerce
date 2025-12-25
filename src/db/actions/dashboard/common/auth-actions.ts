@@ -1,21 +1,22 @@
 "use server";
 
 import { auth } from "@/lib/auth/auth";
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function getCurrentSession() {
 	"use cache: private";
-
-	const session = getCachedAuthSession(await headers());
+	const cookieStore = await cookies();
+	const cookiesString = cookieStore.toString();
+	const session = getCachedAuthSession(cookiesString);
 
 	return session;
 }
 
-async function getCachedAuthSession(headers: Headers) {
+async function getCachedAuthSession(cookieHeader: string) {
 	"use cache";
 	const session = await auth.api.getSession({
-		headers: headers,
+		headers: { Cookie: cookieHeader },
 	});
 
 	if (!session) {

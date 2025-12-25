@@ -9,7 +9,7 @@ export default function HomePageNavbar({
 	showLinks?: boolean;
 }) {
 	return (
-		<nav className="fixed top-0 w-full z-50 border-b border-border/40 backdrop-blur-md bg-background/80 transition-colors duration-300">
+		<nav className="fixed top-0 w-full z-50 border-b font-['DM_Sans'] border-border/40 backdrop-blur-md bg-background/80 transition-colors duration-300">
 			<div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 				<div className="flex items-center">
 					<div className="w-8 h-8 flex items-center justify-center">

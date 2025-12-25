@@ -5,9 +5,12 @@ import { and, desc, eq, sql } from "drizzle-orm";
 import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-client";
 import z from "zod";
 import { checkPermission } from "@/lib/auth/check-permission";
+import { applyCache, tags } from "@/lib/cache/cache-manager";
 
 export const getDashboardCustomers = dashboardActionClient.action(
 	async ({ ctx }) => {
+		"use cache";
+		applyCache(tags.storeCustomers(ctx.storeId));
 		checkPermission(ctx, "customers:read");
 
 		const customers = await db
@@ -33,6 +36,8 @@ export const getDashboardCustomers = dashboardActionClient.action(
 export const getDashboardCustomer = dashboardActionClient
 	.inputSchema(z.object({ customerId: z.string() }))
 	.action(async ({ parsedInput, ctx }) => {
+		"use cache";
+		applyCache(tags.storeCustomer(ctx.storeId, parsedInput.customerId));
 		checkPermission(ctx, "customers:read");
 
 		const customer = await db

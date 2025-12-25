@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Usable, use, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	AlertDialog,
@@ -24,6 +24,7 @@ import { Copy, Plus, Trash2, Key } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { AVAILABLE_PERMISSIONS } from "@/db/actions/dashboard/settings/api-keys/const";
+import type { SafeActionResult } from "next-safe-action";
 
 type ApiKey = {
 	id: string;
@@ -35,8 +36,28 @@ type ApiKey = {
 	created_at: Date;
 };
 
-export function ApiKeysManager({ initialKeys }: { initialKeys: ApiKey[] }) {
-	const [keys, setKeys] = useState<ApiKey[]>(initialKeys);
+type listKeysPromiseType = Promise<
+	SafeActionResult<
+		string,
+		undefined,
+		| {
+				formErrors: string[];
+				fieldErrors: {};
+		  }
+		| undefined,
+		ApiKey[],
+		object
+	>
+>;
+
+export function ApiKeysManager({
+	listKeysPromise,
+}: {
+	listKeysPromise: listKeysPromiseType;
+}) {
+	const initialKeys = use(listKeysPromise);
+
+	const [keys, setKeys] = useState<ApiKey[]>(initialKeys.data ?? []);
 	const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 	const [newKeyName, setNewKeyName] = useState("");
 	const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);

@@ -8,6 +8,7 @@ import { generateApiKey } from "@/lib/auth/generate-api-key";
 import { hashApiKey } from "@/lib/auth/safe-guard-helpers/get-api-key-context";
 import { and, eq } from "drizzle-orm";
 import { AVAILABLE_PERMISSIONS } from "./const";
+import { applyCache, tags, updateCache } from "@/lib/cache/cache-manager";
 
 /**
  * Create a new API key for the authenticated store
@@ -52,6 +53,9 @@ export const createApiKey = dashboardActionClient
  * List all API keys for the authenticated store
  */
 export const listApiKeys = dashboardActionClient.action(async ({ ctx }) => {
+	"use cache";
+
+	applyCache(tags.storeApiKeys(ctx.storeId));
 	if (ctx.authType !== "session") {
 		throw new Error("Forbidden: API keys cannot list other API keys");
 	}
@@ -73,7 +77,7 @@ export const revokeApiKey = dashboardActionClient
 			throw new Error("Forbidden: API keys cannot revoke other API keys");
 		}
 
-		await db
+		const revokedApiKey = await db
 			.update(ApiKeyTable)
 			.set({ is_active: false })
 			.where(
@@ -81,6 +85,12 @@ export const revokeApiKey = dashboardActionClient
 					eq(ApiKeyTable.id, parsedInput.id),
 					eq(ApiKeyTable.store_id, ctx.storeId),
 				),
-			);
+			)
+			.returning({ key_hash: ApiKeyTable.key_hash });
+
+		updateCache(
+			tags.storeApiKeys(ctx.storeId),
+			tags.storeApiKey(ctx.storeId, revokedApiKey[0].key_hash),
+		);
 		return { success: true };
 	});

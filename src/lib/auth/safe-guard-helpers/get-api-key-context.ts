@@ -19,7 +19,6 @@ export async function hashApiKey(apiKey: string): Promise<string> {
 export async function getCachedApiKeyContext(apiKey: string) {
 	"use cache";
 	const keyHash = await hashApiKey(apiKey);
-	applyCache(tags.apiKey(keyHash));
 
 	const apiKeyRecord = await db.query.ApiKeyTable.findFirst({
 		where: and(
@@ -33,6 +32,7 @@ export async function getCachedApiKeyContext(apiKey: string) {
 		throw new Error("Unauthorized: Invalid or inactive API key");
 	}
 
+	applyCache(tags.storeApiKey(apiKeyRecord.store_id, keyHash));
 	return apiKeyRecord;
 }
 

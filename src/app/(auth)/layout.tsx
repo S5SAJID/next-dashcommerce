@@ -32,11 +32,6 @@ export default async function AuthLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const session = await auth.api.getSession({ headers: await headers() });
-
-	if (session != null && session.user.storeId != null) {
-		redirect("/products");
-	}
 	return (
 		<>
 			<ThemeProvider attribute="class" defaultTheme="dark">

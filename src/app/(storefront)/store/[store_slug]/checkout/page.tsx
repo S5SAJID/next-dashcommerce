@@ -1,6 +1,8 @@
 import StoreFrontCheckoutForm from "@/components/storefront/organisms/forms/checkout";
 import type { Metadata } from "next";
 import StoreFrontCartSummery from "@/components/storefront/organisms/cart/cart-summery";
+import { Suspense } from "react";
+import { FullPageSpinner } from "@/components/storefront/molecules/full-page-spinner";
 
 export const metadata: Metadata = {
 	title: "Checkout",
@@ -18,10 +20,14 @@ export default function CheckoutPage() {
 				<p className="mt-2 mb-4 text-muted-foreground text-sm">
 					Please fill in your details to complete the purchase.
 				</p>
-				<StoreFrontCheckoutForm />
+				<Suspense fallback={<FullPageSpinner />}>
+					<StoreFrontCheckoutForm />
+				</Suspense>
 			</div>
 			{/* Cart Preview */}
-			<StoreFrontCartSummery />
+			<Suspense fallback={<FullPageSpinner />}>
+				<StoreFrontCartSummery />
+			</Suspense>
 		</div>
 	);
 }

@@ -30,26 +30,26 @@ export default async function Layout({
 	return (
 		<div className={`${GeistSans.className}`}>
 			<DashboardProviders>
-				<SidebarProvider>
-					<AppSidebar />
-					<SidebarInset className="@container/content">
-						<main className="h-full w-full flex-1">
-							<Suspense
-								fallback={
-									<div className="w-full h-full flex gap-1 items-center justify-center">
-										<Spinner /> <span>Loading...</span>
-									</div>
-								}
-							>
+				<Suspense
+					fallback={
+						<div className="w-full h-full flex gap-1 items-center justify-center">
+							<Spinner /> <span>Loading...</span>
+						</div>
+					}
+				>
+					<SidebarProvider>
+						<AppSidebar />
+						<SidebarInset className="@container/content">
+							<main className="h-full w-full flex-1">
 								<SiteHeader />
 								<DashboardCacheStoreInfoProvider>
 									<Main>{children}</Main>
 								</DashboardCacheStoreInfoProvider>
-							</Suspense>
-							<Toaster />
-						</main>
-					</SidebarInset>
-				</SidebarProvider>
+								<Toaster />
+							</main>
+						</SidebarInset>
+					</SidebarProvider>
+				</Suspense>
 			</DashboardProviders>
 		</div>
 	);

@@ -3,12 +3,16 @@ import { ProductTable, StoreTable } from "@/db/schema";
 import { and, desc, eq, exists } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { getPublicStoreFront } from "../../store/public/actionts";
+import { applyCache, tags } from "@/lib/cache/cache-manager";
 
 export async function getPublicStorefrontProducts(domain: string) {
+	"use cache";
 	const store = await getPublicStoreFront(domain);
 	if (!store) {
 		return notFound();
 	}
+
+	applyCache(tags.storeProducts(store.id));
 
 	const products = await db
 		.select()
@@ -24,6 +28,7 @@ export async function getPublicStorefrontProducts(domain: string) {
 }
 
 export async function getPublicStorefrontProduct(domain: string, slug: string) {
+	"use cache";
 	// Use a relational query with an `exists` subquery for filtering
 	const product = await db.query.ProductTable.findFirst({
 		where: (productTable) =>
@@ -47,5 +52,11 @@ export async function getPublicStorefrontProduct(domain: string, slug: string) {
 		},
 	});
 
+	if (!product) return undefined;
+
+	applyCache(
+		tags.storeProducts(product.store.id),
+		tags.storeProduct(product.store.id, product.id),
+	);
 	return product;
 }

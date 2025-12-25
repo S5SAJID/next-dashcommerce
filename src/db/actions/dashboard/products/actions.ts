@@ -14,6 +14,8 @@ import { applyCache, tags, updateCache } from "@/lib/cache/cache-manager";
 
 export const getDashboardProducts = dashboardActionClient.action(
 	async ({ ctx }) => {
+		"use cache";
+		applyCache(tags.storeProducts(ctx.storeId));
 		checkPermission(ctx, "products:read");
 
 		const storeId = ctx.storeId;
@@ -34,7 +36,6 @@ export const getDashboardProduct = dashboardActionClient
 	.inputSchema(z.object({ slug: z.string() }))
 	.action(async ({ parsedInput, ctx }) => {
 		"use cache";
-		applyCache(tags.storeProducts(ctx.storeId));
 
 		checkPermission(ctx, "products:read");
 		const slug = parsedInput.slug;
@@ -48,6 +49,12 @@ export const getDashboardProduct = dashboardActionClient
 				store_id: false,
 			},
 		});
+
+		if (!product) {
+			return null;
+		}
+
+		applyCache(tags.storeProduct(ctx.storeId, product.id));
 
 		return product;
 	});
@@ -77,7 +84,14 @@ export const updateDashboardProduct = dashboardActionClient
 				),
 			)
 			.returning({ id: ProductTable.id });
-		return results[0];
+
+		const updatedProduct = results[0];
+
+		updateCache(
+			tags.storeProducts(ctx.storeId),
+			tags.storeProduct(ctx.storeId, updatedProduct.id),
+		);
+		return updatedProduct;
 	});
 
 export const deleteDashboardProduct = dashboardActionClient
@@ -95,6 +109,11 @@ export const deleteDashboardProduct = dashboardActionClient
 					),
 				);
 			revalidatePath("/products");
+
+			updateCache(
+				tags.storeProducts(ctx.storeId),
+				tags.storeProduct(ctx.storeId, parsedInput.id),
+			);
 			return { success: true, message: "Product deleted successfully" };
 		} catch (_error: unknown) {
 			return { success: false, error: "Error deleting product" };
@@ -151,6 +170,11 @@ export const updateDashboardProductDetails = dashboardActionClient
 					eq(ProductTable.store_id, ctx.storeId),
 				),
 			);
+
+		updateCache(
+			tags.storeProducts(ctx.storeId),
+			tags.storeProduct(ctx.storeId, parsedInput.id),
+		);
 
 		return { success: true, message: "Product updated" };
 	});

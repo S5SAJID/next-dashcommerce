@@ -24,6 +24,17 @@ export const proxy = async (request: NextRequest) => {
 		}
 	}
 
+	// Redirect authenticated users with storeId away from auth routes
+	if (AUTH_ROUTES.some((route) => pathname.startsWith(route))) {
+		const session = await auth.api.getSession({
+			headers: await headers(),
+		});
+
+		if (session != null && session.user.storeId != null) {
+			return NextResponse.redirect(new URL("/products", request.url));
+		}
+	}
+
 	// On the root domain, allow normal access
 	return NextResponse.next();
 };
@@ -32,6 +43,12 @@ export const proxy = async (request: NextRequest) => {
 // const productionMatcher = "/((?!api|_next|[\\w-]+\\.\\w+).*)"; // Excludes /api routes
 
 const PROTECTED_ROUTES = ["/products", "/customers", "/orders", "/settings"];
+const AUTH_ROUTES = [
+	"/signin",
+	"/signup",
+	"/reset-password",
+	"/forgot-password",
+];
 
 export const config = {
 	matcher: [

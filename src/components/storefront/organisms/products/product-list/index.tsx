@@ -31,7 +31,7 @@ export default function StoreFrontProductList({
 
 	const [viewMode] = useQueryStates({
 		view: parseAsStringEnum(["default", "dense"] as const).withDefault(
-			"default",
+			dense ? "dense" : "default",
 		),
 	});
 

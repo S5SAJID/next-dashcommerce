@@ -50,7 +50,6 @@ export const getDashboardOrder = dashboardActionClient
 	.inputSchema(z.object({ orderId: z.string() }))
 	.action(async ({ ctx, parsedInput }) => {
 		"use cache";
-
 		checkPermission(ctx, "orders:read");
 		const result = await db
 			.select({

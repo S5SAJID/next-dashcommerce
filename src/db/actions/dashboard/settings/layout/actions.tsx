@@ -3,7 +3,7 @@ import { storeLayoutSettingsSchema } from "@/components/organisms/forms/dashboar
 import { db } from "@/db/db";
 import { StoreTable } from "@/db/schema";
 import { checkPermission } from "@/lib/auth/check-permission";
-import { applyCache, tags } from "@/lib/cache/cache-manager";
+import { applyCache, tags, updateCache } from "@/lib/cache/cache-manager";
 import { dashboardActionClient } from "@/lib/safe-action-clients/dashboard-client";
 import { eq } from "drizzle-orm";
 import { cacheTag } from "next/cache";
@@ -26,6 +26,8 @@ export const updateLayoutSettings = dashboardActionClient
 			.update(StoreTable)
 			.set({ settings })
 			.where(eq(StoreTable.id, ctx.storeId));
+
+		updateCache(tags.store(ctx.storeId));
 
 		return { success: true, message: "Changes saved successfully." };
 	});

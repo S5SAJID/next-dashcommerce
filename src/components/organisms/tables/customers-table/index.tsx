@@ -1,16 +1,9 @@
-"use client";
 import DataTable from "@/components/molecules/data-table";
 import { customers_columns } from "./columns";
-import type { CustomersType } from "./columns";
-import { DashboardUsable } from "@/lib/shared/types/dashboard-types";
-import { use } from "react";
+import { getDashboardCustomers } from "@/db/actions/dashboard/customers/actions";
 
-export default function CustomersTable({
-	customersDataPromise,
-}: {
-	customersDataPromise: DashboardUsable<CustomersType[]>;
-}) {
-	const customers = use(customersDataPromise);
+export default async function CustomersTable() {
+	const customers = await getDashboardCustomers();
 
 	return (
 		<DataTable

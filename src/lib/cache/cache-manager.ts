@@ -6,15 +6,34 @@ import { cacheLife, cacheTag, updateTag } from "next/cache";
  */
 export const CacheTags = {
 	store: (storeId: string) => `store-${storeId}`,
+
 	storeProducts: (storeId: string) => `store-${storeId}-products`,
 	storeProduct: (storeId: string, productId: string) =>
 		`store-${storeId}-product-${productId}`,
+
 	storeOrders: (storeId: string) => `store-${storeId}-orders`,
 	storeOrder: (storeId: string, orderId: string) =>
 		`store-${storeId}-order-${orderId}`,
-	userSession: (userId: string) => `user-${userId}-session`,
 
-	apiKey: (apiKeyHash: string) => `api-key-${apiKeyHash}`,
+	storeCustomers: (storeId: string) => `store-${storeId}-customers`,
+	storeCustomer: (storeId: string, customerId: string) =>
+		`store-${storeId}-customer-${customerId}`,
+
+	storeIntegrations: (storeId: string) => `store-${storeId}-integrations`,
+	storeIntegration: (storeId: string, integrationId: string) =>
+		`store-${storeId}-integration-${integrationId}`,
+	storeIntegrationInstallation: (
+		storeId: string,
+		integrationId: string,
+		installationId: string,
+	) =>
+		`store-${storeId}-integration-${integrationId}-installation-${installationId}`,
+
+	storeApiKeys: (storeId: string) => `store-${storeId}-api-keys`,
+	storeApiKey: (storeId: string, apiKeyHash: string) =>
+		`store-${storeId}-api-key-${apiKeyHash}`,
+
+	userSession: (userId: string) => `user-${userId}-session`,
 	storeUser: (storeId: string, userId: string) =>
 		`store-${storeId}-user-${userId}`,
 } as const;
@@ -63,6 +82,7 @@ export function applyCache(...inputs: TagResult<CacheTagKey>[]) {
 	});
 
 	cacheTag(...generatedStrings);
+	cacheLife("max"); // if cacheLife is called multiple times in the same scope, the last one called takes precedence.
 
 	return {
 		life: (profile: CacheTimeUnits) => {

@@ -1,8 +1,11 @@
 import { StoreCreateForm } from "@/components/organisms/forms/auth/create-store";
+import { FullPageSpinner } from "@/components/storefront/molecules/full-page-spinner";
 import { auth } from "@/lib/auth/auth";
+import { User } from "better-auth";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
 	title: "Create your store",
@@ -10,6 +13,14 @@ export const metadata: Metadata = {
 };
 
 export default async function NewStorePage() {
+	return (
+		<Suspense fallback={<FullPageSpinner />}>
+			<NewStorePageInner />
+		</Suspense>
+	);
+}
+
+export async function NewStorePageInner() {
 	const session = await auth.api.getSession({ headers: await headers() });
 	if (!session) {
 		redirect("/signin");

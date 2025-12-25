@@ -16,6 +16,8 @@ import { notFound } from "next/navigation";
 import OrderCustomerCard from "@/components/organisms/orders/order-customer";
 import OrderShippingCard from "@/components/organisms/orders/order-shipping";
 import OrderActions from "@/components/organisms/orders/order-actions";
+import { Suspense } from "react";
+import { FullPageSpinner } from "@/components/storefront/molecules/full-page-spinner";
 
 export const metadata: Metadata = {
 	title: "Order Details",
@@ -25,13 +27,27 @@ export const metadata: Metadata = {
 export default async function OrderDetailsPage({
 	params,
 }: PageProps<"/orders/[slug]">) {
+	return (
+		<FormPageLayout>
+			<Suspense fallback={<FullPageSpinner />}>
+				<OrderDetailsPageInner params={params} />
+			</Suspense>
+		</FormPageLayout>
+	);
+}
+
+export async function OrderDetailsPageInner({
+	params,
+}: {
+	params: Promise<{ slug: string }>;
+}) {
 	const orderSlug = (await params).slug;
+
 	const { data } = await getDashboardOrder({ orderId: orderSlug });
 	if (!data) {
 		notFound();
 	}
 	const { customer, items, order } = data;
-
 	return (
 		<FormPageLayout>
 			<FormPageHeader>
