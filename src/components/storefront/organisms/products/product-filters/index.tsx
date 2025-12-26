@@ -1,6 +1,5 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
 import {
 	Select,
 	SelectContent,
@@ -11,6 +10,11 @@ import {
 import { useQueryStates, parseAsString } from "nuqs";
 import { SearchIcon } from "lucide-react";
 import ViewToggle from "@/components/storefront/molecules/view-toggle";
+import {
+	InputGroup,
+	InputGroupAddon,
+	InputGroupInput,
+} from "@/components/ui/input-group";
 
 type ProductFiltersProps = {
 	totalCount: number;
@@ -35,16 +39,17 @@ export default function ProductFilters({ totalCount }: ProductFiltersProps) {
 
 			<div className="flex items-center gap-3">
 				{/* Search */}
-				<div className="relative">
-					<SearchIcon className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-					<Input
-						className="h-9 w-[200px] pl-9"
+				<InputGroup className="max-w-[200px]">
+					<InputGroupAddon>
+						<SearchIcon className="text-muted-foreground" />
+					</InputGroupAddon>
+					<InputGroupInput
 						onChange={(e) => setFilters({ search: e.target.value })}
 						placeholder="Search..."
 						type="text"
 						value={filters.search}
 					/>
-				</div>
+				</InputGroup>
 
 				{/* Sort */}
 				<Select

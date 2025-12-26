@@ -7,7 +7,7 @@ import {
 import { getPublicStorefrontProducts } from "@/db/actions/storefront/products/public/actionts";
 import StoreFrontHero from "@/components/storefront/organisms/hero";
 import StoreFrontProductList from "@/components/storefront/organisms/products/product-list";
-import { FullPageSpinner } from "@/components/storefront/molecules/full-page-spinner";
+import ProductListSkeleton from "@/components/storefront/organisms/products/product-list/product-list-skeleton";
 
 const HOMEPAGE_PRODUCTS_LIMIT = 11;
 
@@ -46,7 +46,7 @@ async function StoreFrontContent({
 					<p>No products found. We’re currently adding our product line.</p>
 				</div>
 			) : (
-				<Suspense fallback={<FullPageSpinner />}>
+				<Suspense fallback={<ProductListSkeleton />}>
 					<StoreFrontProductList
 						products={products.slice(0, HOMEPAGE_PRODUCTS_LIMIT)}
 						currency={currency ?? "USD"}

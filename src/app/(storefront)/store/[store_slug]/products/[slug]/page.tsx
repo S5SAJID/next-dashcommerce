@@ -13,6 +13,7 @@ import { notFound } from "next/navigation";
 import { applyCache, tags } from "@/lib/cache/cache-manager";
 import { Suspense } from "react";
 import { FullPageSpinner } from "@/components/storefront/molecules/full-page-spinner";
+import StorefrontProductPageSkeleton from "@/components/storefront/organisms/products/skeletons/product-page-skeleton";
 
 export async function generateMetadata({
 	params,
@@ -66,114 +67,111 @@ export default async function ProductPage({
 	);
 
 	return (
-		<Suspense fallback={<FullPageSpinner />}>
-			<>
-				<section className="grid gap-10 md:grid-cols-2 lg:gap-16">
-					{/* Preview image */}
-					<StoreFrondProductImagePreview product={product} />
-					{/* Product Details */}
-					<div className="flex flex-col gap-6">
-						<div className="space-y-2">
-							<h1 className="font-semibold text-4xl tracking-tight text-foreground">
-								{product.name}
-							</h1>
-							<div className="flex items-center gap-4">
-								<div className="flex items-baseline gap-2">
-									<span className="font-semibold text-3xl">
+		<Suspense fallback={<StorefrontProductPageSkeleton />}>
+			<section className="grid gap-10 md:grid-cols-2 lg:gap-16">
+				{/* Preview image */}
+				<StoreFrondProductImagePreview product={product} />
+				{/* Product Details */}
+				<div className="flex flex-col gap-6">
+					<div className="space-y-2">
+						<h1 className="font-semibold text-4xl tracking-tight text-foreground">
+							{product.name}
+						</h1>
+						<div className="flex items-center gap-4">
+							<div className="flex items-baseline gap-2">
+								<span className="font-semibold text-3xl">
+									{formatPrice({
+										locale: currencyInfo.locale,
+										currency: currencyInfo.code,
+										price: product.price,
+									})}
+								</span>
+								{product.compare_at && product.compare_at > product.price && (
+									<span className="text-lg text-muted-foreground line-through decoration-red-300">
 										{formatPrice({
 											locale: currencyInfo.locale,
 											currency: currencyInfo.code,
-											price: product.price,
+											price: product.compare_at,
 										})}
 									</span>
-									{product.compare_at && product.compare_at > product.price && (
-										<span className="text-lg text-muted-foreground line-through decoration-red-300">
-											{formatPrice({
-												locale: currencyInfo.locale,
-												currency: currencyInfo.code,
-												price: product.compare_at,
-											})}
+								)}
+							</div>
+							{product.compare_at && product.compare_at > product.price && (
+								<span className="rounded-md bg-muted px-2.5 py-1 font-medium text-foreground text-xs">
+									Save{" "}
+									{formatPrice({
+										locale: currencyInfo.locale,
+										currency: currencyInfo.code,
+										price: product.compare_at - product.price,
+									})}
+								</span>
+							)}
+						</div>
+					</div>
+
+					<div className="h-px w-full bg-border" />
+
+					<div className="space-y-4">
+						<p className="text-base text-muted-foreground leading-relaxed">
+							{product.description}
+						</p>
+
+						<div className="flex flex-col gap-2 text-sm">
+							{product.sku && (
+								<div className="flex items-center gap-2 text-muted-foreground">
+									<span className="font-medium text-foreground">SKU:</span>
+									{product.sku}
+								</div>
+							)}
+							{product.stock !== null && (
+								<div className="flex items-center gap-2">
+									<span className="font-medium text-foreground">
+										Availability:
+									</span>
+									{product.stock > 0 ? (
+										<span className="flex items-center gap-1.5 text-foreground">
+											<span className="h-1.5 w-1.5 rounded-full bg-foreground" />
+											In Stock {product.stock < 10 && `(${product.stock} left)`}
+										</span>
+									) : (
+										<span className="flex items-center gap-1.5 text-muted-foreground">
+											<span className="h-1.5 w-1.5 rounded-full bg-muted-foreground" />
+											Out of Stock
 										</span>
 									)}
 								</div>
-								{product.compare_at && product.compare_at > product.price && (
-									<span className="rounded-md bg-muted px-2.5 py-1 font-medium text-foreground text-xs">
-										Save{" "}
-										{formatPrice({
-											locale: currencyInfo.locale,
-											currency: currencyInfo.code,
-											price: product.compare_at - product.price,
-										})}
-									</span>
-								)}
-							</div>
-						</div>
-
-						<div className="h-px w-full bg-border" />
-
-						<div className="space-y-4">
-							<p className="text-base text-muted-foreground leading-relaxed">
-								{product.description}
-							</p>
-
-							<div className="flex flex-col gap-2 text-sm">
-								{product.sku && (
-									<div className="flex items-center gap-2 text-muted-foreground">
-										<span className="font-medium text-foreground">SKU:</span>
-										{product.sku}
-									</div>
-								)}
-								{product.stock !== null && (
-									<div className="flex items-center gap-2">
-										<span className="font-medium text-foreground">
-											Availability:
-										</span>
-										{product.stock > 0 ? (
-											<span className="flex items-center gap-1.5 text-foreground">
-												<span className="h-1.5 w-1.5 rounded-full bg-foreground" />
-												In Stock{" "}
-												{product.stock < 10 && `(${product.stock} left)`}
-											</span>
-										) : (
-											<span className="flex items-center gap-1.5 text-muted-foreground">
-												<span className="h-1.5 w-1.5 rounded-full bg-muted-foreground" />
-												Out of Stock
-											</span>
-										)}
-									</div>
-								)}
-							</div>
-						</div>
-
-						<div className="mt-4">
-							<StoreFrontAddToCart
-								className="w-full rounded-full py-6 text-lg"
-								isOutOfStock={product.stock === 0}
-								product={{
-									id: product.id,
-									name: product.name,
-									price: product.price,
-									image: product.images[0],
-									quantity: 1,
-								}}
-							/>
+							)}
 						</div>
 					</div>
-				</section>
 
-				<div className="my-16" />
-				<div className="space-y-8">
-					<h3 className="text-2xl">You May Also Like</h3>
-					<StoreFrontProductList
-						dense
-						products={shuffleArray(recommendedProducts).slice(
-							0,
-							RECOMMENDED_PRODUCTS_LIMIT,
-						)}
-						currency={currency ?? "USD"}
-					/>
+					<div className="mt-4">
+						<StoreFrontAddToCart
+							className="w-full rounded-full py-6 text-lg"
+							isOutOfStock={product.stock === 0}
+							product={{
+								id: product.id,
+								name: product.name,
+								price: product.price,
+								image: product.images[0],
+								quantity: 1,
+							}}
+						/>
+					</div>
 				</div>
-			</>
+			</section>
+
+			<div className="my-16" />
+			<div className="space-y-8">
+				<h3 className="text-2xl">You May Also Like</h3>
+				<StoreFrontProductList
+					dense
+					products={shuffleArray(recommendedProducts).slice(
+						0,
+						RECOMMENDED_PRODUCTS_LIMIT,
+					)}
+					currency={currency ?? "USD"}
+				/>
+			</div>
 		</Suspense>
 	);
 }

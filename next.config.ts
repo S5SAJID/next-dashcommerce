@@ -24,7 +24,6 @@ const nextConfig: NextConfig = {
 			{ hostname: "res.cloudinary.com" },
 		],
 	},
-
 	async headers() {
 		return [{
 			source: '/store/:path*',

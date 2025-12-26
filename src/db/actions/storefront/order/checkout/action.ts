@@ -221,6 +221,7 @@ export const checkoutFormAction = storeFrontActionClient
 			});
 		} catch (error) {
 			// Return consistent error format
+			console.error(error);
 			return {
 				success: false,
 				message:

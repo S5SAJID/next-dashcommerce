@@ -6,10 +6,9 @@ import {
 	getPublicStoreFront,
 	getPublicStoreFrontCurrency,
 } from "@/db/actions/storefront/store/public/actionts";
-import { applyCache, tags } from "@/lib/cache/cache-manager";
 import { Suspense } from "react";
-import { FullPageSpinner } from "@/components/storefront/molecules/full-page-spinner";
 import { notFound } from "next/navigation";
+import StorefrontProductsPageSkeleton from "@/components/storefront/organisms/products/skeletons/products-page-skeleton";
 
 export const metadata: Metadata = {
 	title: "All Products",
@@ -20,7 +19,7 @@ export default async function ProductsPage({
 	params,
 }: PageProps<"/store/[store_slug]/products">) {
 	return (
-		<Suspense fallback={<FullPageSpinner />}>
+		<Suspense fallback={<StorefrontProductsPageSkeleton />}>
 			<ProductsPageContent params={params} />
 		</Suspense>
 	);

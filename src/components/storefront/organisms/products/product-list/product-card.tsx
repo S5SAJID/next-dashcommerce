@@ -29,6 +29,7 @@ export default function StoreFrontProductCard({
 						className={`h-full bg-muted ${product.images.length > 1 ? "group-hover:hidden" : ""} w-full rounded-xl object-cover`}
 						height={450}
 						src={product.images[0]}
+						loading="lazy"
 						width={450}
 					/>
 					{product.images.length > 1 ? (
@@ -37,6 +38,7 @@ export default function StoreFrontProductCard({
 							className="hidden h-full w-full rounded-xl bg-muted object-cover group-hover:block"
 							height={450}
 							src={product.images[1]}
+							loading="lazy"
 							width={450}
 						/>
 					) : null}
