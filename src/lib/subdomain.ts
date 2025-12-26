@@ -53,7 +53,18 @@ export function extractSubdomain(request: NextRequest): string | null {
 const localhostSubdomainRegexFromString = /http:\/\/([^.]+)\.localhost/;
 
 export function extractSubdomainFromString(url: string): string | null {
-	const hostname = url.split(":")[0];
+	// Properly parse the URL to extract hostname
+	let hostname: string;
+	try {
+		const parsedUrl = new URL(url);
+		hostname = parsedUrl.hostname;
+	} catch {
+		// If URL parsing fails, try extracting hostname manually
+		// Remove protocol if present
+		const withoutProtocol = url.replace(/^https?:\/\//, "");
+		// Get hostname (everything before the first slash or end of string)
+		hostname = withoutProtocol.split("/")[0].split(":")[0];
+	}
 
 	// Local development environment
 	if (url.includes("localhost") || url.includes("127.0.0.1")) {

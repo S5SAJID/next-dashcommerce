@@ -9,7 +9,6 @@ export const storeFrontActionClient = createSafeActionClient().use(
 	async ({ next }) => {
 		const allHeaders = await headers();
 
-		// Access specific headers using the .get() method
 		const referer = allHeaders.get("referer") || "unknown";
 		const subdomain = extractSubdomainFromString(referer);
 		if (!subdomain) {
