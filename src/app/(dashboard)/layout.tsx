@@ -28,29 +28,33 @@ export default async function Layout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className={`${GeistSans.className} w-full h-full`}>
+		<div className={`${GeistSans.className} w-full h-dvh`}>
 			<DashboardProviders>
-				<Suspense
-					fallback={
-						<div className="min-w-full min-h-full flex gap-1 items-center justify-center">
-							<Spinner /> <span>Loading...</span>
-						</div>
-					}
-				>
-					<SidebarProvider>
-						<AppSidebar />
-						<SidebarInset className="@container/content">
-							<main className="h-full w-full flex-1">
-								<SiteHeader />
+				<SidebarProvider>
+					<AppSidebar />
+					<SidebarInset className="@container/content">
+						<main className="h-full w-full flex-1">
+							<SiteHeader />
+
+							<Suspense fallback={<DashboardLayoutSkeleton />}>
 								<DashboardCacheStoreInfoProvider>
 									<Main>{children}</Main>
 								</DashboardCacheStoreInfoProvider>
-								<Toaster />
-							</main>
-						</SidebarInset>
-					</SidebarProvider>
-				</Suspense>
+							</Suspense>
+
+							<Toaster />
+						</main>
+					</SidebarInset>
+				</SidebarProvider>
 			</DashboardProviders>
+		</div>
+	);
+}
+
+export function DashboardLayoutSkeleton() {
+	return (
+		<div className="min-w-full min-h-dvh flex gap-1 items-center justify-center">
+			<Spinner /> <span>LOADING...</span>
 		</div>
 	);
 }

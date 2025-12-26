@@ -1,7 +1,7 @@
+"use client";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatDashboardPrice } from "@/lib/shared/utils/format-dashboard-price";
-import { formatPrice } from "@/lib/utils";
 
 export default function OrderSummaryCard({
 	subtotal,

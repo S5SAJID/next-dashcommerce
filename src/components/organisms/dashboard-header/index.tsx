@@ -15,7 +15,9 @@ export async function SiteHeader() {
 					className="mx-2 data-[orientation=vertical]:h-4"
 					orientation="vertical"
 				/>
-				<BreadcrumbNavigation />
+				<Suspense fallback={<Skeleton className="h-4 w-28" />}>
+					<BreadcrumbNavigation />
+				</Suspense>
 				<div className="ml-auto flex items-center gap-2">
 					<Suspense fallback={<Skeleton className="size-8" />}>
 						<DashboardStoreOpenButton />

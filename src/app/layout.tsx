@@ -7,7 +7,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning={true}>
-			<body className={`font-sans antialiased min-h-dvh`}>{children}</body>
+			<body className={`antialiased min-h-dvh`}>{children}</body>
 		</html>
 	);
 }

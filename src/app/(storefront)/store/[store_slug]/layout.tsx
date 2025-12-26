@@ -56,7 +56,7 @@ async function LayoutContent({ children, params }: Props) {
 export default function Layout({ children, params }: Props) {
 	// Return the static shell immediately
 	return (
-		<div className={dmSans.className}>
+		<div className={`${dmSans.className} min-h-dvh`}>
 			<Suspense fallback={<FullPageSpinner />}>
 				<LayoutContent params={params}>{children}</LayoutContent>
 			</Suspense>

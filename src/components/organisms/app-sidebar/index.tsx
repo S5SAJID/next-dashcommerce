@@ -4,7 +4,6 @@ import {
 	SidebarContent,
 	SidebarFooter,
 	SidebarGroup,
-	SidebarGroupContent,
 	SidebarGroupLabel,
 	SidebarHeader,
 	SidebarMenu,
@@ -20,11 +19,12 @@ import {
 } from "lucide-react";
 import { NavUser } from "./nav-user";
 import { usePathname } from "next/navigation";
-import { isActivePath } from "@/lib/utils";
 import Link from "next/link";
 import Logo from "../../../../public/favico.svg";
 import Image from "next/image";
-import type { User } from "better-auth/types";
+import { Suspense } from "react";
+import { DashboardAppSidebarContents } from "./side-bar-contents";
+import DashboardAppSidebarContentsSkeleton from "./sidebar-contents-skeleton";
 
 type SidebarLinkType = {
 	title: string;
@@ -33,7 +33,7 @@ type SidebarLinkType = {
 };
 
 // Menu items.
-const SIDEBAR_LINKS: SidebarLinkType[] = [
+export const DASHBOARD_APPSIDEBAR_LINKS: SidebarLinkType[] = [
 	{
 		title: "Products",
 		url: "/products",
@@ -86,27 +86,9 @@ export default function AppSidebar() {
 			<SidebarContent>
 				<SidebarGroup>
 					<SidebarGroupLabel>Application</SidebarGroupLabel>
-					<SidebarGroupContent>
-						<SidebarMenu>
-							{SIDEBAR_LINKS.map((item) => {
-								const isActive = isActivePath(item.url, pathname);
-
-								return (
-									<SidebarMenuItem key={item.url}>
-										<SidebarMenuButton asChild isActive={isActive}>
-											<Link
-												className={isActive ? "opacity-100" : "opacity-80"}
-												href={item.url}
-											>
-												<item.icon />
-												<span>{item.title}</span>
-											</Link>
-										</SidebarMenuButton>
-									</SidebarMenuItem>
-								);
-							})}
-						</SidebarMenu>
-					</SidebarGroupContent>
+					<Suspense fallback={<DashboardAppSidebarContentsSkeleton />}>
+						<DashboardAppSidebarContents />
+					</Suspense>
 				</SidebarGroup>
 			</SidebarContent>
 			<SidebarFooter>
