@@ -3,16 +3,18 @@ import { db } from "@/db/db";
 import { StoreTable } from "@/db/schema";
 import { applyCache, tags } from "@/lib/cache/cache-manager";
 import { eq } from "drizzle-orm";
+import { notFound } from "next/navigation";
 
 export const getPublicStoreFront = async (domain: string) => {
 	"use cache";
-	const store = await db
-		.select()
-		.from(StoreTable)
-		.where(eq(StoreTable.domain, domain));
+	const store = await db.query.StoreTable.findFirst({
+		where: eq(StoreTable.domain, domain),
+	});
 
-	applyCache(tags.store(store[0].id));
-	return store[0];
+	if (!store) return undefined;
+
+	applyCache(tags.store(store.id));
+	return store;
 };
 
 export const getPublicStoreFrontCurrency = async (domain: string) => {

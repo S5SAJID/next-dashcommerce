@@ -57,8 +57,6 @@ export const DASHBOARD_APPSIDEBAR_LINKS: SidebarLinkType[] = [
 ];
 
 export default function AppSidebar() {
-	const pathname = usePathname();
-
 	return (
 		<Sidebar collapsible="icon">
 			{/* Header */}

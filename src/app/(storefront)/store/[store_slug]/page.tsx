@@ -46,10 +46,12 @@ async function StoreFrontContent({
 					<p>No products found. We’re currently adding our product line.</p>
 				</div>
 			) : (
-				<StoreFrontProductList
-					products={products.slice(0, HOMEPAGE_PRODUCTS_LIMIT)}
-					currency={currency ?? "USD"}
-				/>
+				<Suspense fallback={<FullPageSpinner />}>
+					<StoreFrontProductList
+						products={products.slice(0, HOMEPAGE_PRODUCTS_LIMIT)}
+						currency={currency ?? "USD"}
+					/>
+				</Suspense>
 			)}
 		</>
 	);
@@ -62,9 +64,7 @@ export default function StoreFrontPage({
 }) {
 	return (
 		<main className="space-y-4">
-			<Suspense fallback={<FullPageSpinner />}>
-				<StoreFrontContent params={params} />
-			</Suspense>
+			<StoreFrontContent params={params} />
 		</main>
 	);
 }
