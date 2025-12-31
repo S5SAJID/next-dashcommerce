@@ -8,6 +8,7 @@ export const proxy = async (request: NextRequest) => {
 	const { pathname, search } = request.nextUrl; // also used for subdoman
 	const subdomain = extractSubdomain(request);
 
+	// Storefront management
 	if (subdomain && pathname.startsWith("/")) {
 		return NextResponse.rewrite(
 			new URL(`/store/${subdomain}${pathname}${search}`, request.url),
