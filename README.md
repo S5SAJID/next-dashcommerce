@@ -3,7 +3,7 @@
 # NextDash Commerce (S5ARC.)
 
 [![Status](https://img.shields.io/badge/Status-Experimental-orange?style=flat-square)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg?style=flat-square)](https://www.gnu.org/licenses/agpl-3.0)
 [![Next.js](https://img.shields.io/badge/Next.js-15.0-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Drizzle ORM](https://img.shields.io/badge/Drizzle-ORM-green?style=flat-square&logo=drizzle)](https://orm.drizzle.team/)
@@ -79,6 +79,51 @@ src/
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+### Contributor License Agreement (CLA)
+
+By contributing to this project, you agree that:
+
+1. You grant the project maintainers a perpetual, worldwide, non-exclusive, royalty-free license to use, reproduce, modify, and distribute your contributions.
+2. The project maintainers retain the right to sublicense the project under different licensing terms (including commercial licenses).
+3. Your contributions are your original work and do not violate any third-party rights.
+
+This ensures that we can continue to offer commercial licensing options while maintaining the open-source version under AGPL-3.0.
+
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **AGPL-3.0 License** - see the [LICENSE](LICENSE) file for details.
+
+### What does AGPL-3.0 mean?
+
+The GNU Affero General Public License v3.0 (AGPL-3.0) is a strong copyleft license that requires you to:
+
+- **Share source code**: If you modify and deploy this software (even as a web service), you must make the complete source code available to your users.
+- **Same license**: Any derivative works must also be licensed under AGPL-3.0.
+- **Attribution**: You must include a "Powered by S5ARC." link in your footer that links back to this repository.
+
+### Commercial Licensing
+
+**Need to use NextDash Commerce (S5ARC.) without AGPL restrictions?**
+
+We offer commercial licenses for businesses that want to:
+
+- Use the software without sharing source code modifications
+- Integrate into proprietary systems
+- Remove the "Powered by S5ARC." attribution requirement
+- Receive priority support and custom features
+
+For commercial licensing inquiries, please contact:
+
+📧 **[s5sajid@gmail.com](mailto:s5sajid@gmail.com)**
+
+### Attribution Requirement
+
+If you use this software under the AGPL-3.0 license, you must include a visible "Powered by S5ARC." link in the footer of your application that links to this repository:
+
+```html
+<a href="https://github.com/S5SAJID/next-dashcommerce" target="_blank">
+  Powered by S5ARC.
+</a>
+```
+
+This helps users fulfill the AGPL requirement of making source code available and supports the continued development of this project.
