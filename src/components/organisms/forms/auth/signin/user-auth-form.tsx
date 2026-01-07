@@ -2,7 +2,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Github, Loader, LogIn } from "lucide-react";
+import { Loader, LogIn } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,8 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { authClient } from "@/lib/auth/auth-client";
-import BetterAuthActionButton from "@/components/molecules/better-auth/action-button";
 import { toast } from "sonner";
+import { SocialAuthButtons } from "@/components/molecules/better-auth/social-auth-buttons";
 
 const formSchema = z.object({
 	email: z.email({
@@ -108,37 +108,7 @@ export function UserAuthForm({
 					</Button>
 				</div>
 
-				<div className="relative my-2">
-					<div className="absolute inset-0 flex items-center">
-						<span className="w-full border-t" />
-					</div>
-					<div className="relative flex justify-center text-xs uppercase">
-						<span className="bg-background px-2 text-muted-foreground">
-							Or continue with
-						</span>
-					</div>
-				</div>
-
-				{/* TODO: Add Google and make it 2 cols */}
-				<div className="grid gap-2">
-					<BetterAuthActionButton
-						action={() =>
-							authClient.signIn.social({
-								provider: "github",
-								callbackURL: "/products",
-							})
-						}
-						disabled={isLoading}
-						successMessage="Redirecting to github..."
-						type="button"
-						variant="outline"
-					>
-						<Github className="h-4 w-4" /> GitHub
-					</BetterAuthActionButton>
-					{/* <Button variant='outline' type='button' disabled={isLoading}>
-            <Facebook className='h-4 w-4' /> Facebook
-          </Button> */}
-				</div>
+				<SocialAuthButtons isLoading={isLoading} />
 			</form>
 		</Form>
 	);

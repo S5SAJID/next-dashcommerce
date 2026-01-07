@@ -23,6 +23,10 @@ export const proxy = async (request: NextRequest) => {
 		if (!session) {
 			return NextResponse.redirect(new URL("/signin", request.url));
 		}
+
+		if (!session.user.storeId) {
+			return NextResponse.redirect(new URL("/new-store", request.url));
+		}
 	}
 
 	// Redirect authenticated users with storeId away from auth routes
@@ -31,7 +35,7 @@ export const proxy = async (request: NextRequest) => {
 			headers: await headers(),
 		});
 
-		if (session != null && session.user.storeId != null) {
+		if (session !== null && session.user.storeId !== null) {
 			return NextResponse.redirect(new URL("/products", request.url));
 		}
 	}
