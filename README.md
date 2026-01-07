@@ -114,7 +114,7 @@ We offer commercial licenses for businesses that want to:
 
 For commercial licensing inquiries, please contact:
 
-📧 **[s5sajid@gmail.com](mailto:s5sajid@gmail.com)**
+📧 **[s5sajidyt@gmail.com](mailto:s5sajid@gmail.com)**
 
 ### Attribution Requirement
 

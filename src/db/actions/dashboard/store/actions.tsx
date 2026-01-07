@@ -13,8 +13,10 @@ export const createDashboardStore = noAuthdashboardActionClient
 	.inputSchema(storeFormSchema)
 	.action(async ({ parsedInput }) => {
 		const { name, description, subdomain, currency } = parsedInput;
+		const requestHeaders = await headers();
+
 		try {
-			const session = await auth.api.getSession({ headers: await headers() });
+			const session = await auth.api.getSession({ headers: requestHeaders });
 
 			if (!session) {
 				redirect("/signin");
@@ -45,10 +47,14 @@ export const createDashboardStore = noAuthdashboardActionClient
 				})
 				.returning({ id: StoreTable.id });
 
-			await db
-				.update(user)
-				.set({ storeId: store[0].id })
-				.where(eq(user.id, session.user.id));
+			// Update the session to include the new storeId
+			// This ensures the cached session reflects the change before redirect
+			await auth.api.updateUser({
+				headers: requestHeaders,
+				body: {
+					storeId: store[0].id,
+				},
+			});
 
 			updateCache(
 				tags.storeUser(store[0].id, session.user.id),
@@ -60,6 +66,7 @@ export const createDashboardStore = noAuthdashboardActionClient
 				message: "Store created successfully",
 			};
 		} catch (error) {
+			console.error(error);
 			return {
 				success: false,
 				message: "Something went wrong",
