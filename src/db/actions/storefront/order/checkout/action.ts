@@ -191,6 +191,7 @@ export const checkoutFormAction = storeFrontActionClient
 
 				// 8. Publish order.created event for integrations
 				// Note: Using .catch() to prevent event publishing failures from affecting the order
+				// FIX: remove it out of the transaction
 				publishEvent("order.created", storeId, {
 					orderId: order.id,
 					customerId: customer_id,
@@ -201,6 +202,10 @@ export const checkoutFormAction = storeFrontActionClient
 						email: parsedInput.email,
 						city: parsedInput.city,
 						country: parsedInput.country,
+						phone: parsedInput.phone,
+						street_address: parsedInput.address,
+						state: parsedInput.state,
+						postal_code: parsedInput.postalCode,
 					},
 					items: items.map((item) => ({
 						productId: item.productId,
