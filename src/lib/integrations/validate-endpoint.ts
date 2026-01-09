@@ -25,7 +25,8 @@ export async function validateIntegrationEndpoint(
 		errors.push("Endpoint must use HTTPS for security");
 	}
 
-	url = url.replace(/^(https?:\/\/[^/]+).*$/, "$1");
+	// FIX: fix this
+	// url = url.replace(/^(https?:\/\/[^/]+).*$/, "$1");
 
 	// 2. Check if URL is reachable (with timeout)
 	let isLive = false;
@@ -33,7 +34,6 @@ export async function validateIntegrationEndpoint(
 	try {
 		const start = Date.now();
 		const response = await fetch(url, {
-			method: "HEAD",
 			signal: AbortSignal.timeout(5000), // 5 second timeout
 		});
 		responseTime = Date.now() - start;
@@ -55,7 +55,7 @@ export async function validateIntegrationEndpoint(
 	if (isLive) {
 		try {
 			const response = await fetch(`${url}/validate`, {
-				method: "POST",
+				method: "OPTIONS",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					version: "1.0",
