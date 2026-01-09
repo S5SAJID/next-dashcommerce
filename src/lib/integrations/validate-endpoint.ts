@@ -55,7 +55,7 @@ export async function validateIntegrationEndpoint(
 	if (isLive) {
 		try {
 			const response = await fetch(`${url}/validate`, {
-				method: "OPTIONS",
+				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					version: "1.0",
