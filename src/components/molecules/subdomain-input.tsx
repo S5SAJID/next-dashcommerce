@@ -70,7 +70,7 @@ export default function DashboardSubdomainInput({
 										{...field}
 									/>
 									<InputGroupAddon align="inline-end">
-										<InputGroupText>.s5arc.vercel.app</InputGroupText>
+										<InputGroupText>.s5arc.store</InputGroupText>
 									</InputGroupAddon>
 									<InputGroupAddon>
 										{/* Status Indicator */}

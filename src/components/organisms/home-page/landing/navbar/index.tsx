@@ -29,17 +29,9 @@ export default function HomePageNavbar({
 						<div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
 							<a
 								className="hover:text-foreground hover:underline underline-offset-2 transition-colors"
-								href="https://github.com/S5SAJID/next-dashcommerce"
-								target="_blank"
+								href="#how-it-works"
 							>
-								Github
-							</a>
-							<a
-								className="hover:text-foreground hover:underline underline-offset-2 transition-colors"
-								href="/api/v1/docs"
-								target="_blank"
-							>
-								API Docs
+								How It Works
 							</a>
 							<a
 								className="hover:text-foreground hover:underline underline-offset-2 transition-colors"
@@ -50,9 +42,10 @@ export default function HomePageNavbar({
 							</a>
 							<a
 								className="hover:text-foreground hover:underline underline-offset-2 transition-colors"
-								href="mailto:s5sajidyt+s5arc@gmail.com"
+								href="/api/v1/docs"
+								target="_blank"
 							>
-								Contact
+								API Docs
 							</a>
 						</div>
 

@@ -39,6 +39,7 @@ export default function ProductForm() {
 				if (response.data?.success) {
 					// navigate to product details page
 					router.push("/products/");
+					form.reset()
 					return "Product created.";
 				}
 				return "Product creation failed";

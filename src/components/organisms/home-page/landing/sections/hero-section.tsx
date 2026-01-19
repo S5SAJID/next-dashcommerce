@@ -36,7 +36,7 @@ export default function HomePageHeroSection() {
 							<InputGroupInput placeholder="your store name"></InputGroupInput>
 							<InputGroupAddon align="inline-end">
 								{/* Fix hardcoded URL */}
-								<InputGroupText>.s5arc.vercel.app</InputGroupText>
+								<InputGroupText>.s5arc.store</InputGroupText>
 							</InputGroupAddon>
 						</InputGroup>
 						<Button size="lg">Claim Store</Button>
@@ -71,6 +71,7 @@ export default function HomePageHeroSection() {
 											height={800}
 											src="/assets/pages/home-page/hero-section/dashboard.png"
 											width={800}
+											priority
 										/>
 									</CardContent>
 								</Card>

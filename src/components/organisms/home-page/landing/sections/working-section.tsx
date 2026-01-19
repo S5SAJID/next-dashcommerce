@@ -1,6 +1,6 @@
 export default function HomePageWorkingSection() {
 	return (
-		<section className="py-24 bg-background relative" id="features">
+		<section className="py-24 bg-background relative" id="how-it-works">
 			<div className="max-w-7xl mx-auto px-6">
 				<div className="mb-16 text-center max-w-2xl mx-auto">
 					<h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
@@ -47,7 +47,7 @@ export default function HomePageWorkingSection() {
 								/>
 								<span className="text-xs text-foreground font-mono">
 									{/* Fix hardcoded URL */}
-									store.s5arc.vercel.app
+									yourstore.s5arc.store
 								</span>
 								<div className="ml-auto bg-primary text-primary-foreground text-[10px] px-2 py-1 rounded">
 									Copy
