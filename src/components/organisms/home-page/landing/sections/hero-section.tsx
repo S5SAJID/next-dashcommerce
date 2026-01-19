@@ -24,8 +24,8 @@ export default function HomePageHeroSection() {
 						v1.0 is now live: Cash on Delivery ready.
 					</div>
 					<h1 className="text-5xl lg:text-7xl font-semibold tracking-tighter text-foreground leading-[1.1]">
-						Start your online store{" "}
-						<span className="text-muted-foreground">in seconds.</span>
+						Build your free online store{" "}
+						<span className="text-muted-foreground">in 60 seconds.</span>
 					</h1>
 					<p className="text-xl text-muted-foreground max-w-lg leading-relaxed">
 						The simplest platform to sell your products. Built specifically for

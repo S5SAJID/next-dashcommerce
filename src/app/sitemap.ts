@@ -1,12 +1,13 @@
-import type { MetadataRoute } from 'next'
+import { getBaseUrl } from "@/lib/base/config/site";
+import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: `${process.env.NODE_ENV === "development" ? "http" : "https"}://${process.env.CUSTOM_ROOT_DOMAIN}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-  ]
+	return [
+		{
+			url: `${getBaseUrl()}`,
+			lastModified: new Date(),
+			changeFrequency: "weekly",
+			priority: 1,
+		},
+	];
 }

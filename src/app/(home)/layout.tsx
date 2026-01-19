@@ -1,5 +1,8 @@
 import JsonLd from "@/components/atoms/seo/json-ld";
-import { homePageJsonLD, homePageMetaData } from "@/lib/base/seo/home-page-metadata";
+import {
+	homePageJsonLD,
+	homePageMetaData,
+} from "@/lib/base/seo/home-page-metadata";
 import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
