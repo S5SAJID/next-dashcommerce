@@ -42,10 +42,10 @@ export default function HomePageNavbar({
 							</a>
 							<a
 								className="hover:text-foreground hover:underline underline-offset-2 transition-colors"
-								href="/api/v1/docs"
+								href="https://docs.s5arc.store"
 								target="_blank"
 							>
-								API Docs
+								Documentation
 							</a>
 						</div>
 
