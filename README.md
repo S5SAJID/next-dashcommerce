@@ -1,6 +1,7 @@
-![NextDash Commerce Banner](./public/favico.svg)
+![S5ARC Banner](./public/assets/decoratives/GitHub-Banner.png)
 
-# NextDash Commerce (S5ARC.)
+S5ARC is the easiest modern open-source e-commerce platform to start your online store in seconds, with a clean UI, beautiful user experience, and a modern stack (Next.js, Zod, shadcn/ui). Focused on type safety, multi-tenancy, and developer experience, it lets business owners create their own online stores with custom subdomains to add products and manage orders. Includes a full e-commerce flow: products, orders, customers, checkout, and modern authentication.
+
 
 [![Status](https://img.shields.io/badge/Status-Experimental-orange?style=flat-square)]()
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg?style=flat-square)](https://www.gnu.org/licenses/agpl-3.0)
@@ -9,8 +10,6 @@
 [![Drizzle ORM](https://img.shields.io/badge/Drizzle-ORM-green?style=flat-square&logo=drizzle)](https://orm.drizzle.team/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
 [![Biome](https://img.shields.io/badge/Biome-Formatter-blue?style=flat-square&logo=biome)](https://biomejs.dev/)
-
-A modern e-commerce platform with a clean UI, beautiful user experience, and a modern stack (Next.js, Zod, shadcn/ui). Focused on type safety, multi-tenancy, and developer experience, it lets business owners create their own online stores with custom subdomains to add products and manage orders. Includes a full e-commerce flow: products, orders, customers, checkout, and modern authentication.
 
 ## 🚀 Key Features
 

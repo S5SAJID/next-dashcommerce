@@ -19,12 +19,20 @@ export const homePageMetaData: Metadata = {
 			"Built for non-tech founders. No coding, no monthly fees. Start selling with Cash on Delivery support today.",
 		url: "https://www.s5arc.store",
 		siteName: "S5ARC",
-		// images: [{
-		// 	url: "https://www.s5arc.store", // Ensure this exists
-		// 	width: 1200,
-		// 	height: 630,
-		// 	alt: "S5ARC Dashboard Preview"
-		// }],
+		images: [
+			{
+				url: "https://www.s5arc.store/assets/decoratives/OpenGraph-Square.png",
+				width: 1444,
+				height: 1444,
+				alt: "S5ARC OpenGraph Square Image"
+			},
+			{
+				url: "https://www.s5arc.store/assets/decoratives/OpenGraph.png",
+				width: 1920,
+				height: 1173,
+				alt: "S5ARC OpenGraph Image"
+			},
+		],
 		locale: "en_US",
 		type: "website",
 	},
