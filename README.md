@@ -11,7 +11,7 @@ S5ARC is the easiest modern open-source e-commerce platform to start your online
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
 [![Biome](https://img.shields.io/badge/Biome-Formatter-blue?style=flat-square&logo=biome)](https://biomejs.dev/)
 
-## 🚀 Key Features
+## Key Features
 
 -   **Multi-Tenancy Architecture**: Create and manage multiple stores with custom subdomains and isolated data.
 -   **Modern Tech Stack**: Built with Next.js 15 (App Router), React 19, and Tailwind CSS v4.
@@ -20,7 +20,7 @@ S5ARC is the easiest modern open-source e-commerce platform to start your online
 -   **Admin Dashboard**: Comprehensive dashboard for store owners to manage inventory, orders, and settings.
 -   **Authentication**: Secure authentication flow using Better Auth with email verification.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 -   **Framework**: [Next.js 15](https://nextjs.org/)
 -   **Language**: [TypeScript](https://www.typescriptlang.org/)
@@ -30,7 +30,7 @@ S5ARC is the easiest modern open-source e-commerce platform to start your online
 -   **Auth**: [Better Auth](https://better-auth.com/)
 -   **Validation**: [Zod](https://zod.dev/)
 
-## 🏁 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -63,7 +63,7 @@ S5ARC is the easiest modern open-source e-commerce platform to start your online
     bun dev
     ```
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 src/
@@ -74,7 +74,7 @@ src/
 └── hooks/               # Custom React Hooks
 ```
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -88,7 +88,7 @@ By contributing to this project, you agree that:
 
 This ensures that we can continue to offer commercial licensing options while maintaining the open-source version under AGPL-3.0.
 
-## 📄 License
+## License
 
 This project is licensed under the **AGPL-3.0 License** - see the [LICENSE](LICENSE) file for details.
 
