@@ -21,7 +21,7 @@ export default async function DashboardStoreOpenButton() {
 	applyCache(tags.store(store.id));
 
 	const baseDomain = (
-		process.env.BETTER_AUTH_URL ?? "http://localhost:3000"
+		"https://s5arc.store" ?? "http://localhost:3000"
 	).split("//")[1];
 
 	const storeUrl = `http://${store.domain}.${baseDomain}`;
